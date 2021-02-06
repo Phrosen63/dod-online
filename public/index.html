@@ -5,14 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DoD Online</title>
     <link rel="stylesheet" href="style.css">
-
     <script defer src="/__/firebase/8.2.6/firebase-app.js"></script>
     <script defer src="/__/firebase/8.2.6/firebase-auth.js"></script>
     <script defer src="/__/firebase/8.2.6/firebase-firestore.js"></script>
     <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script src="app.js"></script>
   </head>
+
   <body>
-    <script src="index.js">
-    </script>
+    <div class="login-screen">
+      <h1>DoD-online<br>Log in or Sign up</h1>
+      <form id="login-form">
+        <input id="txtEmail" class="form-control" type="email" placeholder="Email" required>
+        <input id="txtPassword" class="form-control" type="password" placeholder="Password" required>
+        <button id="btnLogin" class="form-control">Log in</button>
+        <button id="btnSignUp" class="form-control">Sign up</button>
+        <button id="btnLogout" class="hide">Log out</button>
+      </form>
+    </div>
+    <!-- 
+    <form id="test-form">
+      <input type="text" name="name" placeholder="Name" />
+      <input type="text" name="age" placeholder="Age" />
+      <input type="text" name="adress" placeholder="Adress" />
+      <button>Add</button>
+    </form>
+    <ul id="targetElement"></ul>
+    -->
   </body>
 </html>
