@@ -1,5 +1,9 @@
 <template>
   <header>
+    <nav>
+      <router-link to="/characters">Characters</router-link>
+      <router-link to="/profile">Profile</router-link>
+    </nav>
     <button
       id="btnLogout"
       class="hide"
@@ -25,21 +29,43 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 header {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  position: relative;
   background-color: #fadaa2;
   box-shadow: 0px -10px 20px 10px;
   padding: 5px 0;
+  height: 53px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+nav > a {
+  font-size: 20px;
+  text-decoration: none;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 15px;
+  color: #303030;
+}
+
+nav > a:hover {
+  background-color: #ffeac4;
 }
 
 #btnLogout {
+  position: absolute;
+  right: 25px;
   border: 0;
   background-color: white;
   font-size: 20px;
-  margin-right: 25px;
   padding: 10px;
   cursor: pointer;
 }
