@@ -1,0 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+.hide {
+  display: none;
+}
+
+body {
+  margin: 0;
+  background-image: url("../bg.jpg");
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+}
