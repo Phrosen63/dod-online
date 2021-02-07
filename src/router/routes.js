@@ -9,9 +9,17 @@ const routes = [
   {
     path: '/lobby',
     name: 'Lobby',
-    component: function () {
-      return import('../views/Lobby.vue');
-    },
+    component: () => import('../views/Lobby.vue'),
+  },
+  {
+    path: '/characters',
+    name: 'Characters',
+    component: () => import('../views/Characters.vue'),
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue'),
   },
 ];
 
