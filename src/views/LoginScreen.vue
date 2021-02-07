@@ -58,10 +58,8 @@ export default {
       if (firebaseUser) {
         // User is logged in
         console.log('User logged in successfully!');
-        console.log(firebaseUser);
         this.$store.commit('setUser', firebaseUser);
-        console.log(this.$store.state.user);
-        // this.$router.push('About');
+        this.$router.push('Lobby');
       } else {
         // User is not logged in
         console.log('User is not logged in..');
