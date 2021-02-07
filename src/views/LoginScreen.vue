@@ -1,6 +1,18 @@
 <template>
   <div class="login-screen">
     <h1>DoD-online<br>Log in or Sign up</h1>
+    <p
+      class="error-message"
+      :class="showErrorMessage ? '' : 'hide'"
+    >
+      Login failed, please check your credentials and try again.
+    </p>
+    <p
+      class="error-message"
+      :class="showErrorMessage ? '' : 'hide'"
+    >
+      {{ errorMessage }}
+    </p>
     <form id="login-form">
       <input
         id="txtEmail"
@@ -43,32 +55,40 @@ export default {
   name: 'LoginScreen',
   data() {
     return {
+      showErrorMessage: false,
+      errorMessage: undefined,
       email: undefined,
       pass: undefined,
     };
   },
-  created() {
-    auth.onAuthStateChanged(firebaseUser => {
-      if (firebaseUser) {
-        // User is logged in
-        console.log('User logged in successfully!');
-        this.$store.commit('setUser', firebaseUser);
-        this.$router.push('Lobby');
-      } else {
-        // User is not logged in
-        console.log('User is not logged in..');
-      }
-    });
-  },
   methods: {
+    resetErrors() {
+      this.showErrorMessage = false;
+      this.errorMessage = undefined;
+    },
     login() {
+      this.resetErrors();
       const promise = auth.signInWithEmailAndPassword(this.email, this.pass);
-      promise.catch(e => console.log(e.message));
+      promise.catch(e => {
+        this.showErrorMessage = true;
+        this.errorMessage = e.message;
+      });
     },
     signUp() {
+      this.resetErrors();
       const promise = auth.createUserWithEmailAndPassword(this.email, this.pass);
-      promise.catch(e => console.log(e.message));
+      promise.catch(e => {
+        this.showErrorMessage = true;
+        this.errorMessage = e.message;
+      });
     },
+  },
+  beforeRouteLeave (to, from, next) {
+    if (this.$store.state.user) {
+      next();
+    } else {
+      alert('Please login before proceeding.');
+    }
   },
 }
 </script>
@@ -86,6 +106,12 @@ export default {
 
 .login-screen > h1 {
   margin: 20px 0 35px 0;
+}
+
+.error-message {
+  color: crimson;
+  font-size: 20px;
+  text-shadow: black 0px 1px 0px;
 }
 
 #login-form {
