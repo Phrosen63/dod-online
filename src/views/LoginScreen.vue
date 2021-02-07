@@ -32,12 +32,6 @@
       >
         Sign up
       </button>
-      <button
-        id="btnLogout"
-        class="hide"
-      >
-        Log out
-      </button>
     </form>
   </div>
 </template>
