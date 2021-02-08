@@ -1,6 +1,7 @@
 <template>
   <header>
     <nav>
+      <router-link to="/lobby">Lobby</router-link>
       <router-link to="/characters">Characters</router-link>
       <router-link to="/profile">Profile</router-link>
     </nav>
