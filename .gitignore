@@ -1,6 +1,7 @@
 # Firebase #
 ###################
 .firebase
+**/fbconfig.js
 
 # Vue #
 ###################
