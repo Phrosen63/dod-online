@@ -49,6 +49,7 @@
 </template>
 
 <script>
+// Modules
 import { auth } from '@/api/auth';
 
 export default {

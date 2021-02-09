@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import CharacterList from '@/components/CharacterList';
+// Components
+import CharacterList from '@/components/character/CharacterList';
 
 export default {
   name: 'Characters',
