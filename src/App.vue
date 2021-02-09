@@ -6,8 +6,10 @@
 </template>
 
 <script>
+// Components
 import Header from '@/components/Header';
 
+// Modules
 // import { db } from '@/api/db';
 import { auth } from '@/api/auth';
 // import { firebaseApp } from '@/api/fb';
