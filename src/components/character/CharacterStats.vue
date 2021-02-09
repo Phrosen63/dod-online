@@ -28,12 +28,6 @@ export default {
 </script>
 
 <style scoped>
-.character-stats-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
 .character-stat span {
   font-size: 18px;
 }
