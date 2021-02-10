@@ -16,18 +16,18 @@
     <form id="login-form">
       <input
         id="txtEmail"
+        v-model="email"
         class="form-control"
         type="email"
         placeholder="Email"
-        v-model="email"
         required
       >
       <input
         id="txtPassword"
+        v-model="pass"
         class="form-control"
         type="password"
         placeholder="Password"
-        v-model="pass"
         required
       >
       <button
@@ -51,6 +51,7 @@
 <script>
 // Modules
 import { auth } from '@/api/auth';
+import { getFirebaseUser } from '@/api/getUserData';
 
 export default {
   name: 'LoginScreen',
@@ -73,7 +74,6 @@ export default {
       promise.then((userCredential) => {
         // Signed in
         if (userCredential.user) {
-          this.$store.commit('setUser', userCredential.user);
           if (this.$route.name === 'LoginScreen') {
             this.$router.push('Lobby');
           }
@@ -93,11 +93,14 @@ export default {
       });
     },
   },
-  beforeRouteLeave(to, from, next) {
-    if (this.$store.state.user) {
+  async beforeRouteLeave(to, from, next) {
+    const currentUser = await getFirebaseUser();
+    if (currentUser) {
       next();
     } else {
-      alert('Please login before proceeding.');
+      if (this.$route.name !== 'LoginScreen') {
+        this.$router.push('/');
+      }
     }
   },
 };

@@ -1,18 +1,27 @@
 <template>
   <div id="app">
     <Header />
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 // Components
 import Header from '@/components/Header';
+import { getFirebaseUser } from '@/api/getUserData';
 
 export default {
   name: 'App',
   components: {
     Header,
+  },
+  async beforeCreate() {
+    const currentUser = await getFirebaseUser();
+    if(!currentUser) {
+      if (this.$route.name !== 'LoginScreen') {
+        this.$router.push('/');
+      }
+    }
   },
 };
 </script>
