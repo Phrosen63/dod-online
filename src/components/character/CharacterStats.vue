@@ -1,14 +1,16 @@
 <template>
-  <div class="character-stats">
-    <h2 v-if="Object.keys(stats).length > 0">Stats</h2>
+  <div v-if="Object.keys(stats).length > 0" class="character-stats">
+    <h2>Stats</h2>
     <ul class="character-stats-list">
-      <li v-for="(stat, key) in stats" :key="key" class="character-stat">
-        <span class="character-stat__name">
-          {{ key }}:
-        </span>
-        <span class="character-stat__value">
-          {{ stat }}
-        </span>
+      <li v-for="stat in stats" :key="stat.name" class="character-stat">
+        <template v-for="(value, name) in stat">
+          <span :key="`key_${name}`" class="character-stat__name">
+            {{ name }}:
+          </span>
+          <span :key="`key_${name}_${value}`" class="character-stat__value">
+            {{ value }}
+          </span>
+        </template>
       </li>
     </ul>
   </div>
@@ -20,7 +22,7 @@ export default {
   props: {
     stats: {
       default: {},
-      type: Object,
+      type: Array,
       required: true,
     },
   },
