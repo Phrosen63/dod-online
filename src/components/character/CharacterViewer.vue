@@ -2,9 +2,10 @@
   <div class="character-viewer">
     <div class="character-viewer-wrapper">
       <CharacterInfo :info="character.info || {}" />
-      <CharacterStats :stats="character.stats || {}" />
+      <CharacterStats :stats="character.stats || []" />
     </div>
     <CharacterInventory :inventory="character.inventory || {}" />
+    <CharacterSkills :skills="character.skills || {}" />
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import CharacterInfo from '@/components/character/CharacterInfo';
 import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterStats from '@/components/character/CharacterStats';
+import CharacterSkills from '@/components/character/CharacterSkills';
 
 export default {
   name: 'CharacterViewer',
@@ -20,6 +22,7 @@ export default {
     CharacterInfo,
     CharacterInventory,
     CharacterStats,
+    CharacterSkills,
   },
   props: {
     character: {
