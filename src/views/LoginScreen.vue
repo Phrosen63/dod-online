@@ -114,7 +114,7 @@ export default {
   border-radius: 5px;
   text-align: center;
   border: 1px solid #000;
-  background-color:rgba(245, 235, 201, 0.65);
+  background-color: rgba(245, 235, 201, 0.65);
 }
 
 .login-screen > h1 {
@@ -124,7 +124,7 @@ export default {
 .error-message {
   color: crimson;
   font-size: 20px;
-  text-shadow: black 0px 1px 0px;
+  text-shadow: black 0 1px 0;
 }
 
 #login-form {

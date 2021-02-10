@@ -46,7 +46,7 @@ header {
   justify-content: center;
   position: relative;
   background-color: #fadaa2;
-  box-shadow: 0px -10px 20px 10px;
+  box-shadow: 0 -10px 20px 10px;
   padding: 5px 0;
   height: 53px;
 }
