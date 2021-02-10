@@ -1,5 +1,9 @@
 import { firebaseApp } from './fb';
 require('firebase/auth');
 
+const auth = firebaseApp.auth();
+
 // Export firebase auth
-export const auth = firebaseApp.auth();
+export {
+  auth,
+};
