@@ -56,3 +56,18 @@ ul li:last-of-type {
   width: 100%;
   margin: 150px 0;
 }
+
+.hidden-textfield {
+  border: 0;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  font-size: 18px;
+}
+
+.hidden-textfield:hover {
+  background-color: #ffeac4;
+}
+
+.hidden-textfield:focus {
+  background-color: #fff;
+}
