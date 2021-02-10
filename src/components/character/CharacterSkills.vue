@@ -9,12 +9,14 @@ export default {
   name: 'CharacterSkills',
   props: {
     skills: {
-      default: {},
       type: Object,
       required: true,
+      default() {
+        return {};
+      },
     },
   },
-}
+};
 </script>
 
 <style scoped>

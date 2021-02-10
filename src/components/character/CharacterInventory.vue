@@ -7,8 +7,8 @@
           {{ key }}
         </p>
         <ul>
-          <li 
-            v-for="(attribute, key) in item" :key="key" 
+          <li
+            v-for="(attribute, key) in item" :key="key"
             class="character-inventory-attribute-list"
           >
             <span>
@@ -29,12 +29,14 @@ export default {
   name: 'CharacterInventory',
   props: {
     inventory: {
-      default: {},
       type: Object,
       required: true,
+      default() {
+        return {};
+      },
     },
   },
-}
+};
 </script>
 
 <style scoped>

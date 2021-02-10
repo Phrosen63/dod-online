@@ -24,13 +24,14 @@
 
 <script>
 // Components
-import CharacterViewer from './CharacterViewer';
 
 // Modules
 import { db } from '@/api/db';
 import { getFirebaseUser } from '@/api/getUserData';
-import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min.js'
+import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
+import CharacterViewer from './CharacterViewer';
 
+/* eslint-disable no-tabs */
 /*
 DB structure:
 
@@ -41,6 +42,7 @@ users / <uid> / characters /	<charName> / inventory
 
 users / <uid> / settings / ...
 */
+/* eslint-enable no-tabs */
 
 export default {
   name: 'CharacterList',
@@ -63,14 +65,14 @@ export default {
   methods: {
     async getCharacters() {
       const currentUser = await getFirebaseUser();
-      const uid = currentUser.uid;
+      const { uid } = currentUser;
 
       if (uid) {
         const COLLECTION_NAME = `/users/${uid}/characters`;
         const snapshot = await db.collection(COLLECTION_NAME).get();
-        const chars = snapshot.docs.map(doc => doc.data());
+        const chars = snapshot.docs.map((doc) => doc.data());
 
-        for (let i = 0; i < snapshot.docs.length; i+=1) {
+        for (let i = 0; i < snapshot.docs.length; i += 1) {
           chars[i].id = snapshot.docs[i].id;
         }
 
@@ -79,15 +81,17 @@ export default {
       }
     },
     resetSelectedCharacters() {
-      this.characters.forEach(char => char.clicked = false);
+      this.characters.forEach((char) => {
+        char.clicked = false;
+      });
     },
     selectCharacter(id, clicked) {
       this.resetSelectedCharacters();
-      this.selectedCharacter = this.characters.filter(char => char.id === id)[0];
+      this.selectedCharacter = this.characters.filter((char) => char.id === id)[0];
       this.selectedCharacter.clicked = !clicked;
     },
   },
-}
+};
 </script>
 
 <style scoped>

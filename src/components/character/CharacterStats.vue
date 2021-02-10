@@ -21,12 +21,14 @@ export default {
   name: 'CharacterStats',
   props: {
     stats: {
-      default: {},
       type: Array,
       required: true,
+      default() {
+        return {};
+      },
     },
   },
-}
+};
 </script>
 
 <style scoped>

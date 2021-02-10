@@ -13,7 +13,7 @@ export default {
   components: {
     CharacterList,
   },
-}
+};
 </script>
 
 <style scoped>

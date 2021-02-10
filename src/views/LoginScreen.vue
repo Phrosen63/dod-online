@@ -79,28 +79,28 @@ export default {
           }
         }
       })
-      .catch(e => {
-        this.showErrorMessage = true;
-        this.errorMessage = e.message;
-      });
+        .catch((e) => {
+          this.showErrorMessage = true;
+          this.errorMessage = e.message;
+        });
     },
     signUp() {
       this.resetErrors();
       const promise = auth.createUserWithEmailAndPassword(this.email, this.pass);
-      promise.catch(e => {
+      promise.catch((e) => {
         this.showErrorMessage = true;
         this.errorMessage = e.message;
       });
     },
   },
-  beforeRouteLeave (to, from, next) {
+  beforeRouteLeave(to, from, next) {
     if (this.$store.state.user) {
       next();
     } else {
       alert('Please login before proceeding.');
     }
   },
-}
+};
 </script>
 
 <style scoped>

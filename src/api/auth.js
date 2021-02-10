@@ -1,4 +1,5 @@
 import { firebaseApp } from './fb';
+
 require('firebase/auth');
 
 const auth = firebaseApp.auth();
