@@ -21,11 +21,12 @@ h2 {
   margin: 20px 0 10px 0;
 }
 
-span, p {
+span,
+p {
   font-size: 18px;
 }
 
-h2:after {
+h2::after {
   display: block;
   width: 20px;
   height: 2px;
