@@ -23,5 +23,6 @@ export default {
   background-color: white;
   border-radius: 5px;
   padding: 20px;
+  min-height: 500px;
 }
 </style>

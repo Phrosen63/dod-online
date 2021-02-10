@@ -17,7 +17,7 @@
           {{ character.info.name }}
         </li>
       </ul>
-      <CharacterViewer :character="selectedCharacter" />
+      <CharacterViewer v-if="characterSelected" :character="selectedCharacter" />
     </div>
   </div>
 </template>
@@ -54,6 +54,7 @@ export default {
     return {
       characters: [],
       selectedCharacter: {},
+      characterSelected: false,
       loading: true,
       color: '#75a1de',
       size: '25px',
@@ -83,12 +84,14 @@ export default {
     resetSelectedCharacters() {
       this.characters.forEach((char) => {
         char.clicked = false;
+        this.characterSelected = false;
       });
     },
     selectCharacter(id, clicked) {
       this.resetSelectedCharacters();
       this.selectedCharacter = this.characters.filter((char) => char.id === id)[0];
       this.selectedCharacter.clicked = !clicked;
+      this.characterSelected = true;
     },
   },
 };
