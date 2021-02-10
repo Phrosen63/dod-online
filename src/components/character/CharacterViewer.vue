@@ -1,11 +1,23 @@
 <template>
   <div class="character-viewer">
     <div class="character-viewer-wrapper">
-      <CharacterInfo :info="character.info || {}" />
-      <CharacterStats :stats="character.stats || []" />
+      <CharacterInfo
+        :id="character.id"
+        :info="character.info || {}"
+      />
+      <CharacterStats
+        :id="character.id"
+        :stats="character.stats || []"
+      />
     </div>
-    <CharacterInventory :inventory="character.inventory || {}" />
-    <CharacterSkills :skills="character.skills || {}" />
+    <CharacterInventory
+      :id="character.id"
+      :inventory="character.inventory || {}"
+    />
+    <CharacterSkills
+      :id="character.id"
+      :skills="character.skills || {}"
+    />
   </div>
 </template>
 

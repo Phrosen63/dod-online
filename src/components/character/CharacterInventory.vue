@@ -35,6 +35,13 @@
 export default {
   name: 'CharacterInventory',
   props: {
+    id: {
+      type: String,
+      required: true,
+      default() {
+        return '';
+      },
+    },
     inventory: {
       type: Object,
       required: true,

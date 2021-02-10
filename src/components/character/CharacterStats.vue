@@ -33,6 +33,13 @@
 export default {
   name: 'CharacterStats',
   props: {
+    id: {
+      type: String,
+      required: true,
+      default() {
+        return '';
+      },
+    },
     stats: {
       type: Array,
       required: true,
