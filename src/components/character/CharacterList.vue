@@ -19,6 +19,7 @@ import CharacterViewer from './CharacterViewer';
 
 // Modules
 import { db } from '@/api/db';
+import { getFirebaseUser } from '@/api/getUserData';
 
 /*
 DB structure:
@@ -38,25 +39,24 @@ export default {
   },
   data() {
     return {
-      userId: undefined,
-      characters: undefined,
+      characters: [],
       selectedCharacter: {},
     };
   },
   created() {
-    const currentUser = this.$store.state.user;
-    this.userId = currentUser.uid;
-
-    this.getCharacters(this.userId);
+    this.getCharacters();
   },
   methods: {
-    async getCharacters(uid) {
+    async getCharacters() {
+      const currentUser = await getFirebaseUser();
+      const uid = currentUser.uid;
+
       if (uid) {
         const COLLECTION_NAME = `/users/${uid}/characters`;
         const snapshot = await db.collection(COLLECTION_NAME).get();
         const chars = snapshot.docs.map(doc => doc.data());
 
-        for(let i = 0; i < snapshot.docs.length; i+=1) {
+        for (let i = 0; i < snapshot.docs.length; i+=1) {
           chars[i].id = snapshot.docs[i].id;
         }
 
@@ -70,7 +70,6 @@ export default {
       this.resetSelectedCharacters();
       this.selectedCharacter = this.characters.filter(char => char.id === id)[0];
       this.selectedCharacter.clicked = !clicked;
-      console.log(this.selectedCharacter);
     },
   },
 }

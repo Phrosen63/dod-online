@@ -7,7 +7,6 @@
     </nav>
     <button
       id="btnLogout"
-      class="hide"
       @click="logOut"
     >
       Log out
@@ -25,7 +24,9 @@ export default {
     logOut() {
       // Log out user and re-direct to LoginScreen
       auth.signOut();
-      this.$router.push('/');
+      if (this.$route.name !== 'LoginScreen') {
+        this.$router.push('/');
+      }
     },
   },
 }

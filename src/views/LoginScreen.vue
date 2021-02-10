@@ -70,7 +70,16 @@ export default {
     login() {
       this.resetErrors();
       const promise = auth.signInWithEmailAndPassword(this.email, this.pass);
-      promise.catch(e => {
+      promise.then((userCredential) => {
+        // Signed in
+        if (userCredential.user) {
+          this.$store.commit('setUser', userCredential.user);
+          if (this.$route.name === 'LoginScreen') {
+            this.$router.push('Lobby');
+          }
+        }
+      })
+      .catch(e => {
         this.showErrorMessage = true;
         this.errorMessage = e.message;
       });
