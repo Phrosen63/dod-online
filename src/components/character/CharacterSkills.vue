@@ -1,7 +1,5 @@
 <template>
-  <div class="character-skills">
-
-  </div>
+  <div class="character-skills" />
 </template>
 
 <script>

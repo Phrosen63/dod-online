@@ -1,21 +1,28 @@
 <template>
   <div class="character-inventory">
-    <h2 v-if="Object.keys(inventory).length > 0">Inventory</h2>
+    <h2 v-if="Object.keys(inventory).length > 0">
+      Inventory
+    </h2>
     <ul>
-      <li v-for="(item, key) in inventory" :key="key" class="character-inventory-item">
+      <li
+        v-for="(item, key) in inventory"
+        :key="key"
+        class="character-inventory-item"
+      >
         <p class="character-inventory-item__name">
           {{ key }}
         </p>
         <ul>
           <li
-            v-for="(attribute, key) in item" :key="key"
+            v-for="(value, attribute) in item"
+            :key="attribute"
             class="character-inventory-attribute-list"
           >
             <span>
-              {{ key }}:
+              {{ attribute }}:
             </span>
             <span>
-              {{ attribute }}
+              {{ value }}
             </span>
           </li>
         </ul>
