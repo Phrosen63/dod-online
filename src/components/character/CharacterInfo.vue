@@ -33,9 +33,11 @@ export default {
   name: 'CharacterInfo',
   props: {
     info: {
-      default: {},
       type: Object,
       required: true,
+      default() {
+        return {};
+      },
     },
   },
 };
