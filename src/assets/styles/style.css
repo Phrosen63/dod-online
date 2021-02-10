@@ -27,9 +27,9 @@ span, p {
 
 h2:after {
   display: block;
-  width: 30px;
+  width: 20px;
   height: 2px;
-  background-color: #ffeac4;
+  background-color: #188bcd;
   content: '';
 }
 
@@ -49,4 +49,9 @@ ul li:first-of-type {
 
 ul li:last-of-type {
   margin: 5px 0 0 0;
+}
+
+.spinner {
+  width: 100%;
+  margin: 150px 0;
 }

@@ -1,15 +1,24 @@
 <template>
   <div class="characters-list">
-    <ul>
-      <li
-        v-for="(character) in characters" :key="character.id"
-        :class="{ selected: character.clicked }"
-        @click="selectCharacter(character.id, character.clicked)"
-      >
-        {{ character.info.name }}
-      </li>
-    </ul>
-    <CharacterViewer :character="selectedCharacter" />
+    <pulse-loader
+      v-if="loading"
+      class="spinner"
+      :size="size"
+      :color="color"
+    >
+    </pulse-loader>
+    <div v-else class="characters-list-wrapper">
+      <ul>
+        <li
+          v-for="(character) in characters" :key="character.id"
+          :class="{ selected: character.clicked }"
+          @click="selectCharacter(character.id, character.clicked)"
+        >
+          {{ character.info.name }}
+        </li>
+      </ul>
+      <CharacterViewer :character="selectedCharacter" />
+    </div>
   </div>
 </template>
 
@@ -20,6 +29,7 @@ import CharacterViewer from './CharacterViewer';
 // Modules
 import { db } from '@/api/db';
 import { getFirebaseUser } from '@/api/getUserData';
+import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min.js'
 
 /*
 DB structure:
@@ -36,11 +46,15 @@ export default {
   name: 'CharacterList',
   components: {
     CharacterViewer,
+    PulseLoader,
   },
   data() {
     return {
       characters: [],
       selectedCharacter: {},
+      loading: true,
+      color: '#75a1de',
+      size: '25px',
     };
   },
   created() {
@@ -61,6 +75,7 @@ export default {
         }
 
         this.characters = chars;
+        this.loading = false;
       }
     },
     resetSelectedCharacters() {
@@ -76,7 +91,7 @@ export default {
 </script>
 
 <style scoped>
-.characters-list {
+.characters-list-wrapper {
   display: flex;
   flex-direction: row;
 }
