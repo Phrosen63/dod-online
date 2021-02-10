@@ -1,4 +1,7 @@
 import LoginScreen from '../views/LoginScreen.vue';
+import Lobby from '../views/Lobby.vue';
+import Characters from '../views/Characters.vue';
+import Profile from '../views/Profile.vue';
 
 const routes = [
   {
@@ -9,17 +12,17 @@ const routes = [
   {
     path: '/lobby',
     name: 'Lobby',
-    component: () => import('../views/Lobby.vue'),
+    component: Lobby,
   },
   {
     path: '/characters',
     name: 'Characters',
-    component: () => import('../views/Characters.vue'),
+    component: Characters,
   },
   {
     path: '/profile',
     name: 'Profile',
-    component: () => import('../views/Profile.vue'),
+    component: Profile,
   },
 ];
 

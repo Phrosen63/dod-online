@@ -5,19 +5,25 @@
       class="spinner"
       :size="size"
       :color="color"
+    />
+    <div
+      v-else
+      class="characters-list-wrapper"
     >
-    </pulse-loader>
-    <div v-else class="characters-list-wrapper">
       <ul>
         <li
-          v-for="(character) in characters" :key="character.id"
+          v-for="(character) in characters"
+          :key="character.id"
           :class="{ selected: character.clicked }"
           @click="selectCharacter(character.id, character.clicked)"
         >
           {{ character.info.name }}
         </li>
       </ul>
-      <CharacterViewer v-if="characterSelected" :character="selectedCharacter" />
+      <CharacterViewer
+        v-if="characterSelected"
+        :character="selectedCharacter"
+      />
     </div>
   </div>
 </template>
