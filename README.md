@@ -2,13 +2,11 @@
 A tool for playing dungeon and dragon-type games online with friends in real-time.
 
 ## Run
-Building and serving: `cd dod-online-app`, `npm run build`, `cd ..`, `firebase serve`.
+Serve locally: `npm run serve`
 
-Deploying: `cd dod-online-app`, `npm run build`, `cd ..`, `firebase deploy`.
+Build: `npm run build`
 
-Start a local server by running `firebase serve`, default address: http://localhost:5000/.
-
-Start a live server by running `firebase deploy`.
+Deploy: `npm run build`, `firebase deploy`
 
 ## Requirements
-This tool uses Firebase and Firestore for hosting and saving data.
+This tool uses Firebase and Firestore for hosting and storing data, and Vue 2 for the SPA.
