@@ -30,12 +30,12 @@
 
 <script>
 // Components
+import CharacterViewer from './CharacterViewer';
 
 // Modules
 import { db } from '@/api/db';
 import { getFirebaseUser } from '@/api/getUserData';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
-import CharacterViewer from './CharacterViewer';
 
 /* eslint-disable no-tabs */
 /*
