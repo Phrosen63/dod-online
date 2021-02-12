@@ -48,7 +48,7 @@
 
 <script>
 // Components
-import WritableField from '@/components/character/WritableField';
+import WritableField from '@/components/WritableField';
 
 export default {
   name: 'CharacterInfo',
