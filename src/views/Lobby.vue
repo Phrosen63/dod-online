@@ -36,8 +36,4 @@ export default {
   display: flex;
   flex-direction: row;
 }
-
-h1 {
-  text-align: center;
-}
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="characters">
+    <h1>Characters</h1>
     <CharacterList />
   </div>
 </template>
