@@ -5,14 +5,13 @@
       ref="consoleWindow"
       class="console-window"
     >
-      <div
+      <p
         v-for="(item, index) in items"
         :key="index"
+        class="console-message"
       >
-        <span>
-          {{ item.user }} rolled: {{ item.value }}, with a: {{ item.dice }}
-        </span>
-      </div>
+        {{ item.message }}
+      </p>
     </div>
   </div>
 </template>
@@ -31,13 +30,7 @@ export default {
   async created() {
     // TODO: Create API for this particular listener
     db.collection("console").doc("shared")
-    .onSnapshot((doc) => {
-      this.items.push({
-        user: doc.data().user,
-        value: doc.data().value,
-        dice: doc.data().dice,
-      });
-    });
+    .onSnapshot((doc) => this.items.push({ message: doc.data().message }));
   },
 };
 </script>
@@ -51,36 +44,21 @@ export default {
   border-radius: 5px;
   position: relative;
   min-height: 400px;
-  background-color: black;
-  background-image:
-    radial-gradient(
-      rgba(0, 150, 0, 0.75),
-      black 120%
-    );
+  max-height: 400px;
+  overflow-y: auto;
+  background-color: #292826;
+  padding: 10px;
   color: white;
-  font: 1.3rem Inconsolata, monospace;
-  text-shadow: 0 0 5px #c8c8c8;
-}
-
-.console-window::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(black, 0.15),
-      rgba(black, 0.15) 1px,
-      transparent 1px,
-      transparent 2px
-    );
+  font-size: 20px;
+  font-family: Inconsolata, monospace;
 }
 
 .console-window::selection {
   background: #0080ff;
   text-shadow: none;
+}
+
+.console-message {
+  margin: 0 0 5px 0;
 }
 </style>
