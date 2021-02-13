@@ -6,32 +6,37 @@
     <h2>Stats</h2>
     <ul class="character-stats-list">
       <li
-        v-for="stat in stats"
-        :key="stat.name"
+        v-for="(stat, key) in stats"
+        :key="key"
         class="character-stat"
       >
-        <template v-for="(value, name) in stat">
-          <span
-            :key="`key_${name}`"
-            class="character-stat__name"
-          >
-            {{ name }}:
-          </span>
-          <span
-            :key="`key_${name}_${value}`"
-            class="character-stat__value"
-          >
-            {{ value }}
-          </span>
-        </template>
+        <span class="character-stat__name">
+          {{ key }}:
+        </span>
+        <WritableField
+          class="character-stat__value"
+          :data="{
+            id,
+            field: 'stats',
+            value: stat,
+            nestedField: key,
+            document: 'characters',
+          }"
+        />
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+// Components
+import WritableField from '@/components/WritableField';
+
 export default {
   name: 'CharacterStats',
+  components: {
+    WritableField,
+  },
   props: {
     id: {
       type: String,
@@ -41,7 +46,7 @@ export default {
       },
     },
     stats: {
-      type: Array,
+      type: Object,
       required: true,
       default() {
         return {};
