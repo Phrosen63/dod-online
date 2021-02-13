@@ -7,7 +7,13 @@ const getFirebaseUser = () => new Promise((resolve, reject) => {
   }, reject);
 });
 
+const getUserDisplayName = async () => {
+  const currentUser = await getFirebaseUser();
+  return currentUser.displayName;
+};
+
 // Export getFirebaseUser
 export {
   getFirebaseUser,
+  getUserDisplayName,
 };
