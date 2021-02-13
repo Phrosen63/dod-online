@@ -1,7 +1,21 @@
 <template>
   <div class="console">
+    <div class="console-settings">
+      <label
+        class="console-settings__controls"
+        for="autoscroll"
+      >
+        Autoscroll:
+      </label>
+      <input
+        id="autoscroll"
+        class="console-settings__controls"
+        type="checkbox"
+        checked
+        @change="toggleAutoscroll($event)"
+      >
+    </div>
     <div
-      id="consoleWindow"
       ref="consoleWindow"
       class="console-window"
     >
@@ -13,24 +27,69 @@
         {{ item.message }}
       </p>
     </div>
+    <form class="console-message-bar">
+      <input
+        ref="messageBar"
+        class="console-message-bar__input-field"
+        type="text"
+      >
+      <input
+        type="submit"
+        class="console-message-bar__send-button"
+        value="Send"
+        @click="sendMessage"
+      >
+    </form>
   </div>
 </template>
 
 <script>
 // Modules
 import { db } from '@/api/database/db';
+import { writeObject } from '@/api/database/writeToDb';
+import { getUserDisplayName } from '@/api/database/getUserData';
 
 export default {
   name: 'Console',
   data() {
     return {
       items: [],
+      autoScroll: true,
+      userDisplayName: undefined,
+      showMessages: false,
     };
   },
-  async created() {
-    // TODO: Create API for this particular listener
+  created() {
+    this.userDisplayName = this.setUserDisplayName();
+  },
+  async mounted() {
     db.collection("console").doc("shared")
-    .onSnapshot((doc) => this.items.push({ message: doc.data().message }));
+    .onSnapshot((doc) => {
+      if (this.showMessages) {
+        this.items.push({ message: doc.data().message });
+      }
+      if (this.autoScroll) {
+        this.$refs.consoleWindow.scrollTop = this.$refs.consoleWindow.scrollHeight;
+      }
+      this.showMessages = true;
+    });
+  },
+  methods: {
+    async setUserDisplayName() {
+      this.userDisplayName = await getUserDisplayName();
+    },
+    toggleAutoscroll(evt) {
+      this.autoScroll = evt.target.checked;
+    },
+    sendMessage() {
+      const value = this.$refs.messageBar.value;
+      this.$refs.messageBar.value = '';
+      if (value && value !== '') {
+        writeObject('console', 'shared', {
+          message: `${this.userDisplayName}: ${value}`,
+        });        
+      }
+    }
   },
 };
 </script>
@@ -38,6 +97,18 @@ export default {
 <style scoped>
 .console {
   flex: 1 0 auto;
+}
+
+.console-settings {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 10px 0;
+}
+
+.console-settings__controls {
+  cursor: pointer;
+  font-size: 18px;
 }
 
 .console-window {
@@ -60,5 +131,25 @@ export default {
 
 .console-message {
   margin: 0 0 5px 0;
+}
+
+.console-message-bar {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0;
+}
+
+.console-message-bar__input-field {
+  flex: 1 0 auto;
+  height: 40px;
+  padding: 0 5px;
+  font-size: 22px;
+  margin: 0 5px 0 0;
+}
+
+.console-message-bar__send-button {
+  flex: 0 0 auto;
+  padding: 0 20px;
+  font-size: 18px;
 }
 </style>
