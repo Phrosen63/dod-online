@@ -1,53 +1,22 @@
 <template>
   <div class="dice">
-    <button @click="rollDie('T4')">
-      T4
-    </button>
-    <button @click="rollDie('T6')">
-      T6
-    </button>
-    <button @click="rollDie('T8')">
-      T8
-    </button>
-    <button @click="rollDie('T12')">
-      T12
-    </button>
-    <button @click="rollDie('T20')">
-      T20
-    </button>
-    <button @click="rollDie('T100')">
-      T100
-    </button>
+    <Die :data="{ title: 'Roll T4', die: 'T4' }" />
+    <Die :data="{ title: 'Roll T6', die: 'T6' }" />
+    <Die :data="{ title: 'Roll T8', die: 'T8' }" />
+    <Die :data="{ title: 'Roll T12', die: 'T12' }" />
+    <Die :data="{ title: 'Roll 204', die: 'T20' }" />
+    <Die :data="{ title: 'Roll100T4', die: 'T100' }" />
   </div>
 </template>
 
 <script>
-// Modules
-import { writeObject } from '@/api/database/writeToDb';
-import { getUserDisplayName } from '@/api/database/getUserData';
-import { rollDie } from '@/api/randomNumberGenerator';
+// Components
+import Die from './Die';
 
 export default {
   name: 'Dice',
-  data() {
-    return {
-      userDisplayName: undefined,
-    };
-  },
-  created() {
-    this.userDisplayName = this.setUserDisplayName();
-  },
-  methods: {
-    async setUserDisplayName() {
-      this.userDisplayName = await getUserDisplayName();
-    },
-    rollDie(die) {
-      const result = rollDie(die);
-      const data = {
-        message: `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}`,
-      }
-      writeObject('console', 'shared', data);
-    },
+  components: {
+    Die,
   },
 };
 </script>
@@ -61,14 +30,16 @@ export default {
   padding: 0 10px;
 }
 
-.dice > button {
+.die {
   flex: 0 0 auto;
   margin: 0 10%;
   background-color: tomato;
   border-radius: 10%;
-  border: 1px solid;
+  border: 1px solid #000;
   width: 60px;
   height: 60px;
+  color: #fff;
+  font-size: 22px;
   cursor: pointer;
 }
 </style>
