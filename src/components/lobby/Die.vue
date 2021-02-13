@@ -40,7 +40,7 @@ export default {
     rollDie(die) {
       const result = rollDie(die);
       writeObject('console', 'shared', {
-        message: `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}`
+        message: `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}`,
       });
     },
   },
