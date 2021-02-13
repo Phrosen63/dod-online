@@ -19,7 +19,7 @@
 
 <script>
 // Modules
-import { db } from '@/api/db';
+import { db } from '@/api/database/db';
 
 export default {
   name: 'Console',

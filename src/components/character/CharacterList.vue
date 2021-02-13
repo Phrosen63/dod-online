@@ -33,8 +33,8 @@
 import CharacterViewer from './CharacterViewer';
 
 // Modules
-import { db } from '@/api/db';
-import { getFirebaseUser } from '@/api/getUserData';
+import { db } from '@/api/database/db';
+import { getFirebaseUser } from '@/api/database/getUserData';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 
 /* eslint-disable no-tabs */

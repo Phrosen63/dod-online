@@ -8,7 +8,7 @@
 <script>
 // Components
 import Header from '@/components/Header';
-import { getFirebaseUser } from '@/api/getUserData';
+import { getFirebaseUser } from '@/api/database/getUserData';
 
 export default {
   name: 'App',

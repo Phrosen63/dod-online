@@ -8,8 +8,8 @@
 
 <script>
 // Modules
-import { writeObject } from '@/api/writeToDb';
-import { getFirebaseUser } from '@/api/getUserData';
+import { writeObject } from '@/api/database/writeToDb';
+import { getFirebaseUser } from '@/api/database/getUserData';
 
 export default {
   name: 'Dice',

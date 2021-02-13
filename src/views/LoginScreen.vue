@@ -50,8 +50,8 @@
 
 <script>
 // Modules
-import { auth } from '@/api/auth';
-import { getFirebaseUser } from '@/api/getUserData';
+import { auth } from '@/api/database/auth';
+import { getFirebaseUser } from '@/api/database/getUserData';
 
 export default {
   name: 'LoginScreen',

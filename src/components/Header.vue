@@ -22,7 +22,7 @@
 
 <script>
 // Modules
-import { auth } from '@/api/auth';
+import { auth } from '@/api/database/auth';
 
 export default {
   name: 'Header',
