@@ -27,6 +27,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  height: 270px;
   padding: 0 10px;
 }
 
