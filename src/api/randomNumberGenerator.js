@@ -1,14 +1,21 @@
 const randomNumberWithinRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+const rollDieT3 = () => randomNumberWithinRange(1, 3);
 const rollDieT4 = () => randomNumberWithinRange(1, 4);
 const rollDieT6 = () => randomNumberWithinRange(1, 6);
 const rollDieT8 = () => randomNumberWithinRange(1, 8);
+const rollDieT10 = () => randomNumberWithinRange(1, 10);
 const rollDieT12 = () => randomNumberWithinRange(1, 12);
 const rollDieT20 = () => randomNumberWithinRange(1, 20);
 const rollDieT100 = () => randomNumberWithinRange(1, 100);
 
 const rollDie = (die, min, max) => {
   switch (die) {
+    case 'T3':
+      return { 
+        die: 'T3',
+        value: rollDieT3(),
+      };
     case 'T4':
       return { 
         die: 'T4',
@@ -23,6 +30,11 @@ const rollDie = (die, min, max) => {
       return { 
         die: 'T8',
         value: rollDieT8(),
+      };
+    case 'T10':
+      return { 
+        die: 'T10',
+        value: rollDieT10(),
       };
     case 'T12':
       return { 
@@ -52,9 +64,11 @@ const rollDie = (die, min, max) => {
 // Export randomNumberGenerator methods
 export {
   randomNumberWithinRange,
+  rollDieT3,
   rollDieT4,
   rollDieT6,
   rollDieT8,
+  rollDieT10,
   rollDieT12,
   rollDieT20,
   rollDieT100,

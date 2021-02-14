@@ -1,8 +1,10 @@
 <template>
   <div class="dice">
+    <Die :data="{ title: 'Roll T3', die: 'T3' }" />
     <Die :data="{ title: 'Roll T4', die: 'T4' }" />
     <Die :data="{ title: 'Roll T6', die: 'T6' }" />
     <Die :data="{ title: 'Roll T8', die: 'T8' }" />
+    <Die :data="{ title: 'Roll T10', die: 'T10' }" />
     <Die :data="{ title: 'Roll T12', die: 'T12' }" />
     <Die :data="{ title: 'Roll 204', die: 'T20' }" />
     <Die :data="{ title: 'Roll100T4', die: 'T100' }" />
