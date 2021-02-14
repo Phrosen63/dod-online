@@ -1,8 +1,9 @@
 <template>
-  <div class="character-inventory">
-    <h2 v-if="Object.keys(inventory).length > 0">
-      Inventory
-    </h2>
+  <div
+    v-if="Object.keys(inventory).length > 0"
+    class="character-inventory"
+  >
+    <h2>Inventory</h2>
     <ul>
       <li
         v-for="(item, key) in inventory"
