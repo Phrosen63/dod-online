@@ -6,19 +6,15 @@ const writeObject = (collectionPath, docName, data) => {
 };
 
 const createNestedFieldObject = (field, nestedField, value) => {
-  const docField = `${field}.${nestedField}`;
-  const nestedFieldObject = {};
-  nestedFieldObject[docField] = value;
-  // Returns { field.nestedFiled: value }
-  return nestedFieldObject;
+  const object = {};
+  object[`${field}.${nestedField}`] = value;
+  return object;
 };
 
 const createDoubleNestedFieldObject = (field, nestedField, doubleNestedField, value) => {
-  const docField = `${field}.${nestedField}.${doubleNestedField}`;
-  const doubleNestedFieldObject = {};
-  doubleNestedFieldObject[docField] = value;
-  // Returns { field.nestedFiled: value }
-  return doubleNestedFieldObject;
+  const object = {};
+  object[`${field}.${nestedField}.${doubleNestedField}`] = value;
+  return object;
 };
 
 const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject) => {
