@@ -1,4 +1,4 @@
-import { firebaseApp } from './fb';
+import { firebaseApp } from '@/api/database/fb';
 import 'firebase/firestore';
 
 const db = firebaseApp.firestore();

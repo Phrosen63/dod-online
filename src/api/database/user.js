@@ -1,4 +1,4 @@
-import { auth } from './auth';
+import { auth } from '@/api/database/auth';
 
 const getFirebaseUser = () => new Promise((resolve, reject) => {
   const unsubscribe = auth.onAuthStateChanged((userAuth) => {
