@@ -52,7 +52,7 @@ import { deleteNestedFieldFromCurrentUser } from '@/api/database/delete';
 import {
   createDoubleNestedFieldObject,
   writeNestedObjToCurrentUser,
-  } from '@/api/database/writeToDb';
+  } from '@/api/database/write';
 
 export default {
   name: 'CharacterNotes',

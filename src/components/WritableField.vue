@@ -11,7 +11,7 @@
 
 <script>
 // Modules
-import { createNestedFieldObject, writeNestedObjToCurrentUser } from '@/api/database/writeToDb';
+import { createNestedFieldObject, writeNestedObjToCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'WriteableField',

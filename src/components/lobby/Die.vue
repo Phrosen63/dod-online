@@ -10,7 +10,7 @@
 
 <script>
 // Modules
-import { writeObject } from '@/api/database/writeToDb';
+import { writeObject } from '@/api/database/write';
 import { getUserDisplayName } from '@/api/database/user';
 import { rollDie } from '@/api/randomNumberGenerator';
 

@@ -46,7 +46,7 @@
 <script>
 // Modules
 import { db } from '@/api/database/db';
-import { writeObject } from '@/api/database/writeToDb';
+import { writeObject } from '@/api/database/write';
 import { getUserDisplayName } from '@/api/database/user';
 
 export default {
