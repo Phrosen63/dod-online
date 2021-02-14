@@ -115,6 +115,7 @@ export default {
 }
 
 ul {
+  min-width: 20%;
   max-width: 20%;
   list-style: none;
   margin: 0;
