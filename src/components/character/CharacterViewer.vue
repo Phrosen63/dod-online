@@ -48,9 +48,11 @@ export default {
 
 <style scoped>
 .character-viewer {
+  max-width: 80%;
   display: flex;
   flex: 1 0 auto;
   flex-direction: row;
+  flex-wrap: wrap;
   padding: 20px;
 }
 
