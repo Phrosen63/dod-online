@@ -4,48 +4,55 @@
     class="character-notes"
   >
     <h2>Notes</h2>
-    <ul>
+    <transition-group
+      name="transition-list"
+      tag="ul"
+    >
       <li
-        v-for="(item, key) in notes"
-        :key="key"
-        :ref="key"
+        v-for="note in showNotes"
+        :key="note.title"
+        :ref="note.title"
         class="character-notes-item"
-        :class="item.strikethrough ? 'character-notes-item--strikethrough' : ''"
+        :class="note.strikethrough ? 'character-notes-item--strikethrough' : ''"
       >
         <p class="character-notes-item__name">
-          {{ key }}
+          {{ note.title }}
         </p>
         <span class="character-notes-item__text">
-          {{ item.text }}
+          {{ note.text }}
         </span>
         <div class="note-controls">
           <button
             class="note-control note-control__edit"
-            @click="clickEdit(key)"
+            @click="clickEdit(note.title)"
           >
             Edit
           </button>
           <button
             class="note-control note-control__strike"
-            @click="clickStrike(key)"
+            @click="clickStrike(note.title)"
           >
             Cross-out
           </button>
           <button
             class="note-control note-control__delete"
-            @click="clickDelete(key)"
+            @click="clickDelete(note.title)"
           >
             Delete
           </button>
         </div>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
 <script>
 // Modules
-import { createDoubleNestedFieldObject, writeNestedObjToCurrentUser } from '@/api/database/writeToDb';
+import { deleteNestedFieldFromCurrentUser } from '@/api/database/delete';
+import {
+  createDoubleNestedFieldObject,
+  writeNestedObjToCurrentUser,
+  } from '@/api/database/writeToDb';
 
 export default {
   name: 'CharacterNotes',
@@ -64,6 +71,26 @@ export default {
         return {};
       },
     },
+  },
+  data() {
+    return {
+      showNotes: [],
+    };
+  },
+  created() {
+    // Convert weird firestore object into javascript array, store the result in this.showNotes
+    Object.keys(this.notes).forEach(key => {
+      const obj = {
+        title: key,
+      };
+
+      const nestedObject = this.notes[key];
+      Object.keys(nestedObject).forEach(nestedKey => {
+        obj[nestedKey] = nestedObject[nestedKey];        
+      });
+
+      this.showNotes.push(obj);
+    });
   },
   methods: {
     clickEdit(title) {
@@ -85,7 +112,11 @@ export default {
       writeNestedObjToCurrentUser('characters', this.id, obj);
     },
     clickDelete(title) {
-      console.log('delete button was clicked!' + title);
+      const index = this.showNotes.findIndex(x => x.title === title);
+      if (index > -1) {
+        this.showNotes.splice(index, 1);
+        deleteNestedFieldFromCurrentUser(this.id, title);
+      }
     },
   },
 };
@@ -94,6 +125,16 @@ export default {
 <style scoped>
 .character-notes {
   flex: 1 0 auto;
+}
+
+.transition-list-enter-active,
+.transition-list-leave-active {
+  transition: all 0.5s;
+}
+
+.transition-list-enter,
+.transition-list-leave-to {
+  opacity: 0;
 }
 
 .character-notes-item {
@@ -133,11 +174,6 @@ export default {
 .note-control__strike {
   margin: 0 5px 0 0;
 }
-
-/*
-.note-control__delete {
-}
-*/
 
 .character-notes-item:hover > .note-controls {
   display: block;
