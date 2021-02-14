@@ -11,7 +11,7 @@
 <script>
 // Modules
 import { writeObject } from '@/api/database/writeToDb';
-import { getUserDisplayName } from '@/api/database/getUserData';
+import { getUserDisplayName } from '@/api/database/user';
 import { rollDie } from '@/api/randomNumberGenerator';
 
 export default {

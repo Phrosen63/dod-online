@@ -18,7 +18,7 @@
 <script>
 // Modules
 import { db } from '@/api/database/db';
-import { getFirebaseUser } from '@/api/database/getUserData';
+import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 
 // TODO: Create user settings view..

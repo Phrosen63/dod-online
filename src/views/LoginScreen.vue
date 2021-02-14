@@ -51,7 +51,7 @@
 <script>
 // Modules
 import { auth } from '@/api/database/auth';
-import { getFirebaseUser } from '@/api/database/getUserData';
+import { getFirebaseUser } from '@/api/database/user';
 
 export default {
   name: 'LoginScreen',

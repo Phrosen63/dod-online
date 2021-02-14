@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import { db } from '@/api/database/db';
-import { getFirebaseUser } from '@/api/database/getUserData';
+import { getFirebaseUser } from '@/api/database/user';
 
 const deleteNestedFieldFromCurrentUser = async (docName, title) => {
   const currentUser = await getFirebaseUser();

@@ -47,7 +47,7 @@
 // Modules
 import { db } from '@/api/database/db';
 import { writeObject } from '@/api/database/writeToDb';
-import { getUserDisplayName } from '@/api/database/getUserData';
+import { getUserDisplayName } from '@/api/database/user';
 
 export default {
   name: 'Console',

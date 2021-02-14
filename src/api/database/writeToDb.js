@@ -1,5 +1,5 @@
 import { db } from './db';
-import { getFirebaseUser } from './getUserData';
+import { getFirebaseUser } from './user';
 
 const writeObject = (collectionPath, docName, data) => {
   db.collection(collectionPath).doc(docName).update(data);
