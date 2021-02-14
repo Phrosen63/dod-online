@@ -13,6 +13,14 @@ const createNestedFieldObject = (field, nestedField, value) => {
   return nestedFieldObject;
 };
 
+const createDoubleNestedFieldObject = (field, nestedField, doubleNestedField, value) => {
+  const docField = `${field}.${nestedField}.${doubleNestedField}`;
+  const doubleNestedFieldObject = {};
+  doubleNestedFieldObject[docField] = value;
+  // Returns { field.nestedFiled: value }
+  return doubleNestedFieldObject;
+};
+
 const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject) => {
   const currentUser = await getFirebaseUser();
   const { uid } = currentUser;
@@ -24,5 +32,6 @@ const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject
 export {
   writeObject,
   createNestedFieldObject,
+  createDoubleNestedFieldObject,
   writeNestedObjToCurrentUser,
 };
