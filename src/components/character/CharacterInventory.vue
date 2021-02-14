@@ -60,8 +60,8 @@ export default {
 }
 
 .character-inventory-item__name {
-  font-size: 20px;
   margin: 20px 0 10px 0;
+  font-size: 20px;
 }
 
 .character-inventory-attribute-list {
