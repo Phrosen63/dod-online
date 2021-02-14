@@ -8,7 +8,9 @@
       <li
         v-for="(item, key) in notes"
         :key="key"
+        :ref="key"
         class="character-notes-item"
+        :class="item.strikethrough ? 'character-notes-item--strikethrough' : ''"
       >
         <p class="character-notes-item__name">
           {{ key }}
@@ -16,21 +18,35 @@
         <span class="character-notes-item__text">
           {{ item.text }}
         </span>
-        <button class="note-control note-control__edit">
-          Edit
-        </button>
-        <button class="note-control note-control__strike">
-          Cross-out
-        </button>
-        <button class="note-control note-control__delete">
-          Delete
-        </button>
+        <div class="note-controls">
+          <button
+            class="note-control note-control__edit"
+            @click="clickEdit(key)"
+          >
+            Edit
+          </button>
+          <button
+            class="note-control note-control__strike"
+            @click="clickStrike(key)"
+          >
+            Cross-out
+          </button>
+          <button
+            class="note-control note-control__delete"
+            @click="clickDelete(key)"
+          >
+            Delete
+          </button>
+        </div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+// Modules
+import { createDoubleNestedFieldObject, writeNestedObjToCurrentUser } from '@/api/database/writeToDb';
+
 export default {
   name: 'CharacterNotes',
   props: {
@@ -47,6 +63,29 @@ export default {
       default() {
         return {};
       },
+    },
+  },
+  methods: {
+    clickEdit(title) {
+      console.log('edit button was clicked!' + title);
+    },
+    clickStrike(title) {
+      const li = this.$refs[title][0];
+      let value;
+
+      if (li.classList.contains('character-notes-item--strikethrough')) {
+        li.classList.remove('character-notes-item--strikethrough');
+        value = false;
+      } else {
+        li.classList.value = li.classList.value + ' character-notes-item--strikethrough';
+        value = true;
+      }
+
+      const obj = createDoubleNestedFieldObject('notes', title, 'strikethrough', value);
+      writeNestedObjToCurrentUser('characters', this.id, obj);
+    },
+    clickDelete(title) {
+      console.log('delete button was clicked!' + title);
     },
   },
 };
@@ -71,20 +110,36 @@ export default {
   margin: 0 0 0 10px;
 }
 
-.note-control {
+.character-notes-item--strikethrough p,
+.character-notes-item--strikethrough span {
+  text-decoration: line-through;
+}
+
+.note-controls {
+  display: none;
   position: absolute;
   top: 0;
+  right: 0;
+}
+
+.note-control {
+  cursor: pointer;
 }
 
 .note-control__edit {
-  right: 80px;
+  margin: 0 5px 0 0;
 }
 
 .note-control__strike {
-  right: 40px;
+  margin: 0 5px 0 0;
 }
 
+/*
 .note-control__delete {
-  right: 0;
+}
+*/
+
+.character-notes-item:hover > .note-controls {
+  display: block;
 }
 </style>
