@@ -18,6 +18,10 @@
       :id="character.id"
       :skills="character.skills || {}"
     />
+    <CharacterNotes
+      :id="character.id"
+      :notes="character.notes || {}"
+    />
   </div>
 </template>
 
@@ -27,6 +31,7 @@ import CharacterInfo from '@/components/character/CharacterInfo';
 import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterStats from '@/components/character/CharacterStats';
 import CharacterSkills from '@/components/character/CharacterSkills';
+import CharacterNotes from '@/components/character/CharacterNotes';
 
 export default {
   name: 'CharacterViewer',
@@ -35,6 +40,7 @@ export default {
     CharacterInventory,
     CharacterStats,
     CharacterSkills,
+    CharacterNotes,
   },
   props: {
     character: {
