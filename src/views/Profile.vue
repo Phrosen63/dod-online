@@ -64,7 +64,7 @@ export default {
       const result = snapshot.docs.map((doc) => doc.data());
       const role = result[0].role;
       return this.convertRole(role);
-    }
+    },
   },
 };
 </script>
