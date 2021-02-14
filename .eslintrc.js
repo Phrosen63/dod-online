@@ -5,6 +5,7 @@ module.exports = {
   ],
   rules: {
     "prefer-default-export": 0,
+    "no-unused-vars": "warn",
   },
   parserOptions: {
     ecmaVersion: 8,
