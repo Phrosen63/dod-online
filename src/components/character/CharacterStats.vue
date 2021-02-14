@@ -57,7 +57,8 @@ export default {
 </script>
 
 <style scoped>
-.character-stat span {
+.character-stat__name {
   font-size: 18px;
+  text-transform: capitalize;
 }
 </style>
