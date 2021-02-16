@@ -1,4 +1,7 @@
-const randomNumberWithinRange = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const randomNumberWithinRange = (min, max) => {
+  return max > min ? Math.floor(Math.random() * (max - min + 1)) + min : 
+    Math.floor(Math.random() * (min - max + 1)) + max;
+};
 
 const rollDieT3 = () => randomNumberWithinRange(1, 3);
 const rollDieT4 = () => randomNumberWithinRange(1, 4);
