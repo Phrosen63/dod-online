@@ -30,6 +30,12 @@ p {
   font-size: 18px;
 }
 
+p.preamble {
+  margin: 0 0 22px 0;
+  text-align: center;
+  color: #a2a2a2;
+}
+
 h2::after {
   display: block;
   width: 20px;
@@ -74,4 +80,9 @@ ul li:last-of-type {
 
 .hidden-textfield:focus {
   background-color: #fff;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
 }
