@@ -59,6 +59,16 @@ export default {
       showMessages: false,
     };
   },
+  computed: {
+    customDiceRollListener() {
+      return this.$store.state.customDiceRoll;
+    },
+  },
+  watch: {
+    customDiceRollListener(obj) {
+      this.items.push({ message: obj.message });
+    }
+  },
   created() {
     this.userDisplayName = this.setUserDisplayName();
   },
@@ -96,7 +106,7 @@ export default {
 
 <style scoped>
 .console {
-  flex: 1 0 auto;
+  flex: 1 0 80%;
 }
 
 .console-settings {
@@ -151,5 +161,6 @@ export default {
   flex: 0 0 auto;
   padding: 0 20px;
   font-size: 18px;
+  cursor: pointer;
 }
 </style>
