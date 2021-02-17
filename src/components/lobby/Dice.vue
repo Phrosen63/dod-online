@@ -32,6 +32,7 @@ export default {
       const componentProps = {};
       const modalProps = {
         height: 'auto',
+        scrollable: true,
         draggable: true,
         focusTrap: true,
       };
