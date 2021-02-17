@@ -10,16 +10,24 @@
       v-else
       class="characters-list-wrapper"
     >
-      <ul>
-        <li
-          v-for="(character) in characters"
-          :key="character.id"
-          :class="{ selected: character.clicked }"
-          @click="selectCharacter(character.id, character.clicked)"
+      <div class="side-bar">
+        <button
+          class="add-character-button"
+          @click="showModal"
         >
-          {{ character.info.name }}
-        </li>
-      </ul>
+          +New character
+        </button>
+        <ul>
+          <li
+            v-for="(character) in characters"
+            :key="character.id"
+            :class="{ selected: character.clicked }"
+            @click="selectCharacter(character.id, character.clicked)"
+          >
+            {{ character.info.name }}
+          </li>
+        </ul>
+      </div>
       <CharacterViewer
         v-if="characterSelected"
         :character="selectedCharacter"
@@ -31,6 +39,7 @@
 <script>
 // Components
 import CharacterViewer from './CharacterViewer';
+import AddCharacter from '../modals/AddCharacter';
 
 // Modules
 import { db } from '@/api/database/db';
@@ -99,6 +108,21 @@ export default {
       this.selectedCharacter.clicked = !clicked;
       this.characterSelected = true;
     },
+    showModal() {
+      const componentProps = {};
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        draggable: false,
+        focusTrap: true,
+      };
+
+      this.$modal.show(
+        AddCharacter,
+        componentProps,
+        modalProps,
+      );
+    },
   },
 };
 </script>
@@ -114,13 +138,21 @@ export default {
   background-color: #ffeac4;
 }
 
+.side-bar {
+  flex: 1 0 20%;
+}
+
+.add-character-button {
+  cursor: pointer;
+  padding: 0 20px;
+  font-size: 18px;
+  line-height: 36px;
+}
+
 ul {
-  min-width: 20%;
-  max-width: 20%;
   list-style: none;
   margin: 0;
   padding: 0;
-  flex: 1 0 auto;
 }
 
 li {
