@@ -223,14 +223,6 @@ export default {
   flex-direction: column;
 }
 
-.custom-dice__label {
-
-}
-
-.custom-dice__input {
-
-}
-
 .custom-dice__select {
   cursor: pointer;
 }
