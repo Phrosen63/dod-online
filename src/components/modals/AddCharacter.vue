@@ -169,7 +169,7 @@
       </button>
       <input
         type="submit"
-        class="new-char__button"
+        class="new-char__button new-char__button--submit"
         value="Create"
       >
     </div>
@@ -315,9 +315,13 @@ export default {
 }
 
 .new-char__button {
-  margin: 0 0 0 10px;
+  margin: 0;
   padding: 5px 20px;
   font-size: 18px;
   cursor: pointer;
+}
+
+.new-char__button--submit {
+  margin: 0 0 0 10px;
 }
 </style>
