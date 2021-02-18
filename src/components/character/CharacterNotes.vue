@@ -1,6 +1,7 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
+    <AddField :data="{ name: 'Add note' }" />
     <transition-group
       name="transition-list"
       tag="ul"
@@ -44,6 +45,9 @@
 </template>
 
 <script>
+// Components
+import AddField from '@/components/AddField';
+
 // Modules
 import { deleteNestedFieldFromCurrentUser } from '@/api/database/delete';
 import {
@@ -53,6 +57,9 @@ import {
 
 export default {
   name: 'CharacterNotes',
+  components: {
+    AddField,
+  },
   props: {
     id: {
       type: String,
@@ -109,7 +116,7 @@ export default {
       writeNestedObjToCurrentUser('characters', this.id, obj);
     },
     clickDelete(title) {
-      const index = this.showNotes.findIndex(x => x.title === title);
+      const index = this.showNotes.findIndex(note => note.title === title);
       if (index > -1) {
         this.showNotes.splice(index, 1);
         deleteNestedFieldFromCurrentUser(this.id, title);
