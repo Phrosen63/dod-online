@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="Object.keys(skills).length > 0"
-    class="character-skills"
-  >
+  <div class="character-skills">
     <h2>Skills</h2>
     <ul class="character-skills-list">
       <li

@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="Object.keys(inventory).length > 0"
-    class="character-inventory"
-  >
+  <div class="character-inventory">
     <h2>Inventory</h2>
     <ul>
       <li

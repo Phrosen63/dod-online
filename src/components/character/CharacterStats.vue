@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="Object.keys(stats).length > 0"
-    class="character-stats"
-  >
+  <div class="character-stats">
     <h2>Stats</h2>
     <ul class="character-stats-list">
       <li

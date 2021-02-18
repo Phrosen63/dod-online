@@ -1,8 +1,5 @@
 <template>
-  <div
-    v-if="Object.keys(notes).length > 0"
-    class="character-notes"
-  >
+  <div class="character-notes">
     <h2>Notes</h2>
     <transition-group
       name="transition-list"
