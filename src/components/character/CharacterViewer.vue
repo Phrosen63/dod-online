@@ -7,7 +7,7 @@
       />
       <CharacterStats
         :id="character.id"
-        :stats="character.stats || []"
+        :stats="character.stats || {}"
       />
     </div>
     <CharacterInventory
@@ -20,6 +20,7 @@
     />
     <CharacterNotes
       :id="character.id"
+      :key="character.id"
       :notes="character.notes || {}"
     />
   </div>
