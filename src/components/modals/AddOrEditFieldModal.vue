@@ -49,6 +49,7 @@ export default {
       objectId: undefined,
       characterId: undefined,
       COLLECTION_PATH: undefined,
+      mutation: undefined,
     };
   },
   created() {
@@ -57,6 +58,7 @@ export default {
     this.objectId = this.$attrs.objectId;
     this.characterId = this.$attrs.characterId;
     this.COLLECTION_PATH = this.$attrs.path;
+    this.mutation = this.$attrs.mutation;
   },
   methods: {
     updateDataValue(e, obj) {
@@ -72,7 +74,7 @@ export default {
           const obj = {};
           obj[item.key] = item.value;
           writeNestedObjToCurrentUser(this.COLLECTION_PATH, this.objectId, obj);
-          this.$store.commit('setCharacterNoteSaved', this.data);
+          this.$store.commit(this.mutation, this.data);
         });
       } else {
         // Add new field
@@ -87,7 +89,7 @@ export default {
         writeNewObjToCurrentUser(this.COLLECTION_PATH, result).then(val => {
           result.id = val;
           this.data.push(result);
-          this.$store.commit('setCharacterNoteSaved', this.data);
+          this.$store.commit(this.mutation, this.data);
         });
       }
       this.$modal.hideAll();
