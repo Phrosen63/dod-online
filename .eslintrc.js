@@ -8,7 +8,7 @@ module.exports = {
     "no-unused-vars": "warn",
   },
   parserOptions: {
-    ecmaVersion: 8,
+    ecmaVersion: 2018,
   },
   env: {
     browser: true,
