@@ -21,7 +21,7 @@
     <CharacterNotes
       :id="character.id"
       :key="character.id"
-      :notes="character.notes || {}"
+      :notes="character.notes || []"
     />
   </div>
 </template>
