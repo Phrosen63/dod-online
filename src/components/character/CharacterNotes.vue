@@ -110,11 +110,13 @@ export default {
           id: note.id,
           key: 'key',
           value: note.key,
+          fieldName: 'Title',
         },
         {
           id: note.id,
           key: 'value',
           value: note.value,
+          fieldName: 'Text',
         },
       ];
 

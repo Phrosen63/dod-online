@@ -7,7 +7,8 @@
         :key="index"
         :data="{
           key: obj.key,
-          value: obj.value
+          value: obj.value,
+          fieldName: obj.fieldName,
         }"
         @editFieldUpdate="updateDataValue($event, obj)"
       />

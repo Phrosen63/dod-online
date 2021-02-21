@@ -1,7 +1,7 @@
 <template>
   <div class="edit-field-wrapper">
     <label class="edit-field__label">
-      {{ data.key }}:
+      {{ data.fieldName }}:
     </label>
     <input
       type="text"
