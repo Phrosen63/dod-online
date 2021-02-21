@@ -138,6 +138,7 @@ export default {
         objectId: noteId,
         characterId: this.characterId,
         path: this.NOTE_COLLECTION,
+        mutation: 'setCharacterNoteSaved',
       };
       const modalProps = {
         height: 'auto',
