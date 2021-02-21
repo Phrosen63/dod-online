@@ -24,10 +24,18 @@ const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject
   db.collection(collectionPath).doc(docName).update(nestedObject);
 };
 
+const writeNewObjToCurrentUser = async (userCollection, nestedObject) => {
+  const currentUser = await getFirebaseUser();
+  const { uid } = currentUser;
+  const collectionPath = `/users/${uid}/${userCollection}`;
+  return db.collection(collectionPath).add(nestedObject).then(docRef => docRef.id);
+};
+
 // Export methods
 export {
   writeObject,
   createNestedFieldObject,
   createDoubleNestedFieldObject,
   writeNestedObjToCurrentUser,
+  writeNewObjToCurrentUser,
 };
