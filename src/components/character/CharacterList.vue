@@ -76,9 +76,11 @@ export default {
         const chars = snapshot.docs.map((doc) => doc.data());
 
         for (let i = 0; i < snapshot.docs.length; i += 1) {
+          // Character id
           const characterId = snapshot.docs[i].id;
           chars[i].characterId = characterId;
 
+          // Notes
           const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
           const notesSnapshot = await db.collection(notesCollection).get();
 
@@ -88,6 +90,17 @@ export default {
             notes[i].id = noteId;
           }
           chars[i].notes = notes;
+
+          // Inventory
+          const inventoryCollection = `/users/${uid}/characters/${characterId}/inventory`;
+          const inventorySnapshot = await db.collection(inventoryCollection).get();
+
+          const inventory = inventorySnapshot.docs.map((doc) => doc.data());
+          for (let i = 0; i < inventorySnapshot.docs.length; i += 1) {
+            const inventoryId = inventorySnapshot.docs[i].id;
+            inventory[i].id = inventoryId;
+          }
+          chars[i].inventory = inventory;
         }
 
         this.characters = chars;
