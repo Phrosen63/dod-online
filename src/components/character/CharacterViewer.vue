@@ -12,7 +12,7 @@
     </div>
     <CharacterInventory
       :character-id="character.characterId"
-      :inventory="character.inventory || {}"
+      :inventory="character.inventory || []"
     />
     <CharacterSkills
       :character-id="character.characterId"
