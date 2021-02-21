@@ -1,40 +1,42 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <AddField :data="{ name: 'Add note' }" />
+    <!-- <AddField :data="{ name: 'Add note' }" /> -->
     <transition-group
       name="transition-list"
       tag="ul"
     >
       <li
         v-for="note in showNotes"
-        :key="note.title"
-        :ref="note.title"
+        :key="note.id"
         class="character-notes-item"
         :class="note.strikethrough ? 'character-notes-item--strikethrough' : ''"
       >
         <p class="character-notes-item__name">
-          {{ note.title }}
+          {{ note.key }}
         </p>
         <span class="character-notes-item__text">
-          {{ note.text }}
+          {{ note.value }}
         </span>
         <div class="note-controls">
           <button
             class="note-control note-control__edit"
-            @click="clickEdit(note.title)"
+            :data-id="note.id"
+            @click="clickEdit(note.id)"
           >
             Edit
           </button>
           <button
             class="note-control note-control__strike"
-            @click="clickStrike(note.title)"
+            :data-id="note.id"
+            @click="clickStrike(note.id)"
           >
             Cross-out
           </button>
           <button
             class="note-control note-control__delete"
-            @click="clickDelete(note.title)"
+            :data-id="note.id"
+            @click="clickDelete(note.id)"
           >
             Delete
           </button>
@@ -45,21 +47,15 @@
 </template>
 
 <script>
-// Components
-import AddField from '@/components/AddField';
+// Componentes
+import EditFieldModal from '@/components/modals/EditFieldModal';
 
 // Modules
-import { deleteNestedFieldFromCurrentUser } from '@/api/database/delete';
-import {
-  createDoubleNestedFieldObject,
-  writeNestedObjToCurrentUser,
-  } from '@/api/database/write';
+import { writeNestedObjToCurrentUser } from '@/api/database/write';
+import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
-  components: {
-    AddField,
-  },
   props: {
     id: {
       type: String,
@@ -69,60 +65,91 @@ export default {
       },
     },
     notes: {
-      type: Object,
+      type: Array,
       required: true,
       default() {
-        return {};
+        return [];
       },
     },
   },
   data() {
     return {
       showNotes: [],
+      NOTE_COLLECTION: undefined,
     };
   },
-  created() {
-    // Convert weird firestore object into javascript array, store the result in this.showNotes
-    Object.keys(this.notes).forEach(key => {
-      const obj = {
-        title: key,
-      };
-
-      const nestedObject = this.notes[key];
-      Object.keys(nestedObject).forEach(nestedKey => {
-        obj[nestedKey] = nestedObject[nestedKey];        
+  computed: {
+    characterNoteSavedListener() {
+      return this.$store.state.characterNoteSaved;
+    },
+  },
+  watch: {
+    characterNoteSavedListener(arr) {
+      arr.forEach(obj => {
+        const target = this.showNotes.find((note) => note.id === obj.id);
+        target[obj.key] = obj.value;
       });
-
-      this.showNotes.push(obj);
-    });
+    }
+  },
+  created() {
+    this.showNotes = this.notes;
+    this.NOTE_COLLECTION = `characters/${this.id}/notes`;
   },
   methods: {
-    clickEdit(title) {
-      console.log('edit button was clicked!' + title);
+    getNoteObjectById(id) {
+      return this.showNotes.find((note) => note.id === id);
     },
-    clickStrike(title) {
-      const li = this.$refs[title][0];
-      let value;
+    clickEdit(noteId) {
+      const note = this.getNoteObjectById(noteId);
+      const data = [
+        {
+          id: note.id,
+          key: 'key',
+          value: note.key,
+        },
+        {
+          id: note.id,
+          key: 'value',
+          value: note.value,
+        },
+      ];
 
-      if (li.classList.contains('character-notes-item--strikethrough')) {
-        li.classList.remove('character-notes-item--strikethrough');
-        value = false;
-      } else {
-        li.classList.value = li.classList.value + ' character-notes-item--strikethrough';
-        value = true;
-      }
+      const componentProps = {
+        data,
+        title: note.key,
+        noteId: noteId,
+        uid: this.id,
+        firestore: {
+          field: 'notes',
+          document: 'characters',
+        },
+      };
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        focusTrap: true,
+      };
 
-      const obj = createDoubleNestedFieldObject('notes', title, 'strikethrough', value);
-      writeNestedObjToCurrentUser('characters', this.id, obj);
+      this.$modal.show(
+        EditFieldModal,
+        componentProps,
+        modalProps,
+      );
     },
-    clickDelete(title) {
-      const index = this.showNotes.findIndex(note => note.title === title);
+    clickStrike(noteId) {
+      const note = this.getNoteObjectById(noteId);
+      note.strikethrough = !note.strikethrough;
+      writeNestedObjToCurrentUser(this.NOTE_COLLECTION, note.id, { strikethrough: note.strikethrough });
+    },
+    clickDelete(noteId) {
+      const index = this.showNotes.findIndex(note => note.id === noteId);
       if (index > -1) {
+        const note = this.showNotes[index];
         this.showNotes.splice(index, 1);
-        deleteNestedFieldFromCurrentUser(this.id, title);
+        deleteDocumentFromCurrentUser(this.NOTE_COLLECTION, note.id);
       }
     },
-  },
+  }
 };
 </script>
 

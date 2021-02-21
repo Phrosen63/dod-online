@@ -46,19 +46,6 @@ import { db } from '@/api/database/db';
 import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 
-/* eslint-disable no-tabs */
-/*
-DB structure:
-
-users / <uid> / characters /	<charName> / inventory
-					   / stats
-				<charName>
-				<charName>
-
-users / <uid> / settings / ...
-*/
-/* eslint-enable no-tabs */
-
 export default {
   name: 'CharacterList',
   components: {
@@ -84,12 +71,23 @@ export default {
       const { uid } = currentUser;
 
       if (uid) {
-        const COLLECTION_NAME = `/users/${uid}/characters`;
-        const snapshot = await db.collection(COLLECTION_NAME).get();
+        const characterCollection = `/users/${uid}/characters`;
+        const snapshot = await db.collection(characterCollection).get();
         const chars = snapshot.docs.map((doc) => doc.data());
 
         for (let i = 0; i < snapshot.docs.length; i += 1) {
-          chars[i].id = snapshot.docs[i].id;
+          const characterId = snapshot.docs[i].id;
+          chars[i].id = characterId;
+
+          const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
+          const notesSnapshot = await db.collection(notesCollection).get();
+
+          const notes = notesSnapshot.docs.map((doc) => doc.data());
+          for (let i = 0; i < notesSnapshot.docs.length; i += 1) {
+            const noteId = notesSnapshot.docs[i].id;
+            notes[i].id = noteId;
+          }
+          chars[i].notes = notes;
         }
 
         this.characters = chars;
