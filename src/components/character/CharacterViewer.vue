@@ -2,25 +2,25 @@
   <div class="character-viewer">
     <div class="character-viewer-wrapper">
       <CharacterInfo
-        :id="character.id"
+        :character-id="character.characterId"
         :info="character.info || {}"
       />
       <CharacterStats
-        :id="character.id"
+        :character-id="character.characterId"
         :stats="character.stats || {}"
       />
     </div>
     <CharacterInventory
-      :id="character.id"
+      :character-id="character.characterId"
       :inventory="character.inventory || {}"
     />
     <CharacterSkills
-      :id="character.id"
+      :character-id="character.characterId"
       :skills="character.skills || {}"
     />
     <CharacterNotes
-      :id="character.id"
-      :key="character.id"
+      :key="character.characterId"
+      :character-id="character.characterId"
       :notes="character.notes || []"
     />
   </div>

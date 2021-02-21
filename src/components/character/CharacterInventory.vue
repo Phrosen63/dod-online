@@ -33,7 +33,7 @@
 export default {
   name: 'CharacterInventory',
   props: {
-    id: {
+    characterId: {
       type: String,
       required: true,
       default() {

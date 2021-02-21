@@ -13,7 +13,7 @@
         <WritableField
           class="character-stat__value"
           :data="{
-            id,
+            characterId,
             field: 'stats',
             value: stat,
             nestedField: key,
@@ -35,7 +35,7 @@ export default {
     WritableField,
   },
   props: {
-    id: {
+    characterId: {
       type: String,
       required: true,
       default() {

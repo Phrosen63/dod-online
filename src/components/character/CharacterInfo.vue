@@ -7,7 +7,7 @@
       </span>
       <WritableField
         :data="{
-          id,
+          characterId,
           field: 'info',
           value: info.name,
           nestedField: 'name',
@@ -21,7 +21,7 @@
       </span>
       <WritableField
         :data="{
-          id,
+          characterId,
           field: 'info',
           value: info.class,
           nestedField: 'class',
@@ -35,7 +35,7 @@
       </span>
       <WritableField
         :data="{
-          id,
+          characterId,
           field: 'info',
           value: info.race,
           nestedField: 'race',
@@ -56,7 +56,7 @@ export default {
     WritableField,
   },
   props: {
-    id: {
+    characterId: {
       type: String,
       required: true,
       default() {

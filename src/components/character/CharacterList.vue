@@ -77,7 +77,7 @@ export default {
 
         for (let i = 0; i < snapshot.docs.length; i += 1) {
           const characterId = snapshot.docs[i].id;
-          chars[i].id = characterId;
+          chars[i].characterId = characterId;
 
           const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
           const notesSnapshot = await db.collection(notesCollection).get();

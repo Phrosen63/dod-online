@@ -45,17 +45,17 @@ export default {
     return {
       data: [],
       title: undefined,
-      noteId: undefined,
-      id: undefined,
+      objectId: undefined,
+      characterId: undefined,
       NOTE_COLLECTION: undefined,
     };
   },
   created() {
     this.data = this.$attrs.data;
     this.title = this.$attrs.title;
-    this.noteId = this.$attrs.noteId;
-    this.id = this.$attrs.uid;
-    this.NOTE_COLLECTION = `characters/${this.id}/notes`;
+    this.objectId = this.$attrs.objectId;
+    this.characterId = this.$attrs.characterId;
+    this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
   },
   methods: {
     updateDataValue(e, obj) {
@@ -68,7 +68,7 @@ export default {
       this.data.forEach(item => {
         const obj = {};
         obj[item.key] = item.value;
-        writeNestedObjToCurrentUser(this.NOTE_COLLECTION, this.noteId, obj);
+        writeNestedObjToCurrentUser(this.NOTE_COLLECTION, this.objectId, obj);
       });
       this.$store.commit('setCharacterNoteSaved', this.data);
       this.$modal.hideAll();

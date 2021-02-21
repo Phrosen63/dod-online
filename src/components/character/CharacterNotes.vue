@@ -1,7 +1,7 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <!-- <AddField :data="{ name: 'Add note' }" /> -->
+    <!-- <AddField :data="{ characterId: 'test', name: 'Add note' }" /> -->
     <transition-group
       name="transition-list"
       tag="ul"
@@ -49,6 +49,7 @@
 <script>
 // Componentes
 import EditFieldModal from '@/components/modals/EditFieldModal';
+import AddField from '@/components/AddField';
 
 // Modules
 import { writeNestedObjToCurrentUser } from '@/api/database/write';
@@ -56,8 +57,11 @@ import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
+  components: {
+    // AddField,
+  },
   props: {
-    id: {
+    characterId: {
       type: String,
       required: true,
       default() {
@@ -93,7 +97,7 @@ export default {
   },
   created() {
     this.showNotes = this.notes;
-    this.NOTE_COLLECTION = `characters/${this.id}/notes`;
+    this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
   },
   methods: {
     getNoteObjectById(id) {
@@ -117,8 +121,8 @@ export default {
       const componentProps = {
         data,
         title: note.key,
-        noteId: noteId,
-        uid: this.id,
+        objectId: noteId,
+        characterId: this.characterId,
         firestore: {
           field: 'notes',
           document: 'characters',

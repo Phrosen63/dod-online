@@ -27,7 +27,7 @@ export default {
   methods: {
     async updateText(nestedField, event) {
       const nestedObject = createNestedFieldObject(this.data.field, nestedField, event.target.value);
-      writeNestedObjToCurrentUser(this.data.document, this.data.id, nestedObject);
+      writeNestedObjToCurrentUser(this.data.document, this.data.characterId, nestedObject);
     }
   },
 };
