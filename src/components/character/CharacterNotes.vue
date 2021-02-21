@@ -1,7 +1,7 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <!-- <AddField :data="{ characterId: 'test', name: 'Add note' }" /> -->
+    <AddField :data="{ characterId, name: '+Add note' }" />
     <transition-group
       name="transition-list"
       tag="ul"
@@ -48,7 +48,7 @@
 
 <script>
 // Componentes
-import EditFieldModal from '@/components/modals/EditFieldModal';
+import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
 import AddField from '@/components/AddField';
 
 // Modules
@@ -58,7 +58,7 @@ import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 export default {
   name: 'CharacterNotes',
   components: {
-    // AddField,
+    AddField,
   },
   props: {
     characterId: {
@@ -91,7 +91,16 @@ export default {
     characterNoteSavedListener(arr) {
       arr.forEach(obj => {
         const target = this.showNotes.find((note) => note.id === obj.id);
-        target[obj.key] = obj.value;
+
+        if (target) {
+          // Update existing object
+          target[obj.key] = obj.value;
+        } else {
+          // Add new object
+          if (obj.id) {
+            this.showNotes.push(obj);
+          }
+        }
       });
     }
   },
@@ -122,13 +131,13 @@ export default {
 
       const componentProps = {
         data,
-        title: note.key,
+        title: {
+          key: 'Edit field',
+          value: note.key,
+        },
         objectId: noteId,
         characterId: this.characterId,
-        firestore: {
-          field: 'notes',
-          document: 'characters',
-        },
+        path: this.NOTE_COLLECTION,
       };
       const modalProps = {
         height: 'auto',
@@ -137,7 +146,7 @@ export default {
       };
 
       this.$modal.show(
-        EditFieldModal,
+        AddOrEditFieldModal,
         componentProps,
         modalProps,
       );
@@ -181,7 +190,6 @@ export default {
 .character-notes-item__name {
   margin: 20px 0 10px 0;
   font-size: 20px;
-  text-transform: capitalize;
 }
 
 .character-notes-item__text {
@@ -210,6 +218,10 @@ export default {
 
 .note-control__strike {
   margin: 0 5px 0 0;
+}
+
+.character-notes-item:hover {
+  background-color: #e4e4e4;
 }
 
 .character-notes-item:hover > .note-controls {
