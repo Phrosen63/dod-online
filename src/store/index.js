@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     customDiceRoll: null,
+    characterNoteSaved: null,
   },
   mutations: {
     setUser(state, payload) {
@@ -15,6 +16,11 @@ export default new Vuex.Store({
     setCustomDiceRoll(state, payload) {
       if (payload && typeof payload === 'object' && payload.message) {
         state.customDiceRoll = payload;
+      }
+    },
+    setCharacterNoteSaved(state, payload) {
+      if (payload && typeof payload === 'object') {
+        state.characterNoteSaved = payload;
       }
     },
   },
