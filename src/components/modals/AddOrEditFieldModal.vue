@@ -1,6 +1,6 @@
 <template>
   <div class="edit-field-modal">
-    <h1>Edit field: {{ title }}</h1>
+    <h1>{{ title.key }}: {{ title.value }}</h1>
     <div class="edit-field-modal-form">
       <EditField
         v-for="(obj, index) in data"
@@ -35,7 +35,7 @@
 import EditField from '@/components/EditField';
 
 // Modules
-import { writeNestedObjToCurrentUser } from '@/api/database/write';
+import { writeNestedObjToCurrentUser, writeNewObjToCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'EditFieldModal',
@@ -48,7 +48,7 @@ export default {
       title: undefined,
       objectId: undefined,
       characterId: undefined,
-      NOTE_COLLECTION: undefined,
+      COLLECTION_PATH: undefined,
     };
   },
   created() {
@@ -56,7 +56,7 @@ export default {
     this.title = this.$attrs.title;
     this.objectId = this.$attrs.objectId;
     this.characterId = this.$attrs.characterId;
-    this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
+    this.COLLECTION_PATH = this.$attrs.path;
   },
   methods: {
     updateDataValue(e, obj) {
@@ -66,12 +66,30 @@ export default {
       this.$modal.hideAll();
     },
     save() {
-      this.data.forEach(item => {
-        const obj = {};
-        obj[item.key] = item.value;
-        writeNestedObjToCurrentUser(this.NOTE_COLLECTION, this.objectId, obj);
-      });
-      this.$store.commit('setCharacterNoteSaved', this.data);
+      if (this.objectId) {
+        // Edit existing field
+        this.data.forEach(item => {
+          const obj = {};
+          obj[item.key] = item.value;
+          writeNestedObjToCurrentUser(this.COLLECTION_PATH, this.objectId, obj);
+          this.$store.commit('setCharacterNoteSaved', this.data);
+        });
+      } else {
+        // Add new field
+        const result = {};
+        this.data.forEach(item => {
+          const obj = {};
+          obj[item.key] = item.value;
+          Object.assign(result, obj);
+        });
+
+        result.strikethrough = false;
+        writeNewObjToCurrentUser(this.COLLECTION_PATH, result).then(val => {
+          result.id = val;
+          this.data.push(result);
+          this.$store.commit('setCharacterNoteSaved', this.data);
+        });
+      }
       this.$modal.hideAll();
     },
   }
