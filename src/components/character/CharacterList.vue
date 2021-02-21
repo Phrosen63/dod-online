@@ -20,9 +20,9 @@
         <ul>
           <li
             v-for="(character) in characters"
-            :key="character.id"
+            :key="character.characterId"
             :class="{ selected: character.clicked }"
-            @click="selectCharacter(character.id, character.clicked)"
+            @click="selectCharacter(character.characterId, character.clicked)"
           >
             {{ character.info.name }}
           </li>
@@ -102,7 +102,7 @@ export default {
     },
     selectCharacter(id, clicked) {
       this.resetSelectedCharacters();
-      this.selectedCharacter = this.characters.filter((char) => char.id === id)[0];
+      this.selectedCharacter = this.characters.filter((char) => char.characterId === id)[0];
       this.selectedCharacter.clicked = !clicked;
       this.characterSelected = true;
     },
