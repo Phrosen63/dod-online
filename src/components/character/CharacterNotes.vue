@@ -1,7 +1,7 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <AddField :data="{ characterId, name: '+Add note' }" />
+    <AddField :data="{ characterId, name: '+Add note', mutation: 'setCharacterNoteSaved' }" />
     <transition-group
       name="transition-list"
       tag="ul"

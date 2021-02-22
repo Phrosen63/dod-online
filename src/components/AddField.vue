@@ -48,6 +48,7 @@ export default {
         objectId: undefined,
         uid: this.id,
         path: `characters/${this.data.characterId}/notes`,
+        mutation: this.data.mutation,
       };
       const modalProps = {
         height: 'auto',
