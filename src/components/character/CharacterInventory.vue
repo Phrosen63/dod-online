@@ -136,9 +136,7 @@ export default {
       );
     },
     clickDelete(itemId) {
-      console.log(itemId)
       const index = this.inventory.findIndex(item => item.id === itemId);
-      console.log(index)
       if (index > -1) {
         const item = this.inventory[index];
         this.inventory.splice(index, 1);
