@@ -49,11 +49,13 @@
 <script>
 // Componentes
 import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
+import PromptBoolean from '@/components/modals/PromptBoolean';
 import AddField from '@/components/AddField';
 
 // Modules
 import { writeNestedObjToCurrentUser } from '@/api/database/write';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
+import { EventBus } from '@/eventBus';
 
 export default {
   name: 'CharacterNotes',
@@ -107,6 +109,12 @@ export default {
   created() {
     this.showNotes = this.notes;
     this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
+
+    EventBus.$on('prompt-answer', answer => {
+      if (answer.value) {
+        this.deleteNote(answer.id);
+      }
+    });
   },
   methods: {
     getNoteObjectById(id) {
@@ -158,6 +166,36 @@ export default {
       writeNestedObjToCurrentUser(this.NOTE_COLLECTION, note.id, { strikethrough: note.strikethrough });
     },
     clickDelete(noteId) {
+      const note = this.showNotes.find(obj => obj.id === noteId);
+      const data = [
+        {
+          button_yes: 'yes',
+          button_no: 'no',
+        },
+      ];
+
+      const componentProps = {
+        data,
+        heading: {
+          title: `Warning! Delete note.`,
+          preamble: `Delete note: ${note.key}`,
+          content: `This cannot be undone. Delete anyway?`,
+        },
+        objectId: noteId,
+      };
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        focusTrap: true,
+      };
+
+      this.$modal.show(
+        PromptBoolean,
+        componentProps,
+        modalProps,
+      );
+    },
+    deleteNote(noteId) {
       const index = this.showNotes.findIndex(note => note.id === noteId);
       if (index > -1) {
         const note = this.showNotes[index];
