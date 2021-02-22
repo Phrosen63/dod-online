@@ -13,7 +13,10 @@
     >
       {{ errorMessage }}
     </p>
-    <form id="login-form">
+    <form
+      id="login-form"
+      @submit.prevent
+    >
       <input
         id="txtEmail"
         v-model="email"
@@ -70,8 +73,8 @@ export default {
     },
     login() {
       this.resetErrors();
-      const promise = auth.signInWithEmailAndPassword(this.email, this.pass);
-      promise.then((userCredential) => {
+      auth.signInWithEmailAndPassword(this.email, this.pass)
+      .then((userCredential) => {
         // Signed in
         if (userCredential.user) {
           if (this.$route.name === 'LoginScreen') {
@@ -79,10 +82,10 @@ export default {
           }
         }
       })
-        .catch((e) => {
-          this.showErrorMessage = true;
-          this.errorMessage = e.message;
-        });
+      .catch((e) => {
+        this.showErrorMessage = true;
+        this.errorMessage = e.message;
+      });
     },
     signUp() {
       this.resetErrors();
