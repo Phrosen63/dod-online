@@ -1,6 +1,12 @@
 <template>
   <div class="character-inventory">
     <h2>Inventory</h2>
+    <button
+      class=""
+      @click="addItem"
+    >
+      Add item
+    </button>
     <transition-group
       name="transition-list"
       tag="ul"
@@ -41,8 +47,13 @@
 
 <script>
 // Componentes
+import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
 import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
+
+// Modules
+import { EventBus } from '@/eventBus';
+import { writeNewObjToCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'CharacterInventory',
@@ -65,6 +76,7 @@ export default {
   data() {
     return {
       INVENTORY_COLLECTION: undefined,
+      EVENT_NAME: undefined,
     };
   },
   computed: {
@@ -91,6 +103,14 @@ export default {
   },
   created() {
     this.INVENTORY_COLLECTION = `characters/${this.characterId}/inventory`;
+    this.EVENT_NAME = 'item-added';
+
+    EventBus.$on(this.EVENT_NAME, data => {
+      writeNewObjToCurrentUser(this.INVENTORY_COLLECTION, data).then((id) => {
+        data.id = id;
+        this.inventory.push(data);
+      });
+    });
   },
   methods: {
     getItemById(id) {
@@ -142,6 +162,24 @@ export default {
         this.inventory.splice(index, 1);
         deleteDocumentFromCurrentUser(this.INVENTORY_COLLECTION, item.id);
       }
+    },
+    addItem() {
+      const componentProps = {
+        data: [],
+        title: 'Add item',
+        eventName: this.EVENT_NAME,
+      };
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        focusTrap: true,
+      };
+
+      this.$modal.show(
+        AddFieldsMultipleModal,
+        componentProps,
+        modalProps,
+      );
     },
   }
 };
