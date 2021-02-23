@@ -13,6 +13,13 @@ body {
   background-size: cover;
 }
 
+.error-message {
+  color: crimson;
+  font-size: 20px;
+  text-shadow: black 0 1px 0;
+  text-align: center;
+}
+
 .router-link-active {
   font-weight: bold;
 }

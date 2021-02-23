@@ -124,12 +124,6 @@ export default {
   margin: 20px 0 35px 0;
 }
 
-.error-message {
-  color: crimson;
-  font-size: 20px;
-  text-shadow: black 0 1px 0;
-}
-
 #login-form {
   display: flex;
   flex-direction: column;
