@@ -1,7 +1,7 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <AddField :data="{ characterId, name: '+Add note', mutation: 'setCharacterNoteSaved' }" />
+    <AddNoteButton :data="{ characterId, name: '+Add note', mutation: 'setCharacterNoteSaved' }" />
     <transition-group
       name="transition-list"
       tag="ul"
@@ -50,7 +50,7 @@
 // Componentes
 import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
-import AddField from '@/components/AddField';
+import AddNoteButton from '@/components/AddNoteButton';
 
 // Modules
 import { writeNestedObjToCurrentUser } from '@/api/database/write';
@@ -60,7 +60,7 @@ import { EventBus } from '@/eventBus';
 export default {
   name: 'CharacterNotes',
   components: {
-    AddField,
+    AddNoteButton,
   },
   props: {
     characterId: {
@@ -110,6 +110,7 @@ export default {
     this.showNotes = this.notes;
     this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
 
+    // TODO: save 'prompt-answer' in a variable
     EventBus.$on('prompt-answer', answer => {
       if (answer.value) {
         this.deleteNote(answer.id);

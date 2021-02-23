@@ -12,7 +12,7 @@
 import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
 
 export default {
-  name: 'AddField',
+  name: 'AddNoteButton',
   props: {
     data: {
       type: Object,
