@@ -7,14 +7,12 @@
         :key="key"
         class="character-stat"
       >
-        <span class="character-stat__name">
-          {{ key }}:
-        </span>
         <WritableField
           class="character-stat__value"
           :data="{
             characterId,
             field: 'stats',
+            title: key,
             value: stat,
             nestedField: key,
             document: 'characters',

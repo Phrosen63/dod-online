@@ -7,14 +7,12 @@
         :key="key"
         class="character-skill"
       >
-        <span class="character-skill__name">
-          {{ key }}:
-        </span>
         <WritableField
           class="character-skill__value"
           :data="{
             characterId,
             field: 'skills',
+            title: key,
             value: skill,
             nestedField: key,
             document: 'characters',
@@ -66,21 +64,24 @@ export default {
 
 .character-skill {
   flex: 1 0 50%;
+  max-width: 50%;
+}
+
+.character-skill__value {
   display: flex;
   flex-direction: row;
-  max-width: 48%;
   margin: 5px 15px 5px 0;
   border-bottom: 1px solid #a2a2a2;
 }
 
-.character-skill__name {
+.character-skill__value >>> label {
   flex: 0 0 auto;
-  text-transform: capitalize;
 }
 
-.character-skill__value {
+.character-skill__value >>> input {
   flex: 1 0 auto;
   text-align: right;
   padding: 0 10px 0 0;
 }
+
 </style>

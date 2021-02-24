@@ -1,48 +1,36 @@
 <template>
   <div class="character-info">
     <h2>Info</h2>
-    <div>
-      <span>
-        Name:
-      </span>
-      <WritableField
-        :data="{
-          characterId,
-          field: 'info',
-          value: info.name,
-          nestedField: 'name',
-          document: 'characters',
-        }"
-      />
-    </div>
-    <div>
-      <span>
-        Class:
-      </span>
-      <WritableField
-        :data="{
-          characterId,
-          field: 'info',
-          value: info.class,
-          nestedField: 'class',
-          document: 'characters',
-        }"
-      />
-    </div>
-    <div>
-      <span>
-        Race:
-      </span>
-      <WritableField
-        :data="{
-          characterId,
-          field: 'info',
-          value: info.race,
-          nestedField: 'race',
-          document: 'characters',
-        }"
-      />
-    </div>
+    <WritableField
+      :data="{
+        characterId,
+        field: 'info',
+        title: 'Name',
+        value: info.name,
+        nestedField: 'name',
+        document: 'characters',
+      }"
+    />
+    <WritableField
+      :data="{
+        characterId,
+        field: 'info',
+        title: 'Class',
+        value: info.class,
+        nestedField: 'class',
+        document: 'characters',
+      }"
+    />
+    <WritableField
+      :data="{
+        characterId,
+        field: 'info',
+        title: 'Race',
+        value: info.race,
+        nestedField: 'race',
+        document: 'characters',
+      }"
+    />
   </div>
 </template>
 

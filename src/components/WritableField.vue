@@ -1,12 +1,17 @@
 <template>
-  <input
-    type="text"
-    :value="data.value"
-    class="hidden-textfield"
-    title="Click to edit"
-    @focus="$event.target.select()"
-    @change="updateText(data.nestedField, $event)"
-  >
+  <div>
+    <label class="writableField-label">
+      {{ data.title }}:
+    </label>
+    <input
+      type="text"
+      :value="data.value"
+      class="hidden-textfield"
+      title="Click to edit"
+      @focus="$event.target.select()"
+      @change="updateText(data.nestedField, $event)"
+    >
+  </div>
 </template>
 
 <script>
@@ -14,7 +19,7 @@
 import { createNestedFieldObject, writeNestedObjToCurrentUser } from '@/api/database/write';
 
 export default {
-  name: 'WriteableField',
+  name: 'WritableField',
   props: {
     data: {
       type: Object,
@@ -32,3 +37,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.writableField-label {
+  text-transform: capitalize;
+  font-size: 18px;
+}
+</style>
