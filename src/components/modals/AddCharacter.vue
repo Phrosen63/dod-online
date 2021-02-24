@@ -1,14 +1,16 @@
 <template>
   <form
-    class="new-char"
+    class="modal-window new-char"
     @submit.prevent="create"
   >
-    <h1>Create a new character</h1>
+    <h1 class="modal-heading">
+      Create a new character
+    </h1>
     <p class="preamble">
       ~ Fill out the form ~
     </p>
-    <div class="new-char-wrapper">
-      <label class="new-char__label">
+    <div class="modal-wrapper">
+      <label class="modal-label">
         Name:
       </label>
       <input
@@ -18,8 +20,8 @@
         required
       >
     </div>
-    <div class="new-char-wrapper">
-      <label class="new-char__label">
+    <div class="modal-wrapper">
+      <label class="modal-label">
         Class:
       </label>
       <input
@@ -29,7 +31,7 @@
       >
     </div>
     <div class="new-char-stats__wrapper">
-      <label class="new-char__label">
+      <label class="modal-label">
         Race:
       </label>
       <input
@@ -39,117 +41,16 @@
       >
     </div>
     <div class="new-char-stats">
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Strength:
+      <div
+        v-for="stat in stats"
+        :key="stat"
+        class="new-char-stats__wrapper"
+      >
+        <label class="modal-label">
+          {{ stat }}:
         </label>
         <input
-          v-model="char.stats.strength"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Agility:
-        </label>
-        <input
-          v-model="char.stats.agility"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Spiritus:
-        </label>
-        <input
-          v-model="char.stats.spiritus"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Perception:
-        </label>
-        <input
-          v-model="char.stats.perception"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Size:
-        </label>
-        <input
-          v-model="char.stats.size"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Physique:
-        </label>
-        <input
-          v-model="char.stats.physique"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Intelligence:
-        </label>
-        <input
-          v-model="char.stats.intelligence"
-          class="new-char__input-number"
-          type="number"
-          min="1"
-          :max="maxStatValue"
-          step="1"
-          value="1"
-          required
-        >
-      </div>
-      <div class="new-char-stats__wrapper">
-        <label class="new-char__label">
-          Charisma:
-        </label>
-        <input
-          v-model="char.stats.charisma"
+          v-model="char.stats[stat]"
           class="new-char__input-number"
           type="number"
           min="1"
@@ -160,16 +61,16 @@
         >
       </div>
     </div>
-    <div class="new-char-stats__wrapper">
+    <div class="modal-wrapper">
       <button
-        class="new-char__button"
+        class="modal-button"
         @click="closeModal"
       >
         Cancel
       </button>
       <input
         type="submit"
-        class="new-char__button new-char__button--submit"
+        class="modal-button"
         value="Create"
       >
     </div>
@@ -186,6 +87,7 @@ export default {
   data() {
     return {
       maxStatValue: 999,
+      stats: [],
       char: {
         name: undefined,
         class: undefined,
@@ -202,6 +104,18 @@ export default {
         },
       },
     };
+  },
+  created() {
+    this.stats = [
+      'strength',
+      'spiritus',
+      'agility',
+      'perception',
+      'size',
+      'physique',
+      'charisma',
+      'intelligence',
+    ];
   },
   methods: {
     closeModal() {
@@ -256,18 +170,6 @@ export default {
 </script>
 
 <style scoped>
-.new-char {
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-}
-
-.new-char-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .new-char-stats__wrapper {
   display: flex;
   min-width: 49%;
@@ -282,19 +184,13 @@ export default {
   margin: 15px 0 35px 0;
 }
 
-.new-char__label,
 .new-char__input,
 .new-char__select,
 .new-char__text,
-.new-char__button,
 .new-char__input-number {
   flex: 1 0 auto;
   font-size: 20px;
   margin: 5px 0;
-}
-
-.new-char__label {
-  flex: 0 0 auto;
 }
 
 .new-char__input,
@@ -314,14 +210,7 @@ export default {
   margin: 5px 15px 0 5px;
 }
 
-.new-char__button {
-  margin: 0;
-  padding: 5px 20px;
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.new-char__button--submit {
-  margin: 0 0 0 10px;
+.new-char .modal-label {
+  flex: 0 0 auto;
 }
 </style>

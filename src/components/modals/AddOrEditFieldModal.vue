@@ -1,6 +1,8 @@
 <template>
-  <div class="edit-field-modal">
-    <h1>{{ title.key }}: {{ title.value }}</h1>
+  <div class="modal-window">
+    <h1 class="modal-heading">
+      {{ title.key }}: {{ title.value }}
+    </h1>
     <div class="edit-field-modal-form">
       <EditField
         v-for="(obj, index) in data"
@@ -13,15 +15,15 @@
         @editFieldUpdate="updateDataValue($event, obj)"
       />
     </div>
-    <div class="edit-field-modal-wrapper">
+    <div class="modal-wrapper">
       <button
-        class="edit-field-modal__button"
+        class="modal-button"
         @click="cancel"
       >
         Cancel
       </button>
       <button
-        class="edit-field-modal__button"
+        class="modal-button"
         @click="save"
       >
         Save
@@ -99,27 +101,9 @@ export default {
 </script>
 
 <style scoped>
-.edit-field-modal {
-  padding: 10px;
-}
-
 .edit-field-modal-form {
   display: flex;
   flex-direction: column;
-}
-
-.edit-field-modal-wrapper {
-  flex: 1 0 auto;
-  display: flex;
-  margin: 5px 0;
-}
-
-.edit-field-modal__button {
-  flex: 1 0 auto;
-  margin: 0;
-  padding: 5px 20px;
-  font-size: 18px;
-  cursor: pointer;
 }
 
 .edit-field-modal__button:last-of-type {

@@ -1,7 +1,7 @@
 <template>
-  <div class="prompt-modal">
+  <div class="modal-window">
     <div class="prompt-modal-heading">
-      <h1 class="prompt-modal__title">
+      <h1 class="modal-heading">
         {{ heading.title }}
       </h1>
       <p class="prompt-modal__preamble">
@@ -11,15 +11,15 @@
         {{ heading.content }}
       </p>
     </div>
-    <div class="prompt-modal-wrapper">
+    <div class="modal-wrapper">
       <button
-        class="prompt-modal__button"
+        class="modal-button"
         @click="no"
       >
         Cancel
       </button>
       <button
-        class="prompt-modal__button"
+        class="modal-button"
         @click="yes"
       >
         Save
@@ -70,23 +70,14 @@ export default {
 </script>
 
 <style scoped>
-.prompt-modal {
-  padding: 10px;
-}
-
 .prompt-modal-heading {
   margin: 0 0 30px 0;
 }
 
-.prompt-modal__title,
 .prompt-modal__preamble,
 .prompt-modal__content {
   text-align: center;
   font-size: 20px;
-}
-
-.prompt-modal__title {
-  font-size: 32px;
 }
 
 .prompt-modal__preamble {
@@ -95,21 +86,5 @@ export default {
 
 .prompt-modal__content {
   margin: 0;
-}
-
-.prompt-modal-wrapper {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-.prompt-modal__button {
-  flex: 1 0 auto;
-  max-width: 49%;
-  margin: 0;
-  padding: 5px 20px;
-  font-size: 18px;
-  cursor: pointer;
 }
 </style>

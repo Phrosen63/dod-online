@@ -1,6 +1,6 @@
 <template>
-  <div class="add-multiple">
-    <h1 class="prompt-modal__title">
+  <div class="modal-window add-multiple">
+    <h1 class="modal-heading">
       {{ title }}
     </h1>
     <template v-if="isCustomItem">
@@ -17,8 +17,10 @@
       >
         {{ errorMessage }}
       </p>
-      <div class="add-multiple-wrapper">
-        <label class="add-multiple__label">Field name: </label>
+      <div class="modal-wrapper">
+        <label class="modal-label">
+          Field name:
+        </label>
         <input
           v-model="newFieldTitle"
           class="add-multiple__input"
@@ -39,7 +41,7 @@
         :key="index"
         class="add-multiple-field"
       >
-        <label class="add-multiple__label">
+        <label class="modal-label">
           {{ item.key }}:
         </label>
         <input
@@ -49,15 +51,15 @@
         >
       </div>
     </div>
-    <div class="add-multiple-wrapper">
+    <div class="modal-wrapper">
       <button
-        class="add-multiple__button"
+        class="modal-button"
         @click="cancel"
       >
         Cancel
       </button>
       <button
-        class="add-multiple__button"
+        class="modal-button"
         @click="add"
       >
         Add
@@ -142,10 +144,6 @@ export default {
 </script>
 
 <style scoped>
-.add-multiple {
-  padding: 10px;
-}
-
 .add-multiple-field-list {
   flex: 1 0 auto;
   display: flex;
@@ -161,29 +159,12 @@ export default {
   margin: 5px 0;
 }
 
-.add-multiple__label {
-  flex: 0 0 20%;
-  font-size: 20px;
-}
-
 .add-multiple__input {
   flex: 1 0 80%;
   font-size: 20px;
 }
 
-.add-multiple-wrapper {
-  flex: 1 0 auto;
-  display: flex;
-  justify-content: space-between;
-  margin: 5px 0;
-}
-
-.add-multiple__button {
-  flex: 1 0 auto;
-  max-width: 49%;
-  margin: 0;
-  padding: 5px 20px;
-  font-size: 18px;
-  cursor: pointer;
+.add-multiple .modal-label {
+  flex: 0 0 20%;
 }
 </style>

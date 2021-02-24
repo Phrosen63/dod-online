@@ -1,6 +1,8 @@
 <template>
-  <div class="custom-dice">
-    <h1>Custom die roll</h1>
+  <div class="modal-window custom-dice">
+    <h1 class="modal-heading">
+      Custom die roll
+    </h1>
     <p class="preamble">
       ~ Choose number of dice to roll, then choose type of die ~ <br>
       ~ Finally choose bonuses to be added after the rolls ~
@@ -206,7 +208,6 @@ export default {
 .custom-dice {
   display: flex;
   flex-direction: column;
-  padding: 10px;
 }
 
 .custom-dice__label,
