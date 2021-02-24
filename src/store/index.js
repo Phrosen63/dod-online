@@ -15,6 +15,7 @@ export default new Vuex.Store({
     characterNoteDeleted: null,
     inventoryItemSaved: null,
     inventoryItemAdded: null,
+    inventoryItemDeleted: null,
   },
   actions,
   mutations,

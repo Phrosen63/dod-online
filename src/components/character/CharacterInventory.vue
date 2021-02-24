@@ -61,6 +61,7 @@
 // Componentes
 import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
 import EditFieldModal from '@/components/modals/EditFieldModal';
+import PromptBoolean from '@/components/modals/PromptBoolean';
 
 // Modules
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
@@ -96,6 +97,9 @@ export default {
     characterInventoryAddedListener() {
       return this.$store.state.inventoryItemAdded;
     },
+    characterInventoryDeletedListener() {
+      return this.$store.state.inventoryItemDeleted;
+    },
   },
   watch: {
     characterInventorySavedListener(arr) {
@@ -118,6 +122,14 @@ export default {
         data.id = id;
         this.inventory.push(data);
       });
+    },
+    characterInventoryDeletedListener(data) {
+      const index = this.inventory.findIndex(item => item.id === data.id);
+      if (index > -1) {
+        const item = this.inventory[index];
+        this.inventory.splice(index, 1);
+        deleteDocumentFromCurrentUser(this.INVENTORY_COLLECTION, item.id);
+      }
     },
   },
   created() {
@@ -167,12 +179,33 @@ export default {
       );
     },
     clickDelete(itemId) {
-      const index = this.inventory.findIndex(item => item.id === itemId);
-      if (index > -1) {
-        const item = this.inventory[index];
-        this.inventory.splice(index, 1);
-        deleteDocumentFromCurrentUser(this.INVENTORY_COLLECTION, item.id);
-      }
+      const item = this.inventory.find(obj => obj.id === itemId);
+      const componentProps = {
+        data: {
+          button: {
+            yes: 'Yes',
+            no: 'No',
+          },
+        },
+        heading: {
+          title: `Warning! Delete item.`,
+          preamble: `Delete item: ${item.key}`,
+          content: `This cannot be undone. Delete anyway?`,
+        },
+        objectId: itemId,
+        mutation: 'setInventoryItemDeleted',
+      };
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        focusTrap: true,
+      };
+
+      this.$modal.show(
+        PromptBoolean,
+        componentProps,
+        modalProps,
+      );
     },
     addCustomItem(type) {
       const data = [];
