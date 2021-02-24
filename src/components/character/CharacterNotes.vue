@@ -1,7 +1,12 @@
 <template>
   <div class="character-notes">
     <h2>Notes</h2>
-    <AddNoteButton :data="{ characterId, name: '+Add note', mutation: 'setCharacterNoteSaved' }" />
+    <button
+      class="button--add"
+      @click="addNote"
+    >
+      +Add note
+    </button>
     <transition-group
       name="transition-list"
       tag="ul"
@@ -48,18 +53,17 @@
 
 <script>
 // Componentes
-import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
+import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
+import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
-import AddNoteButton from '@/components/AddNoteButton';
 
 // Modules
-import { writeNestedObjToCurrentUser } from '@/api/database/write';
+import { writeNestedObjToCurrentUser, writeNewObjToCurrentUser } from '@/api/database/write';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
   components: {
-    AddNoteButton,
   },
   props: {
     characterId: {
@@ -84,6 +88,9 @@ export default {
     };
   },
   computed: {
+    characterNoteAddedListener() {
+      return this.$store.state.characterNoteAdded;
+    },
     characterNoteSavedListener() {
       return this.$store.state.characterNoteSaved;
     },
@@ -92,6 +99,19 @@ export default {
     },
   },
   watch: {
+    characterNoteAddedListener(data) {
+      if (data && typeof data === 'object') {
+        const note = {
+          strikethrough: false,
+          key: data.Title,
+          value: data.Text,
+        }
+        writeNewObjToCurrentUser(this.NOTE_COLLECTION, note).then((id) => {
+          note.id = id;
+          this.showNotes.push(note);
+        });
+      }
+    },
     characterNoteSavedListener(arr) {
       arr.forEach(obj => {
         const target = this.showNotes.find((note) => note.id === obj.id);
@@ -156,7 +176,7 @@ export default {
       };
 
       this.$modal.show(
-        AddOrEditFieldModal,
+        EditFieldModal,
         componentProps,
         modalProps,
       );
@@ -168,15 +188,14 @@ export default {
     },
     clickDelete(noteId) {
       const note = this.showNotes.find(obj => obj.id === noteId);
-      const data = [
-        {
-          button_yes: 'yes',
-          button_no: 'no',
-        },
-      ];
 
       const componentProps = {
-        data,
+        data: {
+          button: {
+            yes: 'Yes',
+            no: 'No',
+          },
+        },
         heading: {
           title: `Warning! Delete note.`,
           preamble: `Delete note: ${note.key}`,
@@ -204,6 +223,33 @@ export default {
         this.showNotes.splice(index, 1);
         deleteDocumentFromCurrentUser(this.NOTE_COLLECTION, note.id);
       }
+    },
+    addNote() {
+      const data = [
+        {
+          key: 'Title',
+        },
+        {
+          key: 'Text',
+        },
+      ];
+
+      const componentProps = {
+        data,
+        title: 'Add note',
+        mutation: 'setCharacterNoteAdded',
+      };
+      const modalProps = {
+        height: 'auto',
+        scrollable: true,
+        focusTrap: true,
+      };
+
+      this.$modal.show(
+        AddFieldsMultipleModal,
+        componentProps,
+        modalProps,
+      );
     },
   }
 };

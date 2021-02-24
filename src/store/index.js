@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     user: null,
     customDiceRoll: null,
+    characterNoteAdded: null,
     characterNoteSaved: null,
     characterNoteDeleted: null,
     inventoryItemSaved: null,

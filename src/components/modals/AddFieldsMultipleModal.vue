@@ -30,7 +30,7 @@
       </div>
       <button
         class=""
-        @click="AddField"
+        @click="addField"
       >
         Add field
       </button>
@@ -94,7 +94,7 @@ export default {
       this.showErrorMessage = false;
       this.errorMessage = undefined;
     },
-    AddField() {
+    addField() {
       this.resetErrors();
       if (this.newFieldTitle) {
         const alreadyInList = this.list.filter(item => item.key === this.newFieldTitle).length > 0;

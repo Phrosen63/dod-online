@@ -12,6 +12,10 @@ const setCharacterNoteSaved = (state, payload)  => {
   state.characterNoteSaved = payload;
 };
 
+const setCharacterNoteAdded = (state, payload)  => {
+  state.characterNoteAdded = payload;
+};
+
 const setCharacterNoteDeleted = (state, payload)  => {
   state.characterNoteDeleted = payload;
 };
@@ -28,6 +32,7 @@ export default {
   setUser,
   setCustomDiceRoll,
   setCharacterNoteSaved,
+  setCharacterNoteAdded,
   setCharacterNoteDeleted,
   setInventoryItemSaved,
   setInventoryItemAdded,

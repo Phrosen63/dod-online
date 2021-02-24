@@ -60,10 +60,10 @@
 <script>
 // Componentes
 import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
-import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
-import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
+import EditFieldModal from '@/components/modals/EditFieldModal';
 
 // Modules
+import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 import { writeNewObjToCurrentUser } from '@/api/database/write';
 
 export default {
@@ -161,7 +161,7 @@ export default {
       };
 
       this.$modal.show(
-        AddOrEditFieldModal,
+        EditFieldModal,
         componentProps,
         modalProps,
       );
