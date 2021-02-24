@@ -2,10 +2,22 @@
   <div class="character-inventory">
     <h2>Inventory</h2>
     <button
-      class=""
-      @click="addItem"
+      class="button--add"
+      @click="addCustomItem('weapon')"
     >
-      Add item
+      +Add weapon
+    </button>
+    <button
+      class="button--add"
+      @click="addCustomItem('item')"
+    >
+      +Add item
+    </button>
+    <button
+      class="button--add"
+      @click="addCustomItem('custom')"
+    >
+      +Add custom item
     </button>
     <transition-group
       name="transition-list"
@@ -162,11 +174,42 @@ export default {
         deleteDocumentFromCurrentUser(this.INVENTORY_COLLECTION, item.id);
       }
     },
-    addItem() {
+    addCustomItem(type) {
+      const data = [];
+      let title = 'Add custom item';
+
+      if (type === 'weapon') {
+        title = 'Add weapon';
+        data.push({
+          key: 'Name',
+        });
+        data.push({
+          key: 'Damage',
+        });
+        data.push({
+          key: 'Description',
+        });
+      }
+
+      if (type === 'item') {
+        title = 'Add item';
+        data.push({
+          key: 'Name',
+        });
+        data.push({
+          key: 'Description',
+        });
+        data.push({
+          key: 'Quantity',
+        });
+        data.push({
+          key: 'Weight',
+        });
+      }
+
       const componentProps = {
-        data: [],
-        title: 'Add item',
-        eventName: this.EVENT_NAME,
+        data,
+        title,
         mutation: 'setInventoryItemAdded',
       };
       const modalProps = {

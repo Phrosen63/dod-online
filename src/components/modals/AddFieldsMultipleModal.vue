@@ -3,34 +3,36 @@
     <h1 class="prompt-modal__title">
       {{ title }}
     </h1>
-    <p class="preamble">
-      ~ First add a field by filling out Field name<br>
-      and click the Add field button<br>
-      Then fill out the new field,<br>
-      repeat until satisfied, <br>
-      then click the Add button ~
-    </p>
-    <p
-      class="error-message"
-      :class="showErrorMessage ? '' : 'hide'"
-    >
-      {{ errorMessage }}
-    </p>
-    <div class="add-multiple-wrapper">
-      <label class="add-multiple__label">Field name: </label>
-      <input
-        v-model="newFieldTitle"
-        class="add-multiple__input"
-        type="text"
-        value=""
+    <template v-if="isCustomItem">
+      <p class="preamble">
+        ~ First add a field by filling out Field name<br>
+        and click the Add field button<br>
+        Then fill out the new field,<br>
+        repeat until satisfied, <br>
+        then click the Add button ~
+      </p>
+      <p
+        class="error-message"
+        :class="showErrorMessage ? '' : 'hide'"
       >
-    </div>
-    <button
-      class=""
-      @click="AddField"
-    >
-      Add field
-    </button>
+        {{ errorMessage }}
+      </p>
+      <div class="add-multiple-wrapper">
+        <label class="add-multiple__label">Field name: </label>
+        <input
+          v-model="newFieldTitle"
+          class="add-multiple__input"
+          type="text"
+          value=""
+        >
+      </div>
+      <button
+        class=""
+        @click="AddField"
+      >
+        Add field
+      </button>
+    </template>
     <div class="add-multiple-field-list">
       <div
         v-for="(item, index) in list"
@@ -70,8 +72,8 @@ export default {
   data() {
     return {
       result: {},
+      isCustomItem: false,
       list: [],
-      data: [],
       title: undefined,
       newFieldTitle: undefined,
       showErrorMessage: false,
@@ -80,7 +82,8 @@ export default {
     };
   },
   created() {
-    this.data = this.$attrs.data;
+    this.isCustomItem = this.$attrs.data.length === 0;
+    this.list = this.$attrs.data;
     this.title = this.$attrs.title;
     this.mutation = this.$attrs.mutation;
   },
