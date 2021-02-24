@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-import actions from './actions';
 import mutations from './mutations';
 
 export default new Vuex.Store({
@@ -17,6 +16,5 @@ export default new Vuex.Store({
     inventoryItemAdded: null,
     inventoryItemDeleted: null,
   },
-  actions,
   mutations,
 });

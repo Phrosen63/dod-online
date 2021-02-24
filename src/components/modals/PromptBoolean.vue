@@ -47,21 +47,15 @@ export default {
   },
   methods: {
     no() {
-      this.$store.dispatch('commitBoolean', {
-        mutation: this.mutation,
-        payload: {
-          value: false,
-        },
+      this.$store.commit(this.mutation, {
+        value: false,
       });
       this.$modal.hideAll();
     },
     yes() {
-      this.$store.dispatch('commitBoolean', {
-        mutation: this.mutation,
-        payload: {
+      this.$store.commit(this.mutation, {
           value: true,
           id: this.objectId,
-        },
       });
       this.$modal.hideAll();
     },

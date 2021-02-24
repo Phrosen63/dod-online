@@ -9,27 +9,39 @@ const setCustomDiceRoll = (state, payload)  => {
 };
 
 const setCharacterNoteSaved = (state, payload)  => {
-  state.characterNoteSaved = payload;
+  if (payload && typeof payload === 'object') {
+    state.characterNoteSaved = payload;
+  }
 };
 
 const setCharacterNoteAdded = (state, payload)  => {
-  state.characterNoteAdded = payload;
+  if (payload && typeof payload === 'object') {
+    state.characterNoteAdded = payload;
+  }
 };
 
 const setCharacterNoteDeleted = (state, payload)  => {
-  state.characterNoteDeleted = payload;
+  if (payload && typeof payload === 'object') {
+    state.characterNoteDeleted = payload;
+  }
 };
 
 const setInventoryItemSaved = (state, payload)  => {
-  state.inventoryItemSaved = payload;
+  if (payload && typeof payload === 'object') {
+    state.inventoryItemSaved = payload;
+  }
 };
 
 const setInventoryItemAdded = (state, payload)  => {
-  state.inventoryItemAdded = payload;
+  if (payload && typeof payload === 'object') {
+    state.inventoryItemAdded = payload;
+  }
 };
 
 const setInventoryItemDeleted = (state, payload)  => {
-  state.inventoryItemDeleted = payload;
+  if (payload && typeof payload === 'object') {
+    state.inventoryItemDeleted = payload;
+  }
 };
 
 export default {

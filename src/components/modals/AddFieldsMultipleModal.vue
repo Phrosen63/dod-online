@@ -128,10 +128,7 @@ export default {
       const cleanedObject = this.removeEmptyFields(this.result);
       if (Object.keys(cleanedObject).length > 0) {
         // Cleaned object has keys
-        this.$store.dispatch('commitObject', {
-          mutation: this.mutation,
-          payload: cleanedObject,
-        });
+        this.$store.commit(this.mutation, cleanedObject);
         this.$modal.hideAll();
       } else {
         // Cleaned object has no keys
