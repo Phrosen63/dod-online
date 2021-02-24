@@ -16,13 +16,13 @@
         class="modal-button"
         @click="no"
       >
-        Cancel
+        {{ data.button.no }}
       </button>
       <button
         class="modal-button"
         @click="yes"
       >
-        Save
+        {{ data.button.yes }}
       </button>
     </div>
   </div>
@@ -33,7 +33,7 @@ export default {
   name: 'PromptBoolean',
   data() {
     return {
-      data: [],
+      data: {},
       heading: undefined,
       objectId: undefined,
       mutation: undefined,
