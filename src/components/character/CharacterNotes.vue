@@ -55,7 +55,6 @@ import AddNoteButton from '@/components/AddNoteButton';
 // Modules
 import { writeNestedObjToCurrentUser } from '@/api/database/write';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
-import { EventBus } from '@/eventBus';
 
 export default {
   name: 'CharacterNotes',
@@ -88,6 +87,9 @@ export default {
     characterNoteSavedListener() {
       return this.$store.state.characterNoteSaved;
     },
+    characterNoteDeletedListener() {
+      return this.$store.state.characterNoteDeleted;
+    },
   },
   watch: {
     characterNoteSavedListener(arr) {
@@ -104,18 +106,16 @@ export default {
           }
         }
       });
-    }
+    },
+    characterNoteDeletedListener(data) {
+      if (data.value) {
+        this.deleteNote(data.id);
+      }
+    },
   },
   created() {
     this.showNotes = this.notes;
     this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
-
-    // TODO: save 'prompt-answer' in a variable
-    EventBus.$on('prompt-answer', answer => {
-      if (answer.value) {
-        this.deleteNote(answer.id);
-      }
-    });
   },
   methods: {
     getNoteObjectById(id) {
@@ -183,6 +183,7 @@ export default {
           content: `This cannot be undone. Delete anyway?`,
         },
         objectId: noteId,
+        mutation: 'setCharacterNoteDeleted',
       };
       const modalProps = {
         height: 'auto',

@@ -29,9 +29,6 @@
 </template>
 
 <script>
-// Modules
-import { EventBus } from '@/eventBus';
-
 export default {
   name: 'PromptBoolean',
   data() {
@@ -39,24 +36,32 @@ export default {
       data: [],
       heading: undefined,
       objectId: undefined,
+      mutation: undefined,
     };
   },
   created() {
     this.data = this.$attrs.data;
     this.heading = this.$attrs.heading;
     this.objectId = this.$attrs.objectId;
+    this.mutation = this.$attrs.mutation;
   },
   methods: {
     no() {
-      EventBus.$emit('prompt-answer', {
-        value: false,
+      this.$store.dispatch('commitBoolean', {
+        mutation: this.mutation,
+        payload: {
+          value: false,
+        },
       });
       this.$modal.hideAll();
     },
     yes() {
-      EventBus.$emit('prompt-answer', {
-        value: true,
-        id: this.objectId,
+      this.$store.dispatch('commitBoolean', {
+        mutation: this.mutation,
+        payload: {
+          value: true,
+          id: this.objectId,
+        },
       });
       this.$modal.hideAll();
     },
