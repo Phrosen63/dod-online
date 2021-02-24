@@ -65,9 +65,6 @@
 </template>
 
 <script>
-// Modules
-import { EventBus } from '@/eventBus';
-
 export default {
   name: 'AddFieldsMultipleModal',
   data() {
@@ -79,13 +76,13 @@ export default {
       newFieldTitle: undefined,
       showErrorMessage: false,
       errorMessage: undefined,
-      EVENT_NAME: undefined,
+      mutation: undefined,
     };
   },
   created() {
     this.data = this.$attrs.data;
     this.title = this.$attrs.title;
-    this.EVENT_NAME = this.$attrs.eventName;
+    this.mutation = this.$attrs.mutation;
   },
   methods: {
     resetErrors() {
@@ -126,7 +123,10 @@ export default {
       const cleanedObject = this.removeEmptyFields(this.result);
       if (Object.keys(cleanedObject).length > 0) {
         // Cleaned object has keys
-        EventBus.$emit(this.EVENT_NAME, cleanedObject);
+        this.$store.dispatch('commitObject', {
+          mutation: this.mutation,
+          payload: cleanedObject,
+        });
         this.$modal.hideAll();
       } else {
         // Cleaned object has no keys

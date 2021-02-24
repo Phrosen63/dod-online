@@ -52,7 +52,6 @@ import AddOrEditFieldModal from '@/components/modals/AddOrEditFieldModal';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 // Modules
-import { EventBus } from '@/eventBus';
 import { writeNewObjToCurrentUser } from '@/api/database/write';
 
 export default {
@@ -76,12 +75,14 @@ export default {
   data() {
     return {
       INVENTORY_COLLECTION: undefined,
-      EVENT_NAME: undefined,
     };
   },
   computed: {
     characterInventorySavedListener() {
       return this.$store.state.inventoryItemSaved;
+    },
+    characterInventoryAddedListener() {
+      return this.$store.state.inventoryItemAdded;
     },
   },
   watch: {
@@ -99,18 +100,16 @@ export default {
           }
         }
       });
-    }
-  },
-  created() {
-    this.INVENTORY_COLLECTION = `characters/${this.characterId}/inventory`;
-    this.EVENT_NAME = 'item-added';
-
-    EventBus.$on(this.EVENT_NAME, data => {
+    },
+    characterInventoryAddedListener(data) {
       writeNewObjToCurrentUser(this.INVENTORY_COLLECTION, data).then((id) => {
         data.id = id;
         this.inventory.push(data);
       });
-    });
+    },
+  },
+  created() {
+    this.INVENTORY_COLLECTION = `characters/${this.characterId}/inventory`;
   },
   methods: {
     getItemById(id) {
@@ -168,6 +167,7 @@ export default {
         data: [],
         title: 'Add item',
         eventName: this.EVENT_NAME,
+        mutation: 'setInventoryItemAdded',
       };
       const modalProps = {
         height: 'auto',
