@@ -8,7 +8,17 @@
       :color="color"
     />
     <div class="profile-info">
-      <p>User name: <span>{{ user.displayName }}</span></p>
+      <div>
+        <label>User name:</label>
+        <input
+          type="text"
+          :value="user.displayName"
+          class="hidden-textfield"
+          title="Click to edit"
+          @focus="$event.target.select()"
+          @change="updateUserDisplayName($event)"
+        >
+      </div>
       <p>Email: <span>{{ user.email }}</span></p>
       <p>Role: <span>{{ role }}</span></p>
     </div>
@@ -62,6 +72,11 @@ export default {
       const role = result[0].role;
       return this.convertRole(role);
     },
+    async updateUserDisplayName(event) {
+      if (this.user) {
+        this.user.updateProfile({displayName: event.target.value});
+      }
+    }
   },
 };
 </script>
