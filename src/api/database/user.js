@@ -1,8 +1,8 @@
 import { auth } from '@/api/database/auth';
+import { addUserDocument } from '@/api/database/write';
 
 const getFirebaseUser = () => new Promise((resolve, reject) => {
-  const unsubscribe = auth.onAuthStateChanged((userAuth) => {
-    unsubscribe();
+  auth.onAuthStateChanged((userAuth) => {
     resolve(userAuth);
   }, reject);
 });
@@ -12,8 +12,28 @@ const getUserDisplayName = async () => {
   return currentUser.displayName;
 };
 
-// Export getFirebaseUser
+const createNewUser = (email, password) => new Promise((resolve, reject) => {
+  auth.createUserWithEmailAndPassword(email, password)
+  .then(async res => {
+    const user = res.user;
+    const displayName = 'test';
+    const uid = user.uid;
+
+    user.updateProfile({displayName});
+    await addUserDocument(displayName, uid);
+
+    resolve(user);
+  })
+  .catch((e) => {
+    reject({
+      message: e.message,
+    });
+  });
+});
+
+// Export getFirebaseUser methods
 export {
   getFirebaseUser,
   getUserDisplayName,
+  createNewUser,
 };
