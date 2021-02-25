@@ -1,5 +1,6 @@
 import { auth } from '@/api/database/auth';
 import { addUserDocument } from '@/api/database/write';
+import { generateName } from '@/api/randomNameGenerator';
 
 const getFirebaseUser = () => new Promise((resolve, reject) => {
   auth.onAuthStateChanged((userAuth) => {
@@ -16,7 +17,7 @@ const createNewUser = (email, password) => new Promise((resolve, reject) => {
   auth.createUserWithEmailAndPassword(email, password)
   .then(async res => {
     const user = res.user;
-    const displayName = 'test';
+    const displayName = generateName();
     const uid = user.uid;
 
     user.updateProfile({displayName});
