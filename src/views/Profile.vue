@@ -72,7 +72,7 @@ export default {
       const role = result[0].role;
       return this.convertRole(role);
     },
-    async updateUserDisplayName(event) {
+    updateUserDisplayName(event) {
       if (this.user) {
         this.user.updateProfile({displayName: event.target.value});
       }
