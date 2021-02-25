@@ -28,6 +28,7 @@
         v-model="char.class"
         class="new-char__input"
         type="text"
+        required
       >
     </div>
     <div class="new-char-stats__wrapper">
@@ -38,6 +39,7 @@
         v-model="char.race"
         class="new-char__input"
         type="text"
+        required
       >
     </div>
     <div class="new-char-stats">
@@ -56,7 +58,6 @@
           min="1"
           :max="maxStatValue"
           step="1"
-          value="1"
           required
         >
       </div>
@@ -103,9 +104,12 @@ export default {
           intelligence: undefined,
         },
       },
+      CHARACTER_COLLECTION: undefined,
+      user: undefined,
+      hasNoCharacters: undefined,
     };
   },
-  created() {
+  async created() {
     this.stats = [
       'strength',
       'spiritus',
@@ -116,6 +120,12 @@ export default {
       'charisma',
       'intelligence',
     ];
+
+    this.user = await getFirebaseUser();
+    this.CHARACTER_COLLECTION = `/users/${this.user.uid}/characters`;
+    const snapshot = await db.collection(this.CHARACTER_COLLECTION).get();
+    const chars = snapshot.docs.map((doc) => doc.data());
+    this.hasNoCharacters = chars.length === 0;
   },
   methods: {
     closeModal() {
@@ -137,9 +147,7 @@ export default {
       };
     },
     async create() {
-      const currentUser = await getFirebaseUser();
-      const { uid } = currentUser;
-      const COLLECTION_NAME = `/users/${uid}/characters`;
+      const { uid } = this.user;
 
       const data = {
         info: {
@@ -149,20 +157,40 @@ export default {
         },
         stats: this.char.stats,
         skills: {},
-        inventory: {},
-        notes: {},
+        // inventory: {},
+        // notes: {},
       };
 
       if (uid) {
-        db.collection(COLLECTION_NAME).add(data)
-          .then(() => {
-            this.resetForm();
-            this.closeModal();
-            this.$router.go(0);
-          })
-          .catch((error) => {
-            console.error("Error adding document: ", error);
-          });
+        let collectionPath;
+        if (this.hasNoCharacters) {
+          console.log('has no characters!')
+          collectionPath = `/users/${this.user.uid}/characters`;
+          await db.collection(collectionPath).doc();
+        } else {
+          collectionPath = this.CHARACTER_COLLECTION;
+        }
+
+        db.collection(collectionPath).add(data)
+        .then((docRef) => {
+          const inventory = {
+            name: 'Old clothes',
+            description: 'Old, dirty clothes, which offers little to no protection..',
+          };
+          const notes = {
+            key: 'Welcome',
+            value: 'Welcome to dod-online!',
+            strikethrough: false,
+          };
+          db.collection(`${collectionPath}/${docRef.id}/inventory`).add(inventory);
+          db.collection(`${collectionPath}/${docRef.id}/notes`).add(notes);
+          this.resetForm();
+          this.closeModal();
+          this.$router.go(0);
+        })
+        .catch((error) => {
+          console.error("Error adding document: ", error);
+        });
       }
     },
   },
