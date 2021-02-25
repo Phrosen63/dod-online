@@ -11,13 +11,16 @@
       <div>
         <label>User name:</label>
         <input
+          v-model="displayName"
           type="text"
-          :value="user.displayName"
           class="hidden-textfield"
           title="Click to edit"
           @focus="$event.target.select()"
           @change="updateUserDisplayName($event)"
         >
+        <button @click="generateRandomName">
+          Generate random name
+        </button>
       </div>
       <p>Email: <span>{{ user.email }}</span></p>
       <p>Role: <span>{{ role }}</span></p>
@@ -30,6 +33,7 @@
 import { db } from '@/api/database/db';
 import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
+import { generateName } from '@/api/randomNameGenerator';
 
 export default {
   name: 'Profile',
@@ -39,6 +43,7 @@ export default {
   data() {
     return {
       user: {},
+      displayName: undefined,
       role: undefined,
       loading: true,
       color: '#75a1de',
@@ -50,6 +55,7 @@ export default {
     this.user = currentUser;
     this.role = await this.getUserRole();
     this.loading = false;
+    this.displayName = this.user.displayName;
   },
   methods: {
     convertRole(role) {
@@ -76,7 +82,18 @@ export default {
       if (this.user) {
         this.user.updateProfile({displayName: event.target.value});
       }
-    }
+    },
+    generateRandomName() {
+      const randomName = generateName();
+
+      const fakeEvent = {
+        target: {
+          value: randomName,
+        },
+      };
+      this.updateUserDisplayName(fakeEvent);
+      this.displayName = randomName;
+    },
   },
 };
 </script>
