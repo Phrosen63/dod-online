@@ -54,7 +54,7 @@
 <script>
 // Modules
 import { auth } from '@/api/database/auth';
-import { getFirebaseUser } from '@/api/database/user';
+import { getFirebaseUser, createNewUser } from '@/api/database/user';
 
 export default {
   name: 'LoginScreen',
@@ -87,13 +87,15 @@ export default {
         this.errorMessage = e.message;
       });
     },
-    signUp() {
+    async signUp() {
       this.resetErrors();
-      const promise = auth.createUserWithEmailAndPassword(this.email, this.pass);
-      promise.catch((e) => {
+      try {
+        await createNewUser(this.email, this.pass);
+        this.$router.push('Profile');
+      } catch (e) {
         this.showErrorMessage = true;
         this.errorMessage = e.message;
-      });
+      }
     },
   },
   async beforeRouteLeave(to, from, next) {
