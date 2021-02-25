@@ -31,6 +31,16 @@ const writeNewObjToCurrentUser = async (userCollection, nestedObject) => {
   return db.collection(collectionPath).add(nestedObject).then(docRef => docRef.id);
 };
 
+const addUserDocument = async (displayName, uid) => {
+  const USER_COLLECTION = `/users/`;
+  const CHARACTER_COLLECTION = `/users/${uid}/characters/`;
+  const SETTINGS_COLLECTION = `/users/${uid}/settings/`;
+
+  await db.collection(USER_COLLECTION).doc(uid).set({});
+  await db.collection(CHARACTER_COLLECTION).doc(uid);
+  await db.collection(SETTINGS_COLLECTION).add({role: 2});
+};
+
 // Export methods
 export {
   writeObject,
@@ -38,4 +48,5 @@ export {
   createDoubleNestedFieldObject,
   writeNestedObjToCurrentUser,
   writeNewObjToCurrentUser,
+  addUserDocument,
 };
