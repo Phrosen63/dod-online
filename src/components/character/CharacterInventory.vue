@@ -266,16 +266,6 @@ export default {
   flex: 1 0 auto;
 }
 
-.transition-list-enter-active,
-.transition-list-leave-active {
-  transition: all 0.5s;
-}
-
-.transition-list-enter,
-.transition-list-leave-to {
-  opacity: 0;
-}
-
 .character-inventory-item {
   position: relative;
 }
