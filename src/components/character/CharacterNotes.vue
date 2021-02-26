@@ -52,7 +52,7 @@
 </template>
 
 <script>
-// Componentes
+// Components
 import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
 import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
@@ -63,8 +63,6 @@ import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
-  components: {
-  },
   props: {
     characterId: {
       type: String,
@@ -84,7 +82,7 @@ export default {
   data() {
     return {
       showNotes: [],
-      NOTE_COLLECTION: undefined,
+      NOTES_COLLECTION: undefined,
     };
   },
   computed: {
@@ -106,7 +104,7 @@ export default {
           key: data.Title,
           value: data.Text,
         }
-        writeNewObjToCurrentUser(this.NOTE_COLLECTION, note).then((id) => {
+        writeNewObjToCurrentUser(this.NOTES_COLLECTION, note).then((id) => {
           note.id = id;
           this.showNotes.push(note);
         });
@@ -135,7 +133,7 @@ export default {
   },
   created() {
     this.showNotes = this.notes;
-    this.NOTE_COLLECTION = `characters/${this.characterId}/notes`;
+    this.NOTES_COLLECTION = `characters/${this.characterId}/notes`;
   },
   methods: {
     getNoteObjectById(id) {
@@ -166,7 +164,7 @@ export default {
         },
         objectId: noteId,
         characterId: this.characterId,
-        path: this.NOTE_COLLECTION,
+        path: this.NOTES_COLLECTION,
         mutation: 'setCharacterNoteSaved',
       };
       const modalProps = {
@@ -184,10 +182,10 @@ export default {
     clickStrike(noteId) {
       const note = this.getNoteObjectById(noteId);
       note.strikethrough = !note.strikethrough;
-      writeNestedObjToCurrentUser(this.NOTE_COLLECTION, note.id, { strikethrough: note.strikethrough });
+      writeNestedObjToCurrentUser(this.NOTES_COLLECTION, note.id, { strikethrough: note.strikethrough });
     },
     clickDelete(noteId) {
-      const note = this.showNotes.find(obj => obj.id === noteId);
+      const note = this.getNoteObjectById(noteId);
 
       const componentProps = {
         data: {
@@ -221,7 +219,7 @@ export default {
       if (index > -1) {
         const note = this.showNotes[index];
         this.showNotes.splice(index, 1);
-        deleteDocumentFromCurrentUser(this.NOTE_COLLECTION, note.id);
+        deleteDocumentFromCurrentUser(this.NOTES_COLLECTION, note.id);
       }
     },
     addNote() {
@@ -258,16 +256,6 @@ export default {
 <style scoped>
 .character-notes {
   flex: 1 0 auto;
-}
-
-.transition-list-enter-active,
-.transition-list-leave-active {
-  transition: all 0.5s;
-}
-
-.transition-list-enter,
-.transition-list-leave-to {
-  opacity: 0;
 }
 
 .character-notes-item {
