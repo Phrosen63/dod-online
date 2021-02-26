@@ -136,3 +136,13 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 18px;
   cursor: pointer;
 }
+
+.transition-list-enter-active,
+.transition-list-leave-active {
+  transition: all 0.5s;
+}
+
+.transition-list-enter,
+.transition-list-leave-to {
+  opacity: 0;
+}
