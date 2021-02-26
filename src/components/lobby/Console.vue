@@ -27,7 +27,10 @@
         {{ item.message }}
       </p>
     </div>
-    <form class="console-message-bar">
+    <form
+      class="console-message-bar"
+      @submit.prevent
+    >
       <input
         ref="messageBar"
         class="console-message-bar__input-field"
@@ -79,7 +82,7 @@ export default {
         this.items.push({ message: doc.data().message });
       }
       if (this.autoScroll) {
-        this.$refs.consoleWindow.scrollTop = this.$refs.consoleWindow.scrollHeight;
+        this.$nextTick(() => this.$refs.consoleWindow.scrollTop = this.$refs.consoleWindow.scrollHeight);
       }
       this.showMessages = true;
     });
