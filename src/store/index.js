@@ -12,9 +12,12 @@ export default new Vuex.Store({
     characterNoteAdded: null,
     characterNoteSaved: null,
     characterNoteDeleted: null,
-    inventoryItemSaved: null,
     inventoryItemAdded: null,
+    inventoryItemSaved: null,
     inventoryItemDeleted: null,
+    characterSkillAdded: null,
+    characterSkillSaved: null,
+    characterSkillDeleted: null,
   },
   mutations,
 });

@@ -157,14 +157,11 @@ export default {
         },
         stats: this.char.stats,
         skills: {},
-        // inventory: {},
-        // notes: {},
       };
 
       if (uid) {
         let collectionPath;
         if (this.hasNoCharacters) {
-          console.log('has no characters!')
           collectionPath = `/users/${this.user.uid}/characters`;
           await db.collection(collectionPath).doc();
         } else {
@@ -182,8 +179,14 @@ export default {
             value: 'Welcome to dod-online!',
             strikethrough: false,
           };
+          const skills = {
+            key: 'Sample skill',
+            value: 'Edit or delete this sample skill',
+            strikethrough: false,
+          };
           db.collection(`${collectionPath}/${docRef.id}/inventory`).add(inventory);
           db.collection(`${collectionPath}/${docRef.id}/notes`).add(notes);
+          db.collection(`${collectionPath}/${docRef.id}/skills`).add(skills);
           this.resetForm();
           this.closeModal();
           this.$router.go(0);

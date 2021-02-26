@@ -8,15 +8,15 @@ const setCustomDiceRoll = (state, payload)  => {
   }
 };
 
-const setCharacterNoteSaved = (state, payload)  => {
-  if (payload && typeof payload === 'object') {
-    state.characterNoteSaved = payload;
-  }
-};
-
 const setCharacterNoteAdded = (state, payload)  => {
   if (payload && typeof payload === 'object') {
     state.characterNoteAdded = payload;
+  }
+};
+
+const setCharacterNoteSaved = (state, payload)  => {
+  if (payload && typeof payload === 'object') {
+    state.characterNoteSaved = payload;
   }
 };
 
@@ -26,15 +26,15 @@ const setCharacterNoteDeleted = (state, payload)  => {
   }
 };
 
-const setInventoryItemSaved = (state, payload)  => {
-  if (payload && typeof payload === 'object') {
-    state.inventoryItemSaved = payload;
-  }
-};
-
 const setInventoryItemAdded = (state, payload)  => {
   if (payload && typeof payload === 'object') {
     state.inventoryItemAdded = payload;
+  }
+};
+
+const setInventoryItemSaved = (state, payload)  => {
+  if (payload && typeof payload === 'object') {
+    state.inventoryItemSaved = payload;
   }
 };
 
@@ -44,13 +44,37 @@ const setInventoryItemDeleted = (state, payload)  => {
   }
 };
 
+const setCharacterSkillAdded = (state, payload)  => {
+  if (payload && typeof payload === 'object') {
+    state.characterSkillAdded = payload;
+  }
+};
+
+const setCharacterSkillSaved = (state, payload)  => {
+  if (payload && typeof payload === 'object') {
+    state.characterSkillSaved = payload;
+  }
+};
+
+const setCharacterSkillDeleted = (state, payload)  => {
+  if (payload && typeof payload === 'object') {
+    state.characterSkillDeleted = payload;
+  }
+};
+
 export default {
   setUser,
   setCustomDiceRoll,
+
   setCharacterNoteSaved,
   setCharacterNoteAdded,
   setCharacterNoteDeleted,
-  setInventoryItemSaved,
+
   setInventoryItemAdded,
+  setInventoryItemSaved,
   setInventoryItemDeleted,
+
+  setCharacterSkillAdded,
+  setCharacterSkillSaved,
+  setCharacterSkillDeleted,
 };

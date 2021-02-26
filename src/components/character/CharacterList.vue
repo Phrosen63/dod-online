@@ -101,6 +101,17 @@ export default {
             inventory[i].id = inventoryId;
           }
           chars[i].inventory = inventory;
+
+          // Skills
+          const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
+          const skillsSnapshot = await db.collection(skillsCollection).get();
+
+          const skills = skillsSnapshot.docs.map((doc) => doc.data());
+          for (let i = 0; i < skillsSnapshot.docs.length; i += 1) {
+            const skillsId = skillsSnapshot.docs[i].id;
+            skills[i].id = skillsId;
+          }
+          chars[i].skills = skills;
         }
 
         this.characters = chars;
