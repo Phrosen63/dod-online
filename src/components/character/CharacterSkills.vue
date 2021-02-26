@@ -70,7 +70,7 @@ export default {
 .character-skill__value {
   display: flex;
   flex-direction: row;
-  margin: 5px 15px 5px 0;
+  margin: 0 15px 0 0;
   border-bottom: 1px solid #a2a2a2;
 }
 
