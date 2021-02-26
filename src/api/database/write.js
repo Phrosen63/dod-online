@@ -31,7 +31,7 @@ const writeNewObjToCurrentUser = async (userCollection, nestedObject) => {
   return db.collection(collectionPath).add(nestedObject).then(docRef => docRef.id);
 };
 
-const addUserDocument = async (displayName, uid) => {
+const addUserDocument = async (uid) => {
   const USER_COLLECTION = `/users/`;
   const CHARACTER_COLLECTION = `/users/${uid}/characters/`;
   const SETTINGS_COLLECTION = `/users/${uid}/settings/`;

@@ -21,7 +21,7 @@ const createNewUser = (email, password) => new Promise((resolve, reject) => {
     const uid = user.uid;
 
     user.updateProfile({displayName});
-    await addUserDocument(displayName, uid);
+    await addUserDocument(uid);
 
     resolve(user);
   })
