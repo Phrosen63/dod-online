@@ -102,6 +102,7 @@ export default {
           physique: undefined,
           charisma: undefined,
           intelligence: undefined,
+          psyche: undefined,
         },
       },
       CHARACTER_COLLECTION: undefined,
@@ -119,6 +120,7 @@ export default {
       'physique',
       'charisma',
       'intelligence',
+      'psyche',
     ];
 
     this.user = await getFirebaseUser();
@@ -144,6 +146,7 @@ export default {
         physique: undefined,
         charisma: undefined,
         intelligence: undefined,
+        psyche: undefined,
       };
     },
     async create() {
