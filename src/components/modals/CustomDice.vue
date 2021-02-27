@@ -104,7 +104,7 @@
 
 <script>
 // Modules
-import { rollDie } from '@/api/randomNumberGenerator';
+import { rollDice } from '@/api/randomNumberGenerator';
 import { getUserDisplayName } from '@/api/database/user';
 
 export default {
@@ -161,25 +161,21 @@ export default {
         `${this.userDisplayName} rolled: ${combinedResult}, with a: ${this.die}`;
     },
     roll() {
-      if (this.amount > 0) {
-        const loopEnd = this.amount > this.maxNumberOfRolls ? this.maxNumberOfRolls : this.amount;
-        const min = this.min > this.customDie.minMax ? this.customDie.minMax : this.min;
-        const max = this.max > this.customDie.maxMax ? this.customDie.maxMax : this.max;
-        const eachResult = [];
-        let combinedResult = 0;
+      const amount = this.amount > this.maxNumberOfRolls ? this.maxNumberOfRolls : this.amount;
+      const min = this.min > this.customDie.minMax ? this.customDie.minMax : this.min;
+      const max = this.max > this.customDie.maxMax ? this.customDie.maxMax : this.max;
 
-        for(var i = 0; i < loopEnd; i+= 1) {
-          const result = rollDie(this.die, min, max);
-          const value = parseInt(result.value);
-          combinedResult += value;
-          eachResult.push(value);
-        }
-        combinedResult+= parseInt(this.bonus);
+      const result = rollDice({
+        amount: amount,
+        type: this.die,
+        min: min,
+        max: max,
+        bonus: this.bonus,
+      });
 
-        this.$store.commit('setCustomDiceRoll', {
-          message: this.getConsoleMessage(eachResult, combinedResult)
-        });
-      }
+     this.$store.commit('setCustomDiceRoll', {
+       message: this.getConsoleMessage(result.eachResult, result.combinedResult)
+     });
     },
     getBonus() {
       let bonus;
