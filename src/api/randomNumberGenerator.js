@@ -64,6 +64,29 @@ const rollDie = (die, min, max) => {
   };
 };
 
+const rollDice = ({ amount, type, min, max, bonus }) => {
+  const eachResult = [];
+  let combinedResult = 0;
+
+  let cleanAmount = amount ? parseInt(amount) : 1;
+  let cleanMin = min ? parseInt(min) : 1;
+  let cleanMax = max ? parseInt(max) : 1;
+  let cleanBonus = bonus ? parseInt(bonus) : 0;
+
+  for (var i = 0; i < cleanAmount; i += 1) {
+    const result = rollDie(type, cleanMin, cleanMax);
+    const value = parseInt(result.value);
+    combinedResult += value;
+    eachResult.push(value);
+  }
+  combinedResult += cleanBonus;
+
+  return {
+    combinedResult,
+    eachResult,
+  };
+}
+
 // Export randomNumberGenerator methods
 export {
   randomNumberWithinRange,
@@ -76,4 +99,5 @@ export {
   rollDieT20,
   rollDieT100,
   rollDie,
+  rollDice,
 };
