@@ -10,13 +10,17 @@
         :stats="character.stats || {}"
       />
     </div>
+    <CharacterHealth
+      :character-id="character.characterId"
+      :stats="character.stats || {}"
+    />
     <CharacterInventory
       :character-id="character.characterId"
       :inventory="character.inventory || []"
     />
     <CharacterSkills
       :character-id="character.characterId"
-      :skills="character.skills || {}"
+      :skills="character.skills || []"
     />
     <CharacterNotes
       :key="character.characterId"
@@ -29,8 +33,9 @@
 <script>
 // Components
 import CharacterInfo from '@/components/character/CharacterInfo';
-import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterStats from '@/components/character/CharacterStats';
+import CharacterHealth from '@/components/character/CharacterHealth';
+import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterSkills from '@/components/character/CharacterSkills';
 import CharacterNotes from '@/components/character/CharacterNotes';
 
@@ -38,8 +43,9 @@ export default {
   name: 'CharacterViewer',
   components: {
     CharacterInfo,
-    CharacterInventory,
     CharacterStats,
+    CharacterHealth,
+    CharacterInventory,
     CharacterSkills,
     CharacterNotes,
   },
