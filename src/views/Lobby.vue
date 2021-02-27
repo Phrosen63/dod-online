@@ -1,5 +1,5 @@
 <template>
-  <div class="lobby">
+  <div class="lobby  view-window">
     <h1>Lobby</h1>
     <div class="lobby-wrapper">
       <Dice />
@@ -23,15 +23,6 @@ export default {
 </script>
 
 <style scoped>
-.lobby {
-  width: 80%;
-  margin: 100px auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 20px;
-  min-height: 500px;
-}
-
 .lobby-wrapper {
   display: flex;
   flex-direction: row;

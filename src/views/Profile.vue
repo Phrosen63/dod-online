@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div class="profile view-window">
     <h1>Profile</h1>
     <pulse-loader
       v-if="loading"
@@ -7,7 +7,10 @@
       :size="size"
       :color="color"
     />
-    <div class="profile-info">
+    <div
+      v-else
+      class="profile-info"
+    >
       <div>
         <label>User name:</label>
         <input
@@ -97,15 +100,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.profile {
-  width: 80%;
-  margin: 100px auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 20px;
-  min-height: 500px;
-}
-</style>
-

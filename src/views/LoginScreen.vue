@@ -1,5 +1,5 @@
 <template>
-  <div class="login-screen">
+  <div class="login-screen  view-window">
     <h1>DoD-online<br>Log in or Sign up</h1>
     <p
       class="error-message"
@@ -116,10 +116,10 @@ export default {
   margin: 200px auto 50px auto;
   width: 30%;
   padding: 20px 20px 50px 20px;
-  border-radius: 5px;
   text-align: center;
   border: 1px solid #000;
   background-color: rgba(245, 235, 201, 0.65);
+  min-height: unset;
 }
 
 .login-screen > h1 {
@@ -132,7 +132,7 @@ export default {
   align-items: center;
 }
 
-#login-form .form-control {
+#login-form > .form-control {
   padding: 10px;
   margin: 0 0 12px 0;
   width: 60%;
@@ -158,5 +158,22 @@ export default {
 
 #login-form > #btnSignUp:hover {
   background-color: #2dbecc;
+}
+
+@media all and (max-width: 1200px) {
+  .login-screen {
+    width: 80%;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .login-screen {
+    width: 90%;
+    margin: 50px auto 25px auto;
+  }
+
+  #login-form > .form-control {
+    width: 90%;
+  }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="characters">
+  <div class="characters  view-window">
     <h1>Characters</h1>
     <p class="preamble">
       ~ Click on a field to edit it's value ~
@@ -21,15 +21,6 @@ export default {
 </script>
 
 <style scoped>
-.characters {
-  width: 80%;
-  margin: 100px auto;
-  background-color: white;
-  border-radius: 5px;
-  padding: 20px;
-  min-height: 500px;
-}
-
 .characters > h1 {
   margin: 22px 0 10px 0;
 }
