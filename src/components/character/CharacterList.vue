@@ -153,6 +153,7 @@ export default {
 .characters-list-wrapper {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .selected {

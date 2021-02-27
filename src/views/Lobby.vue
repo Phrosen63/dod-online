@@ -35,5 +35,6 @@ export default {
 .lobby-wrapper {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 </style>

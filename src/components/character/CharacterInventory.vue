@@ -1,24 +1,26 @@
 <template>
   <div class="character-inventory">
     <h2>Inventory</h2>
-    <button
-      class="button--add"
-      @click="addCustomItem('weapon')"
-    >
-      +Add weapon
-    </button>
-    <button
-      class="button--add"
-      @click="addCustomItem('item')"
-    >
-      +Add item
-    </button>
-    <button
-      class="button--add"
-      @click="addCustomItem('custom')"
-    >
-      +Add custom item
-    </button>
+    <div class="character-inventory__button-wrapper">
+      <button
+        class="button--add"
+        @click="addCustomItem('weapon')"
+      >
+        +Add weapon
+      </button>
+      <button
+        class="button--add"
+        @click="addCustomItem('item')"
+      >
+        +Add item
+      </button>
+      <button
+        class="button--add"
+        @click="addCustomItem('custom')"
+      >
+        +Add custom item
+      </button>
+    </div>
     <transition-group
       name="transition-list"
       tag="ul"
@@ -263,7 +265,17 @@ export default {
 
 <style scoped>
 .character-inventory {
-  flex: 1 0 auto;
+  flex: 1 1 49%;
+}
+
+.character-inventory__button-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.character-inventory__button-wrapper > button {
+  flex: 0 0 auto;
 }
 
 .character-inventory-item {

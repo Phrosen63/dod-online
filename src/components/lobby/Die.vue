@@ -50,7 +50,7 @@ export default {
 <style scoped>
 .die {
   flex: 0 0 auto;
-  margin: 0 10%;
+  margin: 10px;
   background-color: tomato;
   border-radius: 10%;
   border: 1px solid #000;

@@ -126,7 +126,6 @@ export default {
 
 .console-window {
   border-radius: 5px;
-  position: relative;
   min-height: 400px;
   max-height: 400px;
   overflow-y: auto;
