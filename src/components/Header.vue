@@ -77,9 +77,32 @@ nav > a:hover {
   font-size: 20px;
   padding: 10px;
   cursor: pointer;
+  min-width: 87px;
 }
 
 #btnLogout:hover {
   background-color: #e3e2e1;
+}
+
+@media all and (max-width: 550px) {
+  header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px 0;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+    margin: 0 0 15px 0;
+  }
+
+  nav > a {
+    padding: 0;
+  }
+
+  #btnLogout {
+    position: unset;
+  }
 }
 </style>
