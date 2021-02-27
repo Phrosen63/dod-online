@@ -104,6 +104,7 @@
 
 <script>
 // Modules
+import { writeObject } from '@/api/database/write';
 import { rollDice } from '@/api/randomNumberGenerator';
 import { getUserDisplayName } from '@/api/database/user';
 
@@ -173,9 +174,9 @@ export default {
         bonus: this.bonus,
       });
 
-     this.$store.commit('setCustomDiceRoll', {
-       message: this.getConsoleMessage(result.eachResult, result.combinedResult)
-     });
+      writeObject('console', 'shared', {
+        message: this.getConsoleMessage(result.eachResult, result.combinedResult)
+      });
     },
     getBonus() {
       let bonus;
