@@ -1,13 +1,3 @@
-const setUser = (state, payload)  => {
-  state.user = payload;
-};
-
-const setCustomDiceRoll = (state, payload)  => {
-  if (payload && typeof payload === 'object' && payload.message) {
-    state.customDiceRoll = payload;
-  }
-};
-
 const setCharacterNoteAdded = (state, payload)  => {
   if (payload && typeof payload === 'object') {
     state.characterNoteAdded = payload;
@@ -63,9 +53,6 @@ const setCharacterSkillDeleted = (state, payload)  => {
 };
 
 export default {
-  setUser,
-  setCustomDiceRoll,
-
   setCharacterNoteSaved,
   setCharacterNoteAdded,
   setCharacterNoteDeleted,
