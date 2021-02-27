@@ -42,6 +42,13 @@
         required
       >
     </div>
+    <button
+      type="button"
+      class="modal-button button__auto-roll"
+      @click="autoRoll"
+    >
+      Auto-roll stats
+    </button>
     <div class="new-char-stats">
       <div
         v-for="stat in stats"
@@ -82,6 +89,7 @@
 // Modules
 import { db } from '@/api/database/db';
 import { getFirebaseUser } from '@/api/database/user';
+import { rollDice } from '@/api/randomNumberGenerator';
 
 export default {
   name: 'AddCharacter',
@@ -199,6 +207,18 @@ export default {
         });
       }
     },
+    autoRoll() {
+      Object.keys(this.char.stats).forEach((key) => {
+        const result = rollDice({
+          amount: 2,
+          type: 'T6',
+          min: 0,
+          max: 0,
+          bonus: 6,
+        });
+        this.char.stats[key] = result.combinedResult;
+      });
+    },
   },
 };
 </script>
@@ -210,12 +230,17 @@ export default {
   justify-content: space-between;
 }
 
+.button__auto-roll {
+  display: block;
+  margin: 25px auto 0 auto;
+}
+
 .new-char-stats {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   padding: 10px;
-  margin: 15px 0 35px 0;
+  margin: 10px 0 35px 0;
 }
 
 .new-char__input,
