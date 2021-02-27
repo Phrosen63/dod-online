@@ -1,6 +1,12 @@
 <template>
   <div class="console">
     <div class="console-settings">
+      <button
+        class="console-settings__controls button--clear"
+        @click="clearConsole"
+      >
+        Clear
+      </button>
       <label
         class="console-settings__controls"
         for="autoscroll"
@@ -102,7 +108,10 @@ export default {
           message: `${this.userDisplayName}: ${value}`,
         });        
       }
-    }
+    },
+    clearConsole() {
+      this.$refs.consoleWindow.innerHTML = '';
+    },
   },
 };
 </script>
@@ -122,6 +131,10 @@ export default {
 .console-settings__controls {
   cursor: pointer;
   font-size: 18px;
+}
+
+.button--clear {
+  margin: 0 15px 0 0;
 }
 
 .console-window {
