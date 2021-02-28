@@ -82,8 +82,7 @@ export default {
     this.userDisplayName = this.setUserDisplayName();
   },
   async mounted() {
-    db.collection("console").doc("shared")
-    .onSnapshot((doc) => {
+    db.collection('console').doc('shared').onSnapshot((doc) => {
       if (this.showMessages) {
         this.items.push({ message: doc.data().message });
       }
