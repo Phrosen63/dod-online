@@ -1,67 +1,193 @@
-const setCharacterNoteAdded = (state, payload)  => {
+// Modules
+import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
+import { writeNewObjToCurrentUser } from '@/api/database/write';
+
+const setCharacterList = (state, payload)  => {
   if (payload && typeof payload === 'object') {
-    state.characterNoteAdded = payload;
+    state.characterList = payload;
   }
 };
 
-const setCharacterNoteSaved = (state, payload)  => {
+const setSelectedCharacter = (state, payload)  => {
   if (payload && typeof payload === 'object') {
-    state.characterNoteSaved = payload;
+    state.selectedCharacter = payload;
   }
 };
 
-const setCharacterNoteDeleted = (state, payload)  => {
+const setCharacterClicked = (state, payload)  => {
   if (payload && typeof payload === 'object') {
-    state.characterNoteDeleted = payload;
+    state.selectedCharacter = payload;
   }
 };
 
-const setInventoryItemAdded = (state, payload)  => {
+const updateCharacterInfo = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.inventoryItemAdded = payload;
+    state.selectedCharacter.info[payload.key] = payload.value;
   }
 };
 
-const setInventoryItemSaved = (state, payload)  => {
+const updateCharacterStats = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.inventoryItemSaved = payload;
+    state.selectedCharacter.stats[payload.key] = payload.value;
   }
 };
 
-const setInventoryItemDeleted = (state, payload)  => {
+const addCharacterInventoryItem = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.inventoryItemDeleted = payload;
+    const obj = payload.data;
+    if (payload.collectionPath) {
+      writeNewObjToCurrentUser(payload.collectionPath, obj).then((id) => {
+        obj.id = id;
+        state.selectedCharacter.inventory.push(obj);
+      });
+    }
   }
 };
 
-const setCharacterSkillAdded = (state, payload)  => {
+const updateCharacterInventoryItem = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.characterSkillAdded = payload;
+    const result = {};
+    payload.forEach(obj => {
+      result[obj.key] = obj.value;
+    });
+    result.id = payload[0].id;
+
+    const index = state.selectedCharacter.inventory.findIndex(item => item.id === result.id);
+    if (index > -1) {
+      Object.keys(state.selectedCharacter.inventory[index]).forEach(key => {
+        state.selectedCharacter.inventory[index][key] = result[key];
+      });
+    }
   }
 };
 
-const setCharacterSkillSaved = (state, payload)  => {
+const deleteCharacterInventoryItem = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.characterSkillSaved = payload;
+    const obj = payload.data;
+    if (obj.value && obj.collectionPath) {
+      const index = state.selectedCharacter.inventory.findIndex(item => item.id === obj.id);
+      if (index > -1) {
+        const item = state.selectedCharacter.inventory[index];
+        state.selectedCharacter.inventory.splice(index, 1);
+        deleteDocumentFromCurrentUser(obj.collectionPath, item.id);
+      }
+    }
   }
 };
 
-const setCharacterSkillDeleted = (state, payload)  => {
+const addCharacterSkill = (state, payload) => {
   if (payload && typeof payload === 'object') {
-    state.characterSkillDeleted = payload;
+    const obj = payload.data;
+    if (payload.collectionPath) {
+      writeNewObjToCurrentUser(payload.collectionPath, obj).then((id) => {
+        obj.id = id;
+        state.selectedCharacter.skills.push(obj);
+      });
+    }
   }
 };
 
+const updateCharacterSkill = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const result = {};
+    payload.forEach(obj => {
+      if (obj.key !== 'fieldName') {
+        result[obj.key] = obj.value;
+      }
+    });
+    result.id = payload[0].id;
+
+    const index = state.selectedCharacter.skills.findIndex(item => item.id === result.id);
+    if (index > -1) {
+      Object.keys(state.selectedCharacter.skills[index]).forEach(key => {
+        state.selectedCharacter.skills[index][key] = result[key];
+      });
+    }
+  }
+};
+
+const deleteCharacterSkill = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value && obj.collectionPath) {
+      const index = state.selectedCharacter.skills.findIndex(item => item.id === obj.id);
+      if (index > -1) {
+        const item = state.selectedCharacter.skills[index];
+        state.selectedCharacter.skills.splice(index, 1);
+        deleteDocumentFromCurrentUser(obj.collectionPath, item.id);
+      }
+    }
+  }
+};
+
+const addCharacterNote = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = {
+      strikethrough: false,
+      key: payload.data.Title,
+      value: payload.data.Text,
+    };
+    if (payload.collectionPath) {
+      writeNewObjToCurrentUser(payload.collectionPath, obj).then((id) => {
+        obj.id = id;
+        obj.strikethrough = false;
+        state.selectedCharacter.notes.push(obj);
+      });
+    }
+  }
+};
+
+const updateCharacterNote = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const result = {};
+    payload.forEach(obj => {
+      if (obj.key !== 'fieldName') {
+        result[obj.key] = obj.value;
+      }
+    });
+    result.id = payload[0].id;
+
+    const index = state.selectedCharacter.notes.findIndex(item => item.id === result.id);
+    if (index > -1) {
+      Object.keys(state.selectedCharacter.notes[index]).forEach(key => {
+        state.selectedCharacter.notes[index][key] = result[key];
+      });
+    }
+  }
+};
+
+const deleteCharacterNote = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value && obj.collectionPath) {
+      const index = state.selectedCharacter.notes.findIndex(item => item.id === obj.id);
+      if (index > -1) {
+        const item = state.selectedCharacter.notes[index];
+        state.selectedCharacter.notes.splice(index, 1);
+        deleteDocumentFromCurrentUser(obj.collectionPath, item.id);
+      }
+    }
+  }
+};
+
+// Export mutations
 export default {
-  setCharacterNoteSaved,
-  setCharacterNoteAdded,
-  setCharacterNoteDeleted,
+  setCharacterList,
+  setSelectedCharacter,
+  setCharacterClicked,
 
-  setInventoryItemAdded,
-  setInventoryItemSaved,
-  setInventoryItemDeleted,
+  updateCharacterInfo,
+  updateCharacterStats,
 
-  setCharacterSkillAdded,
-  setCharacterSkillSaved,
-  setCharacterSkillDeleted,
+  addCharacterInventoryItem,
+  updateCharacterInventoryItem,
+  deleteCharacterInventoryItem,
+
+  addCharacterSkill,
+  updateCharacterSkill,
+  deleteCharacterSkill,
+
+  addCharacterNote,
+  updateCharacterNote,
+  deleteCharacterNote,
 };
