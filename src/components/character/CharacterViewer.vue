@@ -1,32 +1,16 @@
 <template>
-  <div class="character-viewer">
+  <div
+    v-if="selectedCharacter"
+    class="character-viewer"
+  >
     <div class="character-viewer-wrapper">
-      <CharacterInfo
-        :character-id="character.characterId"
-        :info="character.info || {}"
-      />
-      <CharacterStats
-        :character-id="character.characterId"
-        :stats="character.stats || {}"
-      />
+      <CharacterInfo />
+      <CharacterStats />
     </div>
-    <CharacterHealth
-      :character-id="character.characterId"
-      :stats="character.stats || {}"
-    />
-    <CharacterInventory
-      :character-id="character.characterId"
-      :inventory="character.inventory || []"
-    />
-    <CharacterSkills
-      :character-id="character.characterId"
-      :skills="character.skills || []"
-    />
-    <CharacterNotes
-      :key="character.characterId"
-      :character-id="character.characterId"
-      :notes="character.notes || []"
-    />
+    <CharacterHealth />
+    <CharacterInventory />
+    <CharacterSkills />
+    <CharacterNotes />
   </div>
 </template>
 
@@ -49,11 +33,9 @@ export default {
     CharacterSkills,
     CharacterNotes,
   },
-  props: {
-    character: {
-      default: undefined,
-      type: Object,
-      required: true,
+  computed: {
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
   },
 };

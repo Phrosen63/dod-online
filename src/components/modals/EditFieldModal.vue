@@ -10,7 +10,7 @@
         :data="{
           key: obj.key,
           value: obj.value,
-          fieldName: obj.fieldName,
+          fieldName: obj.key,
         }"
         @editFieldUpdate="updateDataValue($event, obj)"
       />
@@ -37,7 +37,7 @@
 import EditField from '@/components/EditField';
 
 // Modules
-import { writeNestedObjToCurrentUser, writeNewObjToCurrentUser } from '@/api/database/write';
+import { writeNestedObjToCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'EditFieldModal',
@@ -49,7 +49,6 @@ export default {
       data: [],
       title: undefined,
       objectId: undefined,
-      characterId: undefined,
       COLLECTION_PATH: undefined,
       mutation: undefined,
     };
@@ -58,9 +57,8 @@ export default {
     this.data = this.$attrs.data;
     this.title = this.$attrs.title;
     this.objectId = this.$attrs.objectId;
-    this.characterId = this.$attrs.characterId;
-    this.COLLECTION_PATH = this.$attrs.path;
     this.mutation = this.$attrs.mutation;
+    this.collectionPath = this.$attrs.collectionPath;
   },
   methods: {
     updateDataValue(e, obj) {
@@ -70,30 +68,13 @@ export default {
       this.$modal.hideAll();
     },
     save() {
-      if (this.objectId) {
-        // Edit existing field
-        this.data.forEach(item => {
-          const obj = {};
-          obj[item.key] = item.value;
-          writeNestedObjToCurrentUser(this.COLLECTION_PATH, this.objectId, obj);
-          this.$store.commit(this.mutation, this.data);
-        });
-      } else {
-        // Add new field
-        const result = {};
-        this.data.forEach(item => {
-          const obj = {};
-          obj[item.key] = item.value;
-          Object.assign(result, obj);
-        });
+      this.data.forEach(item => {
+        const obj = {};
+        obj[item.key] = item.value;
+        writeNestedObjToCurrentUser(this.collectionPath, this.objectId, obj);
+      });
 
-        result.strikethrough = false;
-        writeNewObjToCurrentUser(this.COLLECTION_PATH, result).then(val => {
-          result.id = val;
-          this.data.push(result);
-          this.$store.commit(this.mutation, this.data);
-        });
-      }
+      this.$store.commit(this.mutation, this.data);
       this.$modal.hideAll();
     },
   }

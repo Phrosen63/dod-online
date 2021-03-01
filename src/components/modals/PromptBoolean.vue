@@ -44,18 +44,24 @@ export default {
     this.heading = this.$attrs.heading;
     this.objectId = this.$attrs.objectId;
     this.mutation = this.$attrs.mutation;
+    this.collectionPath = this.$attrs.collectionPath;
   },
   methods: {
     no() {
       this.$store.commit(this.mutation, {
-        value: false,
+        data: {
+          value: false,
+        },
       });
       this.$modal.hideAll();
     },
     yes() {
       this.$store.commit(this.mutation, {
+        data: {
           value: true,
           id: this.objectId,
+          collectionPath: this.collectionPath,
+        },
       });
       this.$modal.hideAll();
     },

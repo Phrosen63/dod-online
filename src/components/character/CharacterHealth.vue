@@ -4,22 +4,22 @@
     <div class="character-health-wrapper">
       <div class="character-health__stats">
         <p class="character-health-stat">
-          Total hp: {{ health.max }} / {{ health.half }}
+          Total hp: {{ max }} / {{ half }}
         </p>
         <p class="character-health-stat">
-          Head: {{ health.fourth }}
+          Head: {{ fourth }}
         </p>
         <p class="character-health-stat">
-          Arms: {{ health.fourth }}
+          Arms: {{ fourth }}
         </p>
         <p class="character-health-stat">
-          Chest: {{ health.half }}
+          Chest: {{ half }}
         </p>
         <p class="character-health-stat">
-          Stomach: {{ health.third }}
+          Stomach: {{ third }}
         </p>
         <p class="character-health-stat">
-          Legs: {{ health.third }}
+          Legs: {{ third }}
         </p>
       </div>
       <div class="character-health__image">
@@ -36,36 +36,25 @@
 <script>
 export default {
   name: 'CharacterHealth',
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
+  computed: {
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    stats: {
-      type: Object,
-      required: true,
-      default() {
-        return {};
-      },
+    max() {
+      const physique = parseInt(this.selectedCharacter.stats.physique);
+      const psyche = parseInt(this.selectedCharacter.stats.psyche);
+      const size = parseInt(this.selectedCharacter.stats.size);
+      return physique + psyche + size;
     },
-  },
-  data() {
-    return {
-      health: {},
-    };
-  },
-  created() {
-    const physique = parseInt(this.stats.physique);
-    const psyche = parseInt(this.stats.psyche);
-    const size = parseInt(this.stats.size);
-
-    this.health.max = physique + psyche + size;
-    this.health.half = Math.floor(this.health.max / 2);
-    this.health.third = Math.floor(this.health.max / 3);
-    this.health.fourth = Math.floor(this.health.max / 4);
+    half() {
+      return Math.floor(this.max / 2);
+    },
+    third() {
+      return Math.floor(this.max / 3);
+    },
+    fourth() {
+      return Math.floor(this.max / 4);
+    },
   },
 };
 </script>

@@ -12,7 +12,7 @@
       tag="ul"
     >
       <li
-        v-for="note in showNotes"
+        v-for="note in selectedCharacter.notes"
         :key="note.id"
         class="character-notes-item"
         :class="note.strikethrough ? 'character-notes-item--strikethrough' : ''"
@@ -58,88 +58,22 @@ import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
 
 // Modules
-import { writeNestedObjToCurrentUser, writeNewObjToCurrentUser } from '@/api/database/write';
+import { writeNestedObjToCurrentUser } from '@/api/database/write';
 import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
-    },
-    notes: {
-      type: Array,
-      required: true,
-      default() {
-        return [];
-      },
-    },
-  },
-  data() {
-    return {
-      showNotes: [],
-      NOTES_COLLECTION: undefined,
-    };
-  },
   computed: {
-    characterNoteAddedListener() {
-      return this.$store.state.characterNoteAdded;
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    characterNoteSavedListener() {
-      return this.$store.state.characterNoteSaved;
-    },
-    characterNoteDeletedListener() {
-      return this.$store.state.characterNoteDeleted;
-    },
-  },
-  watch: {
-    characterNoteAddedListener(data) {
-      if (data && typeof data === 'object') {
-        const note = {
-          strikethrough: false,
-          key: data.Title,
-          value: data.Text,
-        }
-        writeNewObjToCurrentUser(this.NOTES_COLLECTION, note).then((id) => {
-          note.id = id;
-          this.showNotes.push(note);
-        });
-      }
-    },
-    characterNoteSavedListener(arr) {
-      arr.forEach(obj => {
-        const target = this.showNotes.find((note) => note.id === obj.id);
-
-        if (target) {
-          // Update existing object
-          target[obj.key] = obj.value;
-        } else {
-          // Add new object
-          if (obj.id) {
-            this.showNotes.push(obj);
-          }
-        }
-      });
-    },
-    characterNoteDeletedListener(data) {
-      if (data.value) {
-        this.deleteNote(data.id);
-      }
-    },
-  },
-  created() {
-    this.showNotes = this.notes;
-    this.NOTES_COLLECTION = `characters/${this.characterId}/notes`;
   },
   methods: {
     getNoteObjectById(id) {
-      return this.showNotes.find((note) => note.id === id);
+      return this.selectedCharacter.notes.find((note) => note.id === id);
     },
     clickEdit(noteId) {
+      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const note = this.getNoteObjectById(noteId);
       const data = [
         {
@@ -164,8 +98,8 @@ export default {
         },
         objectId: noteId,
         characterId: this.characterId,
-        path: this.NOTES_COLLECTION,
-        mutation: 'setCharacterNoteSaved',
+        collectionPath: NOTES_COLLECTION,
+        mutation: 'updateCharacterNote',
       };
       const modalProps = {
         height: 'auto',
@@ -180,11 +114,13 @@ export default {
       );
     },
     clickStrike(noteId) {
+      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const note = this.getNoteObjectById(noteId);
       note.strikethrough = !note.strikethrough;
-      writeNestedObjToCurrentUser(this.NOTES_COLLECTION, note.id, { strikethrough: note.strikethrough });
+      writeNestedObjToCurrentUser(NOTES_COLLECTION, note.id, { strikethrough: note.strikethrough });
     },
     clickDelete(noteId) {
+      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const note = this.getNoteObjectById(noteId);
 
       const componentProps = {
@@ -200,7 +136,8 @@ export default {
           content: `This cannot be undone. Delete anyway?`,
         },
         objectId: noteId,
-        mutation: 'setCharacterNoteDeleted',
+        collectionPath: NOTES_COLLECTION,
+        mutation: 'deleteCharacterNote',
       };
       const modalProps = {
         height: 'auto',
@@ -215,14 +152,16 @@ export default {
       );
     },
     deleteNote(noteId) {
-      const index = this.showNotes.findIndex(note => note.id === noteId);
+      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
+      const index = this.selectedCharacter.notes.findIndex(note => note.id === noteId);
       if (index > -1) {
-        const note = this.showNotes[index];
-        this.showNotes.splice(index, 1);
-        deleteDocumentFromCurrentUser(this.NOTES_COLLECTION, note.id);
+        const note = this.selectedCharacter.notes[index];
+        this.selectedCharacter.notes.splice(index, 1);
+        deleteDocumentFromCurrentUser(NOTES_COLLECTION, note.id);
       }
     },
     addNote() {
+      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const data = [
         {
           key: 'Title',
@@ -235,7 +174,8 @@ export default {
       const componentProps = {
         data,
         title: 'Add note',
-        mutation: 'setCharacterNoteAdded',
+        collectionPath: NOTES_COLLECTION,
+        mutation: 'addCharacterNote',
       };
       const modalProps = {
         height: 'auto',

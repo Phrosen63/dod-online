@@ -3,49 +3,54 @@
     <h2>Stats</h2>
     <ul class="character-stats-list">
       <li
-        v-for="(stat, key) in stats"
+        v-for="(stat, key) in selectedCharacter.stats"
         :key="key"
         class="character-stat"
       >
-        <WritableField
-          class="character-stat__value"
-          :data="{
-            characterId,
-            field: 'stats',
-            title: key,
-            value: stat,
-            nestedField: key,
-            document: 'characters',
-          }"
-        />
+        <label class="writableField-label">
+          {{ key }}:
+        </label>
+        <input
+          type="text"
+          :value="stat"
+          class="hidden-textfield"
+          title="Click to edit"
+          @focus="$event.target.select()"
+          @change="updateText(key, $event)"
+        >
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-// Components
-import WritableField from '@/components/WritableField';
+// Modules
+import { createDocumentFieldObject, updateDocumentFieldForCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'CharacterStats',
-  components: {
-    WritableField,
-  },
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
+  computed: {
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    stats: {
-      type: Object,
-      required: true,
-      default() {
-        return {};
-      },
+  },
+  methods: {
+    async updateText(key, event) {
+      const data = createDocumentFieldObject({
+        map: 'stats',
+        key,
+        value: event.target.value,
+      });
+      updateDocumentFieldForCurrentUser({
+        collection: 'characters',
+        document: this.$store.state.selectedCharacter.id,
+        data,
+      }).then(() => {
+          this.$store.commit('updateCharacterStats', {
+            key,
+            value: event.target.value,
+          });
+        }).catch(e => console.log('Error: ' + e));
     },
   },
 };

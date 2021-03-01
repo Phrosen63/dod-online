@@ -1,62 +1,59 @@
 <template>
-  <div class="character-info">
+  <div 
+    v-if="selectedCharacter"
+    class="character-info"
+  >
     <h2>Info</h2>
-    <WritableField
-      :data="{
-        characterId,
-        field: 'info',
-        title: 'Name',
-        value: info.name,
-        nestedField: 'name',
-        document: 'characters',
-      }"
-    />
-    <WritableField
-      :data="{
-        characterId,
-        field: 'info',
-        title: 'Class',
-        value: info.class,
-        nestedField: 'class',
-        document: 'characters',
-      }"
-    />
-    <WritableField
-      :data="{
-        characterId,
-        field: 'info',
-        title: 'Race',
-        value: info.race,
-        nestedField: 'race',
-        document: 'characters',
-      }"
-    />
+    <ul class="character-stats-list">
+      <li
+        v-for="(stat, key) in selectedCharacter.info"
+        :key="key"
+        class="character-stat"
+      >
+        <label class="writableField-label">
+          {{ key }}:
+        </label>
+        <input
+          type="text"
+          :value="stat"
+          class="hidden-textfield"
+          title="Click to edit"
+          @focus="$event.target.select()"
+          @change="updateText(key, $event)"
+        >
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-// Components
-import WritableField from '@/components/WritableField';
+// Modules
+import { createDocumentFieldObject, updateDocumentFieldForCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'CharacterInfo',
-  components: {
-    WritableField,
-  },
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
+  computed: {
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    info: {
-      type: Object,
-      required: true,
-      default() {
-        return {};
-      },
+  },
+  methods: {
+    async updateText(key, event) {
+      const data = createDocumentFieldObject({
+        map: 'info',
+        key,
+        value: event.target.value,
+      });
+      updateDocumentFieldForCurrentUser({
+        collection: 'characters',
+        document: this.$store.state.selectedCharacter.id,
+        data,
+      }).then(() => {
+          this.$store.commit('updateCharacterInfo', {
+            key,
+            value: event.target.value,
+          });
+        }).catch(e => console.log('Error: ' + e));
     },
   },
 };

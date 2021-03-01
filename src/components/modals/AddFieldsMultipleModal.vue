@@ -88,6 +88,7 @@ export default {
     this.list = this.$attrs.data;
     this.title = this.$attrs.title;
     this.mutation = this.$attrs.mutation;
+    this.collectionPath = this.$attrs.collectionPath;
   },
   methods: {
     resetErrors() {
@@ -128,7 +129,11 @@ export default {
       const cleanedObject = this.removeEmptyFields(this.result);
       if (Object.keys(cleanedObject).length > 0) {
         // Cleaned object has keys
-        this.$store.commit(this.mutation, cleanedObject);
+        const payload = {
+          collectionPath: this.collectionPath,
+          data: cleanedObject,
+        };
+        this.$store.commit(this.mutation, payload);
         this.$modal.hideAll();
       } else {
         // Cleaned object has no keys

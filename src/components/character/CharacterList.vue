@@ -1,15 +1,6 @@
 <template>
   <div class="characters-list">
-    <pulse-loader
-      v-if="loading"
-      class="spinner"
-      :size="size"
-      :color="color"
-    />
-    <div
-      v-else
-      class="characters-list-wrapper"
-    >
+    <div class="characters-list-wrapper">
       <div class="side-bar">
         <button
           class="add-character-button"
@@ -19,116 +10,42 @@
         </button>
         <ul>
           <li
-            v-for="(character) in characters"
-            :key="character.characterId"
+            v-for="(character) in characterList"
+            :key="character.id"
             :class="{ selected: character.clicked }"
-            @click="selectCharacter(character.characterId, character.clicked)"
+            @click="selectCharacter(character.id, character.clicked)"
           >
             {{ character.info.name }}
           </li>
         </ul>
       </div>
-      <CharacterViewer
-        v-if="characterSelected"
-        :character="selectedCharacter"
-      />
     </div>
   </div>
 </template>
 
 <script>
 // Components
-import CharacterViewer from './CharacterViewer';
 import AddCharacter from '../modals/AddCharacter';
-
-// Modules
-import { db } from '@/api/database/db';
-import { getFirebaseUser } from '@/api/database/user';
-import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 
 export default {
   name: 'CharacterList',
-  components: {
-    CharacterViewer,
-    PulseLoader,
-  },
-  data() {
-    return {
-      characters: [],
-      selectedCharacter: {},
-      characterSelected: false,
-      loading: true,
-      color: '#75a1de',
-      size: '25px',
-    };
-  },
-  created() {
-    this.getCharacters();
+  computed: {
+    characterList() {
+      return this.$store.state.characterList;
+    },
   },
   methods: {
-    async getCharacters() {
-      const currentUser = await getFirebaseUser();
-      const { uid } = currentUser;
-
-      if (uid) {
-        const characterCollection = `/users/${uid}/characters`;
-        const snapshot = await db.collection(characterCollection).get();
-        const chars = snapshot.docs.map((doc) => doc.data());
-
-        for (let i = 0; i < snapshot.docs.length; i += 1) {
-          // Character id
-          const characterId = snapshot.docs[i].id;
-          chars[i].characterId = characterId;
-
-          // Notes
-          const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
-          const notesSnapshot = await db.collection(notesCollection).get();
-
-          const notes = notesSnapshot.docs.map((doc) => doc.data());
-          for (let i = 0; i < notesSnapshot.docs.length; i += 1) {
-            const noteId = notesSnapshot.docs[i].id;
-            notes[i].id = noteId;
-          }
-          chars[i].notes = notes;
-
-          // Inventory
-          const inventoryCollection = `/users/${uid}/characters/${characterId}/inventory`;
-          const inventorySnapshot = await db.collection(inventoryCollection).get();
-
-          const inventory = inventorySnapshot.docs.map((doc) => doc.data());
-          for (let i = 0; i < inventorySnapshot.docs.length; i += 1) {
-            const inventoryId = inventorySnapshot.docs[i].id;
-            inventory[i].id = inventoryId;
-          }
-          chars[i].inventory = inventory;
-
-          // Skills
-          const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
-          const skillsSnapshot = await db.collection(skillsCollection).get();
-
-          const skills = skillsSnapshot.docs.map((doc) => doc.data());
-          for (let i = 0; i < skillsSnapshot.docs.length; i += 1) {
-            const skillsId = skillsSnapshot.docs[i].id;
-            skills[i].id = skillsId;
-          }
-          chars[i].skills = skills;
-        }
-
-        this.characters = chars;
-        this.loading = false;
-      }
+    getCharacterById(uid) {
+      return this.characterList.find(char => char.id === uid);
     },
     resetSelectedCharacters() {
-      this.characters.forEach((char) => {
-        char.clicked = false;
-        this.characterSelected = false;
-      });
+      this.$store.dispatch('resetAllCharactersClicked');
     },
     selectCharacter(id, clicked) {
       this.resetSelectedCharacters();
-      this.selectedCharacter = this.characters.filter((char) => char.characterId === id)[0];
-      this.selectedCharacter.clicked = !clicked;
-      this.characterSelected = true;
+      const selectedCharacter = this.getCharacterById(id);
+      selectedCharacter.clicked = !clicked;
+      this.$store.commit('setSelectedCharacter', selectedCharacter);
     },
     showModal() {
       const componentProps = {};
@@ -150,6 +67,10 @@ export default {
 </script>
 
 <style scoped>
+.characters-list {
+  flex: 1 0 20%;
+}
+
 .characters-list-wrapper {
   display: flex;
   flex-direction: row;
@@ -159,10 +80,6 @@ export default {
 .selected {
   font-weight: bold;
   background-color: #ffeac4;
-}
-
-.side-bar {
-  flex: 1 0 20%;
 }
 
 .add-character-button {

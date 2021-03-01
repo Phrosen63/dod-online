@@ -1,21 +1,98 @@
 <template>
   <div class="characters  view-window">
-    <h1>Characters</h1>
-    <p class="preamble">
-      ~ Click on a field to edit it's value ~
-    </p>
-    <CharacterList />
+    <pulse-loader
+      v-if="loading"
+      class="spinner"
+      :size="size"
+      :color="color"
+    />
+    <template v-else>
+      <h1>Characters</h1>
+      <p class="preamble">
+        ~ Click on a field to edit it's value ~
+      </p>
+      <div class="characters-wrapper">
+        <CharacterList />
+        <CharacterViewer />
+      </div>
+    </template>
   </div>
 </template>
 
 <script>
 // Components
 import CharacterList from '@/components/character/CharacterList';
+import CharacterViewer from '@/components/character/CharacterViewer';
+
+// Modules
+import { db } from '@/api/database/db';
+import { getFirebaseUser } from '@/api/database/user';
+import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 
 export default {
   name: 'Characters',
   components: {
     CharacterList,
+    CharacterViewer,
+    PulseLoader,
+  },
+  data() {
+    return {
+      loading: true,
+      color: '#75a1de',
+      size: '25px',
+    };
+  },
+  async beforeCreate() {
+    const currentUser = await getFirebaseUser();
+    const { uid } = currentUser;
+
+    if (uid) {
+      const characterCollection = `/users/${uid}/characters`;
+      const snapshot = await db.collection(characterCollection).get();
+      const chars = snapshot.docs.map((doc) => doc.data());
+
+      for (let i = 0; i < snapshot.docs.length; i += 1) {
+        // Character id
+        const characterId = snapshot.docs[i].id;
+        chars[i].id = characterId;
+
+        // Notes
+        const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
+        const notesSnapshot = await db.collection(notesCollection).get();
+
+        const notes = notesSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < notesSnapshot.docs.length; i += 1) {
+          const noteId = notesSnapshot.docs[i].id;
+          notes[i].id = noteId;
+        }
+        chars[i].notes = notes;
+
+        // Inventory
+        const inventoryCollection = `/users/${uid}/characters/${characterId}/inventory`;
+        const inventorySnapshot = await db.collection(inventoryCollection).get();
+
+        const inventory = inventorySnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < inventorySnapshot.docs.length; i += 1) {
+          const inventoryId = inventorySnapshot.docs[i].id;
+          inventory[i].id = inventoryId;
+        }
+        chars[i].inventory = inventory;
+
+        // Skills
+        const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
+        const skillsSnapshot = await db.collection(skillsCollection).get();
+
+        const skills = skillsSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < skillsSnapshot.docs.length; i += 1) {
+          const skillsId = skillsSnapshot.docs[i].id;
+          skills[i].id = skillsId;
+        }
+        chars[i].skills = skills;
+      }
+      this.$store.commit('setCharacterList', chars);
+      this.loading = false;
+    }
   },
 };
 </script>
@@ -23,5 +100,10 @@ export default {
 <style scoped>
 .characters > h1 {
   margin: 22px 0 10px 0;
+}
+
+.characters-wrapper {
+  display: flex;
+  flex-direction: row;
 }
 </style>

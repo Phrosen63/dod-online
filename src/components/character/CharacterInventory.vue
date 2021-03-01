@@ -26,13 +26,13 @@
       tag="ul"
     >
       <li
-        v-for="item in inventory"
+        v-for="item in selectedCharacter.inventory"
         :key="item.id"
         class="character-inventory-item"
       >
         <p
-          v-for="(value, key, index) in item"
-          :key="index"
+          v-for="(value, key) in item"
+          :key="getUniqueObjectKey(item.id, key)"
           :data-type="key.toLowerCase()"
         >
           {{ key }}:
@@ -65,83 +65,22 @@ import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
 import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
 
-// Modules
-import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
-import { writeNewObjToCurrentUser } from '@/api/database/write';
-
 export default {
   name: 'CharacterInventory',
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
-    },
-    inventory: {
-      type: Array,
-      required: true,
-      default() {
-        return [];
-      },
-    },
-  },
-  data() {
-    return {
-      INVENTORY_COLLECTION: undefined,
-    };
-  },
   computed: {
-    characterInventorySavedListener() {
-      return this.$store.state.inventoryItemSaved;
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    characterInventoryAddedListener() {
-      return this.$store.state.inventoryItemAdded;
-    },
-    characterInventoryDeletedListener() {
-      return this.$store.state.inventoryItemDeleted;
-    },
-  },
-  watch: {
-    characterInventorySavedListener(arr) {
-      arr.forEach(obj => {
-        const target = this.inventory.find((item) => item.id === obj.id);
-
-        if (target) {
-          // Update existing object
-          target[obj.key] = obj.value;
-        } else {
-          // Add new object
-          if (obj.id) {
-            this.inventory.push(obj);
-          }
-        }
-      });
-    },
-    characterInventoryAddedListener(data) {
-      writeNewObjToCurrentUser(this.INVENTORY_COLLECTION, data).then((id) => {
-        data.id = id;
-        this.inventory.push(data);
-      });
-    },
-    characterInventoryDeletedListener(data) {
-      const index = this.inventory.findIndex(item => item.id === data.id);
-      if (index > -1) {
-        const item = this.inventory[index];
-        this.inventory.splice(index, 1);
-        deleteDocumentFromCurrentUser(this.INVENTORY_COLLECTION, item.id);
-      }
-    },
-  },
-  created() {
-    this.INVENTORY_COLLECTION = `characters/${this.characterId}/inventory`;
   },
   methods: {
     getItemById(id) {
-      return this.inventory.find((item) => item.id === id);
+      return this.selectedCharacter.inventory.find((item) => item.id === id);
+    },
+    getUniqueObjectKey(id, key) {
+      return `${id}_${key}`;
     },
     clickEdit(itemId) {
+      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
       const item = this.getItemById(itemId);
       const data = [];
 
@@ -164,9 +103,8 @@ export default {
           value: item.key,
         },
         objectId: itemId,
-        characterId: this.characterId,
-        path: this.INVENTORY_COLLECTION,
-        mutation: 'setInventoryItemSaved',
+        collectionPath: INVENTORY_COLLECTION,
+        mutation: 'updateCharacterInventoryItem',
       };
       const modalProps = {
         height: 'auto',
@@ -181,7 +119,8 @@ export default {
       );
     },
     clickDelete(itemId) {
-      const item = this.inventory.find(obj => obj.id === itemId);
+      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
+      const item = this.selectedCharacter.inventory.find(obj => obj.id === itemId);
       const componentProps = {
         data: {
           button: {
@@ -195,7 +134,8 @@ export default {
           content: `This cannot be undone. Delete anyway?`,
         },
         objectId: itemId,
-        mutation: 'setInventoryItemDeleted',
+        collectionPath: INVENTORY_COLLECTION,
+        mutation: 'deleteCharacterInventoryItem',
       };
       const modalProps = {
         height: 'auto',
@@ -212,6 +152,7 @@ export default {
     addCustomItem(type) {
       const data = [];
       let title = 'Add custom item';
+      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
 
       if (type === 'weapon') {
         title = 'Add weapon';
@@ -245,7 +186,8 @@ export default {
       const componentProps = {
         data,
         title,
-        mutation: 'setInventoryItemAdded',
+        collectionPath: INVENTORY_COLLECTION,
+        mutation: 'addCharacterInventoryItem',
       };
       const modalProps = {
         height: 'auto',

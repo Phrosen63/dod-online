@@ -14,7 +14,7 @@
       tag="ul"
     >
       <li
-        v-for="skill in skills"
+        v-for="skill in selectedCharacter.skills"
         :key="skill.id"
         class="character-skill"
       >
@@ -50,86 +50,19 @@ import AddFieldsMultipleModal from '@/components/modals/AddFieldsMultipleModal';
 import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
 
-// Modules
-import { writeNewObjToCurrentUser } from '@/api/database/write';
-import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
-
 export default {
   name: 'CharacterSkills',
-  props: {
-    characterId: {
-      type: String,
-      required: true,
-      default() {
-        return '';
-      },
-    },
-    skills: {
-      type: Array,
-      required: true,
-      default() {
-        return {};
-      },
-    },
-  },
-  data() {
-    return {
-      SKILLS_COLLECTION: undefined,
-    };
-  },
   computed: {
-    characterSkillAddedListener() {
-      return this.$store.state.characterSkillAdded;
+    selectedCharacter() {
+      return this.$store.state.selectedCharacter;
     },
-    characterSkillSavedListener() {
-      return this.$store.state.characterSkillSaved;
-    },
-    characterSkillDeletedListener() {
-      return this.$store.state.characterSkillDeleted;
-    },
-  },
-  watch: {
-    characterSkillAddedListener(data) {
-      if (data && typeof data === 'object') {
-        const skill = {
-          key: data.key,
-          value: data.value,
-        }
-        writeNewObjToCurrentUser(this.SKILLS_COLLECTION, skill).then((id) => {
-          skill.id = id;
-          this.skills.push(skill);
-        });
-      }
-    },
-    characterSkillSavedListener(arr) {
-      arr.forEach(obj => {
-        const target = this.skills.find((skill) => skill.id === obj.id);
-        if (target) {
-          // Update existing object
-          target[obj.key] = obj.value;
-        }
-      });
-    },
-    characterSkillDeletedListener(data) {
-      if (data.value) {
-        const index = this.skills.findIndex(skill => skill.id === data.id);
-        if (index > -1) {
-          const skill = this.skills[index];
-          this.skills.splice(index, 1);
-          deleteDocumentFromCurrentUser(this.SKILLS_COLLECTION, skill.id);
-        }
-      }
-    },
-  },
-  created() {
-    this.SKILLS_COLLECTION = `characters/${this.characterId}/skills`;
   },
   methods: {
     getSkillObjectById(id) {
-      return this.skills.find((skill) => skill.id === id);
+      return this.selectedCharacter.skills.find((skill) => skill.id === id);
     },
-
     addSkill() {
+      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
       const data = [
         {
           key: 'key',
@@ -142,7 +75,8 @@ export default {
       const componentProps = {
         data,
         title: 'Add note',
-        mutation: 'setCharacterSkillAdded',
+        collectionPath: SKILLS_COLLECTION,
+        mutation: 'addCharacterSkill',
       };
       const modalProps = {
         height: 'auto',
@@ -157,6 +91,7 @@ export default {
       );
     },
     clickEdit(skillId) {
+      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
       const skill = this.getSkillObjectById(skillId);
       const data = [
         {
@@ -181,8 +116,8 @@ export default {
         },
         objectId: skillId,
         characterId: this.characterId,
-        path: this.SKILLS_COLLECTION,
-        mutation: 'setCharacterSkillSaved',
+        collectionPath: SKILLS_COLLECTION,
+        mutation: 'updateCharacterSkill',
       };
       const modalProps = {
         height: 'auto',
@@ -197,6 +132,7 @@ export default {
       );
     },
     clickDelete(skillId) {
+      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
       const skill = this.getSkillObjectById(skillId);
 
       const componentProps = {
@@ -212,7 +148,8 @@ export default {
           content: `This cannot be undone. Delete anyway?`,
         },
         objectId: skillId,
-        mutation: 'setCharacterSkillDeleted',
+        collectionPath: SKILLS_COLLECTION,
+        mutation: 'deleteCharacterSkill',
       };
       const modalProps = {
         height: 'auto',

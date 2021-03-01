@@ -5,23 +5,24 @@ const writeObject = (collectionPath, docName, data) => {
   db.collection(collectionPath).doc(docName).update(data);
 };
 
-const createNestedFieldObject = (field, nestedField, value) => {
-  const object = {};
-  object[`${field}.${nestedField}`] = value;
-  return object;
-};
-
-const createDoubleNestedFieldObject = (field, nestedField, doubleNestedField, value) => {
-  const object = {};
-  object[`${field}.${nestedField}.${doubleNestedField}`] = value;
-  return object;
-};
-
 const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject) => {
   const currentUser = await getFirebaseUser();
   const { uid } = currentUser;
   const collectionPath = `/users/${uid}/${userCollection}`;
   db.collection(collectionPath).doc(docName).update(nestedObject);
+};
+
+const createDocumentFieldObject = ({ map, key, value }) => {
+  const object = {};
+  object[`${map}.${key}`] = value;
+  return object;
+};
+
+const updateDocumentFieldForCurrentUser = async ({ collection, document, data }) => {
+  const currentUser = await getFirebaseUser();
+  const { uid } = currentUser;
+  const collectionPath = `/users/${uid}/${collection}`;
+  return db.collection(collectionPath).doc(document).update(data);
 };
 
 const writeNewObjToCurrentUser = async (userCollection, nestedObject) => {
@@ -44,9 +45,9 @@ const addUserDocument = async (uid) => {
 // Export methods
 export {
   writeObject,
-  createNestedFieldObject,
-  createDoubleNestedFieldObject,
   writeNestedObjToCurrentUser,
+  createDocumentFieldObject,
+  updateDocumentFieldForCurrentUser,
   writeNewObjToCurrentUser,
   addUserDocument,
 };
