@@ -86,7 +86,7 @@ export default {
       if (this.showMessages) {
         this.items.push({ message: doc.data().message });
       }
-      if (this.autoScroll) {
+      if (this.autoScroll && this.$refs.consoleWindow) {
         this.$nextTick(() => this.$refs.consoleWindow.scrollTop = this.$refs.consoleWindow.scrollHeight);
       }
       this.showMessages = true;
