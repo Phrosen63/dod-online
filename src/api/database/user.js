@@ -14,8 +14,7 @@ const getUserDisplayName = async () => {
 };
 
 const createNewUser = (email, password) => new Promise((resolve, reject) => {
-  auth.createUserWithEmailAndPassword(email, password)
-  .then(async res => {
+  auth.createUserWithEmailAndPassword(email, password).then(async res => {
     const user = res.user;
     const displayName = generateName();
     const uid = user.uid;
