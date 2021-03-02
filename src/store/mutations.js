@@ -170,6 +170,49 @@ const deleteCharacterNote = (state, payload) => {
   }
 };
 
+const addCharacterArmor = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (payload.collectionPath) {
+      writeNewObjToCurrentUser(payload.collectionPath, obj).then((id) => {
+        obj.id = id;
+        state.selectedCharacter.armor.push(obj);
+      });
+    }
+  }
+};
+
+const updateCharacterArmor = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const result = {};
+    payload.forEach(obj => {
+      result[obj.key] = obj.value;
+    });
+    result.id = payload[0].id;
+
+    const index = state.selectedCharacter.armor.findIndex(armor => armor.id === result.id);
+    if (index > -1) {
+      Object.keys(state.selectedCharacter.armor[index]).forEach(key => {
+        state.selectedCharacter.armor[index][key] = result[key];
+      });
+    }
+  }
+};
+
+const deleteCharacterArmor = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value && obj.collectionPath) {
+      const index = state.selectedCharacter.armor.findIndex(armor => armor.id === obj.id);
+      if (index > -1) {
+        const armor = state.selectedCharacter.armor[index];
+        state.selectedCharacter.armor.splice(index, 1);
+        deleteDocumentFromCurrentUser(obj.collectionPath, armor.id);
+      }
+    }
+  }
+};
+
 // Export mutations
 export default {
   setCharacterList,
@@ -190,4 +233,8 @@ export default {
   addCharacterNote,
   updateCharacterNote,
   deleteCharacterNote,
+
+  addCharacterArmor,
+  updateCharacterArmor,
+  deleteCharacterArmor,
 };
