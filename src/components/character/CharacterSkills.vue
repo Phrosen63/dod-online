@@ -170,6 +170,8 @@ export default {
 <style scoped>
 .character-skills {
   flex: 1 0 100%;
+  border-bottom: 1px solid #a2a2a2;
+  padding: 0 0 55px 0;
 }
 
 .character-skills-list {
@@ -195,7 +197,7 @@ export default {
   margin: 0 15px 0 0;
   text-align: right;
   padding: 0 10px 0 0;
-  border-bottom: 1px solid #a2a2a2;
+  border-bottom: 1px dashed #a2a2a2;
 }
 
 .skill-controls {

@@ -208,6 +208,8 @@ export default {
 <style scoped>
 .character-inventory {
   flex: 1 1 49%;
+  border-bottom: 1px solid #a2a2a2;
+  padding: 0 0 25px 0;
 }
 
 .character-inventory__button-wrapper {
