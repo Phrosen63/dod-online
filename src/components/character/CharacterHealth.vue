@@ -22,13 +22,6 @@
           Legs: {{ third }}
         </p>
       </div>
-      <div class="character-health__image">
-        <img
-          src="@/assets/human.svg"
-          alt="The drawing of a human silhouette"
-          class="character-health__image--human"
-        >
-      </div>
     </div>
   </div>
 </template>
@@ -61,7 +54,7 @@ export default {
 
 <style scoped>
 .character-health {
-  flex: 1 0 70%;
+  flex: 1 0 auto;
 }
 
 .character-health-stat {
@@ -71,18 +64,10 @@ export default {
 .character-health-wrapper {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .character-health__stats {
   flex: 1 0 30%;
-}
-
-.character-health__image {
-  flex: 1 0 70%;
-}
-
-.character-health__image--human {
-  height: 350px;
 }
 </style>
