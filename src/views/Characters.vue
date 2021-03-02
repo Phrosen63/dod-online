@@ -79,6 +79,17 @@ export default {
         }
         chars[i].inventory = inventory;
 
+        // Armor
+        const armorCollection = `/users/${uid}/characters/${characterId}/armor`;
+        const armorSnapshot = await db.collection(armorCollection).get();
+
+        const armor = armorSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < armorSnapshot.docs.length; i += 1) {
+          const armorId = armorSnapshot.docs[i].id;
+          armor[i].id = armorId;
+        }
+        chars[i].armor = armor;
+
         // Skills
         const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
         const skillsSnapshot = await db.collection(skillsCollection).get();

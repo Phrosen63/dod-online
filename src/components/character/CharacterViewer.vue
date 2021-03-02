@@ -7,7 +7,10 @@
       <CharacterInfo />
       <CharacterStats />
     </div>
-    <CharacterHealth />
+    <div class="character-viewer-wrapper">
+      <CharacterArmor />
+      <CharacterHealth />
+    </div>
     <CharacterInventory />
     <CharacterSkills />
     <CharacterNotes />
@@ -18,6 +21,7 @@
 // Components
 import CharacterInfo from '@/components/character/CharacterInfo';
 import CharacterStats from '@/components/character/CharacterStats';
+import CharacterArmor from '@/components/character/CharacterArmor';
 import CharacterHealth from '@/components/character/CharacterHealth';
 import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterSkills from '@/components/character/CharacterSkills';
@@ -28,6 +32,7 @@ export default {
   components: {
     CharacterInfo,
     CharacterStats,
+    CharacterArmor,
     CharacterHealth,
     CharacterInventory,
     CharacterSkills,
@@ -51,6 +56,10 @@ export default {
 }
 
 .character-viewer-wrapper {
-  flex: 0 0 30%;
+  flex: 1 0 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #a2a2a2;
+  padding: 0 0 25px 0;
 }
 </style>
