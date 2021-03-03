@@ -57,6 +57,25 @@ export default {
 </script>
 
 <style scoped>
+.character-stats {
+  flex: 0 1 auto;
+}
+
+.character-stats-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.character-stat {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.character-stat input {
+  width: 200px;
+}
+
 .character-stat__name {
   font-size: 18px;
   text-transform: capitalize;
