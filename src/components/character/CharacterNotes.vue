@@ -59,7 +59,6 @@ import PromptBoolean from '@/components/modals/PromptBoolean';
 
 // Modules
 import { writeNestedObjToCurrentUser } from '@/api/database/write';
-import { deleteDocumentFromCurrentUser } from '@/api/database/delete';
 
 export default {
   name: 'CharacterNotes',
@@ -97,7 +96,7 @@ export default {
           value: note.key,
         },
         objectId: noteId,
-        characterId: this.characterId,
+        characterId: this.selectedCharacter.id,
         collectionPath: NOTES_COLLECTION,
         mutation: 'updateCharacterNote',
       };
@@ -150,15 +149,6 @@ export default {
         componentProps,
         modalProps,
       );
-    },
-    deleteNote(noteId) {
-      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
-      const index = this.selectedCharacter.notes.findIndex(note => note.id === noteId);
-      if (index > -1) {
-        const note = this.selectedCharacter.notes[index];
-        this.selectedCharacter.notes.splice(index, 1);
-        deleteDocumentFromCurrentUser(NOTES_COLLECTION, note.id);
-      }
     },
     addNote() {
       const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
