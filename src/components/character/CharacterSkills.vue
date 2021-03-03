@@ -115,7 +115,7 @@ export default {
           value: skill.key,
         },
         objectId: skillId,
-        characterId: this.characterId,
+        characterId: this.selectedCharacter.id,
         collectionPath: SKILLS_COLLECTION,
         mutation: 'updateCharacterSkill',
       };
