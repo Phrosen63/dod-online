@@ -4,18 +4,18 @@
     class="character-info"
   >
     <h2>Info</h2>
-    <ul class="character-stats-list">
+    <ul class="character-info-list">
       <li
-        v-for="(stat, key) in selectedCharacter.info"
+        v-for="(info, key) in selectedCharacter.info"
         :key="key"
-        class="character-stat"
+        class="character-info"
       >
         <label class="writableField-label">
           {{ key }}:
         </label>
         <input
           type="text"
-          :value="stat"
+          :value="info"
           class="hidden-textfield"
           title="Click to edit"
           @focus="$event.target.select()"
@@ -60,6 +60,10 @@ export default {
 </script>
 
 <style scoped>
+.character-info {
+  flex: 0 1 auto;
+}
+
 .character-info span {
   font-size: 18px;
 }
