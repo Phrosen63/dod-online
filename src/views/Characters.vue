@@ -100,6 +100,17 @@ export default {
           skills[i].id = skillsId;
         }
         chars[i].skills = skills;
+
+        // Wealth
+        const wealthCollection = `/users/${uid}/characters/${characterId}/wealth`;
+        const wealthSnapshot = await db.collection(wealthCollection).get();
+
+        const wealth = wealthSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < wealthSnapshot.docs.length; i += 1) {
+          const wealthId = wealthSnapshot.docs[i].id;
+          wealth[i].id = wealthId;
+        }
+        chars[i].wealth = wealth;
       }
       this.$store.commit('setCharacterList', chars);
       this.loading = false;

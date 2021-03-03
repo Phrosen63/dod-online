@@ -8,6 +8,7 @@
         <div class="character-viewer-wrapper">
           <CharacterInfo />
           <CharacterStats />
+          <CharacterWealth />
         </div>
         <CharacterSkills />
       </v-tab>
@@ -28,6 +29,7 @@
 // Components
 import CharacterInfo from '@/components/character/CharacterInfo';
 import CharacterStats from '@/components/character/CharacterStats';
+import CharacterWealth from '@/components/character/CharacterWealth';
 import CharacterArmor from '@/components/character/CharacterArmor';
 import CharacterHealth from '@/components/character/CharacterHealth';
 import CharacterInventory from '@/components/character/CharacterInventory';
@@ -42,6 +44,7 @@ export default {
   components: {
     CharacterInfo,
     CharacterStats,
+    CharacterWealth,
     CharacterArmor,
     CharacterHealth,
     CharacterInventory,

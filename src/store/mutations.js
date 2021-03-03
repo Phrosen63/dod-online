@@ -213,6 +213,54 @@ const deleteCharacterArmor = (state, payload) => {
   }
 };
 
+const addCharacterWealth = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = {
+      key: payload.data.Title,
+      value: payload.data.Text,
+    };
+    if (payload.collectionPath) {
+      writeNewObjToCurrentUser(payload.collectionPath, obj).then((id) => {
+        obj.id = id;
+        state.selectedCharacter.wealth.push(obj);
+      });
+    }
+  }
+};
+
+const updateCharacterWealth = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const result = {};
+    payload.forEach(obj => {
+      if (obj.key !== 'fieldName') {
+        result[obj.key] = obj.value;
+      }
+    });
+    result.id = payload[0].id;
+
+    const index = state.selectedCharacter.wealth.findIndex(item => item.id === result.id);
+    if (index > -1) {
+      Object.keys(state.selectedCharacter.wealth[index]).forEach(key => {
+        state.selectedCharacter.wealth[index][key] = result[key];
+      });
+    }
+  }
+};
+
+const deleteCharacterWealth = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value && obj.collectionPath) {
+      const index = state.selectedCharacter.wealth.findIndex(item => item.id === obj.id);
+      if (index > -1) {
+        const item = state.selectedCharacter.wealth[index];
+        state.selectedCharacter.wealth.splice(index, 1);
+        deleteDocumentFromCurrentUser(obj.collectionPath, item.id);
+      }
+    }
+  }
+};
+
 // Export mutations
 export default {
   setCharacterList,
@@ -237,4 +285,8 @@ export default {
   addCharacterArmor,
   updateCharacterArmor,
   deleteCharacterArmor,
+
+  addCharacterWealth,
+  updateCharacterWealth,
+  deleteCharacterWealth,
 };
