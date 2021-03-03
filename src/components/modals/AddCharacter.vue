@@ -182,8 +182,8 @@ export default {
         db.collection(collectionPath).add(data)
         .then((docRef) => {
           const inventory = {
-            name: 'Old clothes',
-            description: 'Old, dirty clothes, which offers little to no protection..',
+            Name: 'Old clothes',
+            Description: 'Old, dirty clothes, which offers little to no protection..',
           };
           const notes = {
             key: 'Welcome',
@@ -193,11 +193,24 @@ export default {
           const skills = {
             key: 'Sample skill',
             value: 'Edit or delete this sample skill',
-            strikethrough: false,
           };
+          const armor = {
+            Name: 'Straw hat',
+            Description: 'An well-worn straw hat with holes in it',
+            Effect: '',
+            Value: '0',
+          };
+          const wealth = {
+            key: 'Copper',
+            value: '0',
+          };
+
           db.collection(`${collectionPath}/${docRef.id}/inventory`).add(inventory);
           db.collection(`${collectionPath}/${docRef.id}/notes`).add(notes);
           db.collection(`${collectionPath}/${docRef.id}/skills`).add(skills);
+          db.collection(`${collectionPath}/${docRef.id}/armor`).add(armor);
+          db.collection(`${collectionPath}/${docRef.id}/wealth`).add(wealth);
+
           this.resetForm();
           this.closeModal();
           this.$router.go(0);
