@@ -162,8 +162,8 @@ export default {
           },
         },
         heading: {
-          title: `Warning! Delete item.`,
-          preamble: `Delete item: ${armor.key}`,
+          title: `Warning! Delete armor.`,
+          preamble: `Delete armor: ${armor.key}`,
           content: `This cannot be undone. Delete anyway?`,
         },
         objectId: armorId,
