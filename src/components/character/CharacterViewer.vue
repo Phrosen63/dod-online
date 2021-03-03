@@ -3,17 +3,24 @@
     v-if="selectedCharacter"
     class="character-viewer"
   >
-    <div class="character-viewer-wrapper">
-      <CharacterInfo />
-      <CharacterStats />
-    </div>
-    <div class="character-viewer-wrapper">
-      <CharacterArmor />
-      <CharacterHealth />
-    </div>
-    <CharacterInventory />
-    <CharacterSkills />
-    <CharacterNotes />
+    <vue-tabs>
+      <v-tab title="Front side">
+        <div class="character-viewer-wrapper">
+          <CharacterInfo />
+          <CharacterStats />
+        </div>
+        <CharacterSkills />
+      </v-tab>
+
+      <v-tab title="Back side">
+        <CharacterInventory />
+        <div class="character-viewer-wrapper">
+          <CharacterArmor />
+          <CharacterHealth />
+        </div>
+        <CharacterNotes />
+      </v-tab>
+    </vue-tabs>
   </div>
 </template>
 
@@ -27,6 +34,9 @@ import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterSkills from '@/components/character/CharacterSkills';
 import CharacterNotes from '@/components/character/CharacterNotes';
 
+// Modules
+import {VueTabs, VTab} from 'vue-nav-tabs';
+
 export default {
   name: 'CharacterViewer',
   components: {
@@ -37,6 +47,8 @@ export default {
     CharacterInventory,
     CharacterSkills,
     CharacterNotes,
+    VueTabs,
+    VTab,
   },
   computed: {
     selectedCharacter() {
