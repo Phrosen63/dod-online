@@ -1,11 +1,11 @@
 <template>
   <div class="character-wealth">
-    <h2>Wealth</h2>
+    <h2>{{ $t('wealth') }}</h2>
     <button
       class="button--add"
       @click="addWealth"
     >
-      +Add wealth
+      +{{ $t('add_wealth') }}
     </button>
     <transition-group
       name="transition-list"
@@ -29,14 +29,14 @@
             :data-id="wealth.id"
             @click="clickEdit(wealth.id)"
           >
-            Edit
+            {{ $t('edit') }}
           </button>
           <button
             class="wealth-control wealth-control__delete"
             :data-id="wealth.id"
             @click="clickDelete(wealth.id)"
           >
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </li>

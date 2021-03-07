@@ -4,7 +4,7 @@
     class="character-viewer"
   >
     <vue-tabs>
-      <v-tab title="Front side">
+      <v-tab :title="$t('front')">
         <div class="character-viewer-wrapper">
           <CharacterInfo />
           <CharacterStats />
@@ -13,7 +13,7 @@
         <CharacterSkills />
       </v-tab>
 
-      <v-tab title="Back side">
+      <v-tab :title="$t('back')">
         <CharacterInventory />
         <div class="character-viewer-wrapper">
           <CharacterArmor />

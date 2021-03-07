@@ -7,9 +7,9 @@
       :color="color"
     />
     <template v-else>
-      <h1>Characters</h1>
+      <h1>{{ $t('characters') }}</h1>
       <p class="preamble">
-        ~ Click on a field to edit it's value ~
+        ~ {{ $t('click_to_edit') }} ~
       </p>
       <div class="characters-wrapper">
         <CharacterList />

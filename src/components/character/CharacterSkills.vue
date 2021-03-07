@@ -1,13 +1,12 @@
 <template>
   <div class="character-skills">
-    <h2>Skills</h2>
+    <h2>{{ $t('skills') }}</h2>
     <button
       class="button--add"
       @click="addSkill"
     >
-      +Add skill
+      +{{ $t('add_skill') }}
     </button>
-
     <transition-group
       name="transition-list"
       class="character-skills-list"
@@ -22,21 +21,20 @@
         <span class="character-skill__value">
           {{ skill.value }}
         </span>
-
         <div class="skill-controls">
           <button
             class="skill-control skill-control__edit"
             :data-id="skill.id"
             @click="clickEdit(skill.id)"
           >
-            Edit
+            {{ $t('edit') }}
           </button>
           <button
             class="skill-control skill-control__delete"
             :data-id="skill.id"
             @click="clickDelete(skill.id)"
           >
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </li>

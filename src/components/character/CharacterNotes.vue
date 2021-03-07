@@ -1,11 +1,11 @@
 <template>
   <div class="character-notes">
-    <h2>Notes</h2>
+    <h2>{{ $t('notes') }}</h2>
     <button
       class="button--add"
       @click="addNote"
     >
-      +Add note
+      +{{ $t('add_note') }}
     </button>
     <transition-group
       name="transition-list"
@@ -29,21 +29,21 @@
             :data-id="note.id"
             @click="clickEdit(note.id)"
           >
-            Edit
+            {{ $t('edit') }}
           </button>
           <button
             class="note-control note-control__strike"
             :data-id="note.id"
             @click="clickStrike(note.id)"
           >
-            Cross-out
+            {{ $t('cross_out') }}
           </button>
           <button
             class="note-control note-control__delete"
             :data-id="note.id"
             @click="clickDelete(note.id)"
           >
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </li>

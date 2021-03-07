@@ -1,25 +1,28 @@
 <template>
   <div class="character-health">
-    <h2>Character health</h2>
+    <h2>{{ $t('health') }}</h2>
+    <p class="preamble">
+      {{ $t('health_info') }}
+    </p>
     <div class="character-health-wrapper">
       <div class="character-health__stats">
         <p class="character-health-stat">
-          Total hp: {{ max }} / {{ half }}
+          {{ $t('total_hp') }}: {{ max }} / {{ half }}
         </p>
         <p class="character-health-stat">
-          Head: {{ fourth }}
+          {{ $t('head') }}: {{ fourth }}
         </p>
         <p class="character-health-stat">
-          Arms: {{ fourth }}
+          {{ $t('arms') }}: {{ fourth }}
         </p>
         <p class="character-health-stat">
-          Chest: {{ half }}
+          {{ $t('chest') }}: {{ half }}
         </p>
         <p class="character-health-stat">
-          Stomach: {{ third }}
+          {{ $t('stomach') }}: {{ third }}
         </p>
         <p class="character-health-stat">
-          Legs: {{ third }}
+          {{ $t('legs') }}: {{ third }}
         </p>
       </div>
     </div>
@@ -54,7 +57,11 @@ export default {
 
 <style scoped>
 .character-health {
-  flex: 1 0 auto;
+  flex: 0 1 auto;
+}
+
+.character-health > .preamble {
+  text-align: left;
 }
 
 .character-health-stat {

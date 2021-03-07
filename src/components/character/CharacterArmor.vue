@@ -1,6 +1,6 @@
 <template>
   <div class="character-armor">
-    <h2>Armor</h2>
+    <h2>{{ $t('armor') }}</h2>
     <div class="character-armor-wrapper">
       <div class="character-armor__image">
         <img
@@ -14,7 +14,7 @@
           class="button--add"
           @click="addArmor()"
         >
-          +Add armor
+          +{{ $t('add_armor') }}
         </button>
         <transition-group
           name="transition-list"
@@ -40,14 +40,14 @@
                 :data-id="armor.id"
                 @click="clickEdit(armor.id)"
               >
-                Edit
+                {{ $t('edit') }}
               </button>
               <button
                 class="armor-control armor-control__delete"
                 :data-id="armor.id"
                 @click="clickDelete(armor.id)"
               >
-                Delete
+                {{ $t('delete') }}
               </button>
             </div>
           </li>

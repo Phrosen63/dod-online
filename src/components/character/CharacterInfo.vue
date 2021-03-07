@@ -11,7 +11,7 @@
         class="character-info"
       >
         <label class="writableField-label">
-          {{ key }}:
+          {{ $t(key.toLowerCase()) }}:
         </label>
         <input
           type="text"

@@ -1,24 +1,24 @@
 <template>
   <div class="character-inventory">
-    <h2>Inventory</h2>
+    <h2>{{ $t('inventory') }}</h2>
     <div class="character-inventory__button-wrapper">
       <button
         class="button--add"
         @click="addCustomItem('weapon')"
       >
-        +Add weapon
+        +{{ $t('add_weapon') }}
       </button>
       <button
         class="button--add"
         @click="addCustomItem('item')"
       >
-        +Add item
+        +{{ $t('add_item') }}
       </button>
       <button
         class="button--add"
         @click="addCustomItem('custom')"
       >
-        +Add custom item
+        +{{ $t('add_custom_item') }}
       </button>
     </div>
     <transition-group
@@ -44,14 +44,14 @@
             :data-id="item.id"
             @click="clickEdit(item.id)"
           >
-            Edit
+            {{ $t('edit') }}
           </button>
           <button
             class="item-control item-control__delete"
             :data-id="item.id"
             @click="clickDelete(item.id)"
           >
-            Delete
+            {{ $t('delete') }}
           </button>
         </div>
       </li>

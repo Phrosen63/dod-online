@@ -6,7 +6,7 @@
           class="add-character-button"
           @click="showModal"
         >
-          +New character
+          +{{ $t('new_character') }}
         </button>
         <ul>
           <li

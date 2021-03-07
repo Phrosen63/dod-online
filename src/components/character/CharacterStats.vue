@@ -1,6 +1,6 @@
 <template>
   <div class="character-stats">
-    <h2>Stats</h2>
+    <h2>{{ $t('stats') }}</h2>
     <ul class="character-stats-list">
       <li
         v-for="(stat, key) in selectedCharacter.stats"
@@ -8,7 +8,7 @@
         class="character-stat"
       >
         <label class="writableField-label">
-          {{ key }}:
+          {{ $t(key.toLowerCase()) }}:
         </label>
         <input
           type="text"
