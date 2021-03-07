@@ -20,13 +20,13 @@
         class="modal-button"
         @click="cancel"
       >
-        Cancel
+        {{ $t('cancel') }}
       </button>
       <button
         class="modal-button"
         @click="save"
       >
-        Save
+        {{ $t('save') }}
       </button>
     </div>
   </div>

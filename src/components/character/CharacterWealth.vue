@@ -82,7 +82,7 @@ export default {
       const componentProps = {
         data,
         title: {
-          key: 'Edit field',
+          key: this.$t('edit_field'),
           value: wealth.key,
         },
         objectId: wealth.id,

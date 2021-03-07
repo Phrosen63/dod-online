@@ -1,11 +1,18 @@
 export default {
   // Common
   // Common translations are translations that are used in more than one place
-  characters: 'Characters',
-  profile: 'Profile',
+  characters: 'Karaktärer',
+  profile: 'Profilsida',
+  name: 'Namn',
+  race: 'Ras',
+  class: 'Klass',
   email: 'Email',
   edit: 'Redigera',
   delete: 'Ta bort',
+  cancel: 'Avbryt',
+  save: 'Spara',
+  edit_field: 'Redigera fält',
+  close: 'Stäng',
 
   // Header
   lobby: 'Lobby',
@@ -44,13 +51,8 @@ export default {
   new_character: 'Skapa ny karaktär',
 
   // Characters - CharacterViewer
-  front: 'Framsidan',
-  back: 'Baksidan',
-
-  // Characters - CharacterInfo
-  name: 'Namn',
-  race: 'Ras',
-  class: 'Klass',
+  front: 'Framsida',
+  back: 'Baksida',
 
   // Characters - CharacterStats
   stats: 'Grundegenskaper',
@@ -75,8 +77,8 @@ export default {
   // Characters - CharacterInventory
   inventory: 'Utrustning',
   add_weapon: 'Lägg till vapen',
-  add_item: 'Add föremål',
-  add_custom_item: 'Add custom föremål',
+  add_item: 'Lägg till föremål',
+  add_custom_item: 'Lägg till custom föremål',
 
   // Characters - CharacterArmor
   armor: 'Rustning',
@@ -101,4 +103,38 @@ export default {
   user_name: 'Användarnamn',
   generate_random_name: 'Slumpa användarnamn',
   role: 'Roll',
+
+  // Modals
+  // Modals - AddCharacter
+  create_new_character: 'Skapa en ny karaktär',
+  fill_out_the_form: 'Fyll i formuläret',
+  auto_roll_stats: 'Rulla automatiskt',
+  create: 'Skapa',
+
+  // Modals - AddFieldsMultipleModal
+  add_fields_multiple_info_1: 'Börja med att lägga till fält genom att fylla i Fältets namn',
+  add_fields_multiple_info_2: 'och klicka på Lägg till fält-knappen',
+  add_fields_multiple_info_3: 'Fyll sedan i det nya fältet,',
+  add_fields_multiple_info_4: 'upprepa tills du är nöjd,',
+  add_fields_multiple_info_5: 'klicka sedan på Lägg till-knappen',
+  field_name: 'Fältets namn',
+  add_field: 'Lägg till fält',
+  add: 'Lägg till',
+  damage: 'Skada',
+  description: 'Beskrivning',
+  quantity: 'Antal',
+  weight: 'Vikt',
+  effect: 'Effekt',
+  value: 'Värde',
+
+  // Modals - CustomDice
+  custom_die_roll: 'Rolla custom tärning',
+  custom_dice_info_1: 'Välj antal tärningar, välj sedan vilken sorts tärning',
+  custom_dice_info_2: 'Välj slutligen bonus som ska läggas till på resultatet',
+  how_many_rolls: 'Antal tärningar att rulla?',
+  select_die: 'Välj tärning',
+  custom_die_min: 'Custom tärning - min',
+  custom_die_max: 'Custom tärning - max',
+  bonus: 'Bonus?',
+  rolling: 'Rullar',
 };

@@ -92,7 +92,7 @@ export default {
       const componentProps = {
         data,
         title: {
-          key: 'Edit field',
+          key: this.$t('edit_field'),
           value: note.key,
         },
         objectId: noteId,
@@ -163,7 +163,7 @@ export default {
 
       const componentProps = {
         data,
-        title: 'Add note',
+        title: this.$t('add_note'),
         collectionPath: NOTES_COLLECTION,
         mutation: 'addCharacterNote',
       };

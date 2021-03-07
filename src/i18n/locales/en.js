@@ -3,9 +3,16 @@ export default {
   // Common translations are translations that are used in more than one place
   characters: 'Characters',
   profile: 'Profile',
+  name: 'Name',
+  race: 'Race',
+  class: 'Class',
   email: 'Email',
   edit: 'Edit',
   delete: 'Delete',
+  cancel: 'Cancel',
+  save: 'Save',
+  edit_field: 'Edit field',
+  close: 'Close',
 
   // Header
   lobby: 'Lobby',
@@ -46,11 +53,6 @@ export default {
   // Characters - CharacterViewer
   front: 'Front',
   back: 'Back',
-
-  // Characters - CharacterInfo
-  name: 'Name',
-  race: 'Race',
-  class: 'Class',
 
   // Characters - CharacterStats
   stats: 'Stats',
@@ -101,4 +103,38 @@ export default {
   user_name: 'User name',
   generate_random_name: 'Generate random name',
   role: 'Role',
+
+  // Modals
+  // Modals - AddCharacter
+  create_new_character: 'Create a new character',
+  fill_out_the_form: 'Fill out the form',
+  auto_roll_stats: 'Auto-roll stats',
+  create: 'Create',
+
+  // Modals - AddFieldsMultipleModal
+  add_fields_multiple_info_1: 'First add a field by filling out Field name',
+  add_fields_multiple_info_2: 'and click the Add field button',
+  add_fields_multiple_info_3: 'Then fill out the new field,',
+  add_fields_multiple_info_4: 'repeat until satisfied,',
+  add_fields_multiple_info_5: 'then click the Add button',
+  field_name: 'Field name',
+  add_field: 'Add field',
+  add: 'Add',
+  damage: 'Damage',
+  description: 'Description',
+  quantity: 'Quantity',
+  weight: 'Weight',
+  effect: 'Effect',
+  value: 'Value',
+
+  // Modals - CustomDice
+  custom_die_roll: 'Custom die roll',
+  custom_dice_info_1: 'Choose number of dice to roll, then choose type of die',
+  custom_dice_info_2: 'Finally choose bonuses to be added after the rolls',
+  how_many_rolls: 'How many rolls?',
+  select_die: 'Select die',
+  custom_die_min: 'Custom die - min',
+  custom_die_max: 'Custom die - max',
+  bonus: 'Bonus?',
+  rolling: 'Rolling',
 };

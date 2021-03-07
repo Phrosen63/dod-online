@@ -4,14 +4,14 @@
     @submit.prevent="create"
   >
     <h1 class="modal-heading">
-      Create a new character
+      {{ $t('create_new_character') }}
     </h1>
     <p class="preamble">
-      ~ Fill out the form ~
+      ~ {{ $t('fill_out_the_form') }} ~
     </p>
     <div class="modal-wrapper">
       <label class="modal-label">
-        Name:
+        {{ $t('name') }}:
       </label>
       <input
         v-model="char.name"
@@ -22,7 +22,7 @@
     </div>
     <div class="modal-wrapper">
       <label class="modal-label">
-        Class:
+        {{ $t('class') }}:
       </label>
       <input
         v-model="char.class"
@@ -33,7 +33,7 @@
     </div>
     <div class="new-char-stats__wrapper">
       <label class="modal-label">
-        Race:
+        {{ $t('race') }}:
       </label>
       <input
         v-model="char.race"
@@ -47,7 +47,7 @@
       class="modal-button button__auto-roll"
       @click="autoRoll"
     >
-      Auto-roll stats
+      {{ $t('auto_roll_stats') }}
     </button>
     <div class="new-char-stats">
       <div
@@ -56,7 +56,7 @@
         class="new-char-stats__wrapper"
       >
         <label class="modal-label">
-          {{ stat }}:
+          {{ $t(stat) }}:
         </label>
         <input
           v-model="char.stats[stat]"
@@ -74,12 +74,12 @@
         class="modal-button"
         @click="closeModal"
       >
-        Cancel
+        {{ $t('cancel') }}
       </button>
       <input
         type="submit"
         class="modal-button"
-        value="Create"
+        :value="$t('create')"
       >
     </div>
   </form>
@@ -269,7 +269,7 @@ export default {
 .new-char__input-number {
   outline: none;
   margin: 0 0 0 5px;
-  padding: 0 5px;
+  padding: 0 0 0 5px;
 }
 
 .new-char__input {

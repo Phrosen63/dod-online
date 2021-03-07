@@ -81,22 +81,22 @@ export default {
       const ARMOR_COLLECTION = `characters/${this.selectedCharacter.id}/armor`;
       const data = [
         {
-          key: 'Name',
+          key: this.$t('name'),
         },
         {
-          key: 'Description',
+          key: this.$t('description'),
         },
         {
-          key: 'Effect',
+          key: this.$t('effect'),
         },
         {
-          key: 'Value',
+          key: this.$t('value'),
         },
       ];
 
       const componentProps = {
         data,
-        title: 'Add armor',
+        title: this.$t('add_armor'),
         collectionPath: ARMOR_COLLECTION,
         mutation: 'addCharacterArmor',
       };
@@ -132,7 +132,7 @@ export default {
       const componentProps = {
         data,
         title: {
-          key: 'Edit field',
+          key: this.$t('edit_field'),
           value: armor.key,
         },
         objectId: armorId,

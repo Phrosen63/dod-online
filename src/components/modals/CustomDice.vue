@@ -1,14 +1,14 @@
 <template>
   <div class="modal-window custom-dice">
     <h1 class="modal-heading">
-      Custom die roll
+      {{ $t('custom_die_roll') }}
     </h1>
     <p class="preamble">
-      ~ Choose number of dice to roll, then choose type of die ~ <br>
-      ~ Finally choose bonuses to be added after the rolls ~
+      ~ {{ $t('custom_dice_info_1') }} ~ <br>
+      ~ {{ $t('custom_dice_info_2') }} ~
     </p>
     <label class="custom-dice__label">
-      How many rolls?
+      {{ $t('how_many_rolls') }}
     </label>
     <input
       v-model="amount"
@@ -20,28 +20,28 @@
       value="1"
     >
     <label class="custom-dice__label">
-      Select die
+      {{ $t('select_die') }}
     </label>
     <select
       v-model="die"
       class="custom-dice__select"
     >
-      <option>Custom</option>
-      <option>T3</option>
-      <option>T4</option>
-      <option>T6</option>
-      <option>T8</option>
-      <option>T10</option>
-      <option>T12</option>
-      <option>T20</option>
-      <option>T100</option>
+      <option>{{ $t('custom') }}</option>
+      <option>{{ $t('D3') }}</option>
+      <option>{{ $t('D4') }}</option>
+      <option>{{ $t('D6') }}</option>
+      <option>{{ $t('D8') }}</option>
+      <option>{{ $t('D10') }}</option>
+      <option>{{ $t('D12') }}</option>
+      <option>{{ $t('D20') }}</option>
+      <option>{{ $t('D100') }}</option>
     </select>
     <div
       v-if="die === 'Custom'"
       class="custom-dice-wrapper"
     >
       <label class="custom-dice__label">
-        Custom die - min
+        {{ $t('custom_die_min') }}
       </label>
       <input
         v-model="min"
@@ -53,7 +53,7 @@
         value="1"
       >
       <label class="custom-dice__label">
-        Custom die - max
+        {{ $t('custom_die_max') }}
       </label>
       <input
         v-model="max"
@@ -66,7 +66,7 @@
       >
     </div>
     <label class="custom-dice__label">
-      Bonus?
+      {{ $t('bonus') }}
     </label>
     <input
       v-model="bonus"
@@ -79,7 +79,7 @@
     >
     <div class="custom-dice__wrapper">
       <span class="custom-dice__text custom-dice__text--static">
-        Rolling: 
+        {{ $t('rolling') }}:
       </span>
       <span class="custom-dice__text">
         {{ getOutput() }}
@@ -90,13 +90,13 @@
         class="custom-dice__button"
         @click="closeModal"
       >
-        Close
+        {{ $t('close') }}
       </button>
       <button
         class="custom-dice__button"
         @click="roll"
       >
-        Roll!
+        {{ $t('roll') }}!
       </button>
     </div>
   </div>

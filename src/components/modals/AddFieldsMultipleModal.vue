@@ -5,11 +5,11 @@
     </h1>
     <template v-if="isCustomItem">
       <p class="preamble">
-        ~ First add a field by filling out Field name<br>
-        and click the Add field button<br>
-        Then fill out the new field,<br>
-        repeat until satisfied, <br>
-        then click the Add button ~
+        ~ {{ $t('add_fields_multiple_info_1') }}<br>
+        {{ $t('add_fields_multiple_info_2') }}<br>
+        {{ $t('add_fields_multiple_info_3') }}<br>
+        {{ $t('add_fields_multiple_info_4') }}<br>
+        {{ $t('add_fields_multiple_info_5') }} ~
       </p>
       <p
         class="error-message"
@@ -19,7 +19,7 @@
       </p>
       <div class="modal-wrapper">
         <label class="modal-label">
-          Field name:
+          {{ $t('field_name') }}:
         </label>
         <input
           v-model="newFieldTitle"
@@ -32,7 +32,7 @@
         class=""
         @click="addField"
       >
-        Add field
+        {{ $t('add_field') }}
       </button>
     </template>
     <div class="add-multiple-field-list">
@@ -56,13 +56,13 @@
         class="modal-button"
         @click="cancel"
       >
-        Cancel
+        {{ $t('cancel') }}
       </button>
       <button
         class="modal-button"
         @click="add"
       >
-        Add
+        {{ $t('add') }}
       </button>
     </div>
   </div>
@@ -103,7 +103,9 @@ export default {
         if (alreadyInList) {
           // Already in list, do not add new field
           this.showErrorMessage = true;
-          this.errorMessage = 'A field with that name already exists, please choose a different name.';
+          this.errorMessage = this.$i18n.locale === 'en' ?
+            'A field with that name already exists, please choose a different name.' :
+            'Ett fält med samma namn existerar redan, vänligen välj ett annat namn';
         } else {
           // New field, add to list
           this.list.push({
@@ -115,7 +117,9 @@ export default {
       } else {
         // No field name
         this.showErrorMessage = true;
-        this.errorMessage = 'Please fill out the Field name field.';
+        this.errorMessage = this.$i18n.locale === 'en' ?
+          'Please fill out the Field name field.' :
+          'Fyll i Fältets namn-fältet.';
       }
     },
     cancel() {
@@ -138,7 +142,9 @@ export default {
       } else {
         // Cleaned object has no keys
         this.showErrorMessage = true;
-        this.errorMessage = 'Please fill out the custom field(s).';
+        this.errorMessage = this.$i18n.locale === 'en' ?
+          'Please fill out the custom field(s).' :
+          'Vänligen fyll i custom fält(en).';
       }
     },
   },

@@ -72,7 +72,7 @@ export default {
 
       const componentProps = {
         data,
-        title: 'Add note',
+        title: this.$t('add_skill'),
         collectionPath: SKILLS_COLLECTION,
         mutation: 'addCharacterSkill',
       };
@@ -96,20 +96,18 @@ export default {
           id: skill.id,
           key: 'key',
           value: skill.key,
-          fieldName: 'Title',
         },
         {
           id: skill.id,
           key: 'value',
           value: skill.value,
-          fieldName: 'Text',
         },
       ];
 
       const componentProps = {
         data,
         title: {
-          key: 'Edit field',
+          key: this.$t('edit_field'),
           value: skill.key,
         },
         objectId: skillId,

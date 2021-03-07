@@ -99,7 +99,7 @@ export default {
       const componentProps = {
         data,
         title: {
-          key: 'Edit field',
+          key: this.$t('edit_field'),
           value: item.key,
         },
         objectId: itemId,
@@ -151,35 +151,35 @@ export default {
     },
     addCustomItem(type) {
       const data = [];
-      let title = 'Add custom item';
+      let title = this.$t('add_custom_item');
       const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
 
       if (type === 'weapon') {
-        title = 'Add weapon';
+        title = this.$t('add_weapon');
         data.push({
-          key: 'Name',
+          key: this.$t('name'),
         });
         data.push({
-          key: 'Damage',
+          key: this.$t('damage'),
         });
         data.push({
-          key: 'Description',
+          key: this.$t('description'),
         });
       }
 
       if (type === 'item') {
-        title = 'Add item';
+        title = this.$t('add_item');
         data.push({
-          key: 'Name',
+          key: this.$t('name'),
         });
         data.push({
-          key: 'Description',
+          key: this.$t('description'),
         });
         data.push({
-          key: 'Quantity',
+          key: this.$t('quantity'),
         });
         data.push({
-          key: 'Weight',
+          key: this.$t('weight'),
         });
       }
 
