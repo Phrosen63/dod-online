@@ -103,6 +103,7 @@ export default {
   user_name: 'Användarnamn',
   generate_random_name: 'Slumpa användarnamn',
   role: 'Roll',
+  prefered_language: 'Föredraget språk',
 
   // Modals
   // Modals - AddCharacter

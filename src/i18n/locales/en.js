@@ -103,6 +103,7 @@ export default {
   user_name: 'User name',
   generate_random_name: 'Generate random name',
   role: 'Role',
+  prefered_language: 'Prefered lanaguage',
 
   // Modals
   // Modals - AddCharacter
