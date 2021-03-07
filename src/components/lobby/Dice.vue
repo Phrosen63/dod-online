@@ -1,20 +1,20 @@
 <template>
   <div class="dice-wrapper">
     <div class="dice">
-      <Die :data="{ title: 'Roll T3', die: 'T3' }" />
-      <Die :data="{ title: 'Roll T4', die: 'T4' }" />
-      <Die :data="{ title: 'Roll T6', die: 'T6' }" />
-      <Die :data="{ title: 'Roll T8', die: 'T8' }" />
-      <Die :data="{ title: 'Roll T10', die: 'T10' }" />
-      <Die :data="{ title: 'Roll T12', die: 'T12' }" />
-      <Die :data="{ title: 'Roll 204', die: 'T20' }" />
-      <Die :data="{ title: 'Roll100T4', die: 'T100' }" />
+      <Die :data="{ title: getTitle('D3'), die: $t('D3') }" />
+      <Die :data="{ title: getTitle('D4'), die: $t('D4') }" />
+      <Die :data="{ title: getTitle('D6'), die: $t('D6') }" />
+      <Die :data="{ title: getTitle('D8'), die: $t('D8') }" />
+      <Die :data="{ title: getTitle('D10'), die: $t('D10') }" />
+      <Die :data="{ title: getTitle('D12'), die: $t('D12') }" />
+      <Die :data="{ title: getTitle('D20'), die: $t('D20') }" />
+      <Die :data="{ title: getTitle('D100'), die: $t('D100') }" />
     </div>
     <button
       class="die custom-die"
       @click="showModal"
     >
-      Custom
+      {{ $t('custom') }}
     </button>
   </div>
 </template>
@@ -30,6 +30,9 @@ export default {
     Die,
   },
   methods: {
+    getTitle(die) {
+      return `${this.$t('roll')} ${this.$t(die)}`;
+    },
     showModal() {
       const componentProps = {};
       const modalProps = {
