@@ -12,8 +12,14 @@
       class="profile-info"
     >
       <div>
-        <label>{{ $t('user_name') }}:</label>
+        <label
+          for="field_UserName"
+          class="profile-info__user-name"
+        >
+          {{ $t('user_name') }}:
+        </label>
         <input
+          id="field_UserName"
           v-model="displayName"
           type="text"
           class="hidden-textfield"
@@ -21,7 +27,10 @@
           @focus="$event.target.select()"
           @change="updateUserDisplayName($event)"
         >
-        <button @click="generateRandomName">
+        <button
+          class="profile-info__random-name-button"
+          @click="generateRandomName"
+        >
           {{ $t('generate_random_name') }}
         </button>
       </div>
@@ -100,3 +109,13 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.profile-info__user-name {
+  font-size: 18px;
+}
+
+.profile-info__random-name-button {
+  cursor: pointer;
+}
+</style>
