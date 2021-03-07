@@ -1,5 +1,5 @@
 <template>
-  <div class="lobby  view-window">
+  <div class="lobby view-window">
     <h1>Lobby</h1>
     <div class="lobby-wrapper">
       <Dice />
