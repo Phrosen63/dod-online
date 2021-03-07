@@ -2,21 +2,31 @@
   <header>
     <nav>
       <router-link to="/lobby">
-        Lobby
+        {{ $t('lobby') }}
       </router-link>
       <router-link to="/characters">
-        Characters
+        {{ $t('characters') }}
       </router-link>
       <router-link to="/profile">
-        Profile
+        {{ $t('profile') }}
       </router-link>
     </nav>
-    <button
-      id="btnLogout"
-      @click="logOut"
-    >
-      Log out
-    </button>
+    <div class="header-button-wrapper">
+      <button
+        id="btnSwitchLanguage"
+        class="header-button"
+        @click="switchLanguage"
+      >
+        {{ $t('switch_language') }}
+      </button>
+      <button
+        id="btnLogout"
+        class="header-button"
+        @click="logOut"
+      >
+        {{ $t('log_out') }}
+      </button>
+    </div>
   </header>
 </template>
 
@@ -32,6 +42,13 @@ export default {
       auth.signOut();
       if (this.$route.name !== 'LoginScreen') {
         this.$router.push('/');
+      }
+    },
+    switchLanguage() {
+      if (this.$i18n.locale === 'en') {
+        this.$i18n.locale = 'sv';
+      } else {
+        this.$i18n.locale = 'en';
       }
     },
   },
@@ -69,18 +86,28 @@ nav > a:hover {
   background-color: #ffeac4;
 }
 
-#btnLogout {
+.header-button-wrapper {
   position: absolute;
   right: 25px;
   border: 0;
+}
+
+.header-button {
   background-color: white;
   font-size: 20px;
   padding: 10px;
   cursor: pointer;
+}
+
+#btnSwitchLanguage {
+  margin: 0 10px 0 0;
+}
+
+#btnLogout {
   min-width: 87px;
 }
 
-#btnLogout:hover {
+.header-button:hover {
   background-color: #e3e2e1;
 }
 
@@ -101,8 +128,14 @@ nav > a:hover {
     padding: 0;
   }
 
-  #btnLogout {
+  .header-button-wrapper {
     position: unset;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .header-button {
+    margin: 5px 0;
   }
 }
 </style>
