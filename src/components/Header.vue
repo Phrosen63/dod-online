@@ -14,10 +14,21 @@
     <div class="header-button-wrapper">
       <button
         id="btnSwitchLanguage"
-        class="header-button"
+        :title="$t('switch_language')"
         @click="switchLanguage"
       >
-        {{ $t('switch_language') }}
+        <img
+          v-if="showFlag === 'swe'"
+          src="@/assets/flag_swe.svg"
+          alt="Swedens flag"
+          class="header-flag header-flag--swe"
+        >
+        <img
+          v-if="showFlag === 'uk'"
+          src="@/assets/flag_uk.svg"
+          alt="The flag of the United Kingdom"
+          class="header-flag header-flag--uk"
+        >
       </button>
       <button
         id="btnLogout"
@@ -26,6 +37,7 @@
       >
         {{ $t('log_out') }}
       </button>
+      <span class="hide">Icons made by <a href="https://www.freepik.com">Freepik</a> from <a href="https://www.flaticon.com/">www.flaticon.com</a></span>
     </div>
   </header>
 </template>
@@ -36,6 +48,11 @@ import { auth } from '@/api/database/auth';
 
 export default {
   name: 'Header',
+  data() {
+    return {
+      showFlag: 'swe',
+    };
+  },
   methods: {
     logOut() {
       // Log out user and re-direct to LoginScreen
@@ -47,8 +64,10 @@ export default {
     switchLanguage() {
       if (this.$i18n.locale === 'en') {
         this.$i18n.locale = 'sv';
+        this.showFlag = 'uk';
       } else {
         this.$i18n.locale = 'en';
+        this.showFlag = 'swe';
       }
     },
   },
@@ -89,6 +108,9 @@ nav > a:hover {
 .header-button-wrapper {
   position: absolute;
   right: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   border: 0;
 }
 
@@ -100,7 +122,11 @@ nav > a:hover {
 }
 
 #btnSwitchLanguage {
-  margin: 0 10px 0 0;
+  margin: 0 15px 0 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 #btnLogout {
@@ -109,6 +135,10 @@ nav > a:hover {
 
 .header-button:hover {
   background-color: #e3e2e1;
+}
+
+.header-flag {
+  width: 50px;
 }
 
 @media all and (max-width: 550px) {
@@ -136,6 +166,10 @@ nav > a:hover {
 
   .header-button {
     margin: 5px 0;
+  }
+
+  #btnSwitchLanguage {
+    margin: 0;
   }
 }
 </style>
