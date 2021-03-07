@@ -31,4 +31,11 @@ export default {
   clear: "Clear",
   autoscroll: "Autoscroll",
   send: "Send",
+
+  // Profile
+  // Translation for Profile already exists under Header
+  user_name: "User name",
+  generate_random_name: "Generate random name",
+  // Translation for Email already exists under LoginScreen
+  role: "Role",
 };

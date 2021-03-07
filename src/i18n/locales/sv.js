@@ -31,4 +31,11 @@ export default {
   clear: "Rensa",
   autoscroll: "Autoskroll",
   send: "Skicka",
+
+  // Profile
+  // Translation for Profile already exists under Header
+  user_name: "Användarnamn",
+  generate_random_name: "Slumpa användarnamn",
+  // Translation for Email already exists under LoginScreen
+  role: "Roll",
 };

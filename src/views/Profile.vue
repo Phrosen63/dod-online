@@ -1,6 +1,6 @@
 <template>
   <div class="profile view-window">
-    <h1>Profile</h1>
+    <h1>{{ $t('profile') }}</h1>
     <pulse-loader
       v-if="loading"
       class="spinner"
@@ -12,7 +12,7 @@
       class="profile-info"
     >
       <div>
-        <label>User name:</label>
+        <label>{{ $t('user_name') }}:</label>
         <input
           v-model="displayName"
           type="text"
@@ -22,11 +22,11 @@
           @change="updateUserDisplayName($event)"
         >
         <button @click="generateRandomName">
-          Generate random name
+          {{ $t('generate_random_name') }}
         </button>
       </div>
-      <p>Email: <span>{{ user.email }}</span></p>
-      <p>Role: <span>{{ role }}</span></p>
+      <p>{{ $t('email') }}: <span>{{ user.email }}</span></p>
+      <p>{{ $t('role') }}: <span>{{ role }}</span></p>
     </div>
   </div>
 </template>
