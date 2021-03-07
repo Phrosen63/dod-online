@@ -5,13 +5,13 @@
         class="console-settings__controls button--clear"
         @click="clearConsole"
       >
-        Clear
+        {{ $t('clear') }}
       </button>
       <label
         class="console-settings__controls"
         for="autoscroll"
       >
-        Autoscroll:
+        {{ $t('autoscroll') }}:
       </label>
       <input
         id="autoscroll"
@@ -45,7 +45,7 @@
       <input
         type="submit"
         class="console-message-bar__send-button"
-        value="Send"
+        :value="$t('send')"
         @click="sendMessage"
       >
     </form>
