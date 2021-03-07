@@ -1,11 +1,11 @@
 <template>
   <div class="login-screen  view-window">
-    <h1>DoD-online<br>Log in or Sign up</h1>
+    <h1>DoD-online<br>{{ $t('login_or_signup') }}</h1>
     <p
       class="error-message"
       :class="showErrorMessage ? '' : 'hide'"
     >
-      Login failed, please check your credentials and try again.
+      {{ $t('login_failed') }}
     </p>
     <p
       class="error-message"
@@ -22,7 +22,7 @@
         v-model="email"
         class="form-control"
         type="email"
-        placeholder="Email"
+        :placeholder="$t('email')"
         required
       >
       <input
@@ -30,7 +30,7 @@
         v-model="pass"
         class="form-control"
         type="password"
-        placeholder="Password"
+        :placeholder="$t('password')"
         required
       >
       <button
@@ -38,14 +38,14 @@
         class="form-control"
         @click="login"
       >
-        Log in
+        {{ $t('log_in') }}
       </button>
       <button
         id="btnSignUp"
         class="form-control"
         @click="signUp"
       >
-        Sign up
+        {{ $t('sign_up') }}
       </button>
     </form>
   </div>
