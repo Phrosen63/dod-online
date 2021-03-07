@@ -3,56 +3,57 @@ const randomNumberWithinRange = (min, max) => {
     Math.floor(Math.random() * (min - max + 1)) + max;
 };
 
-const rollDieT3 = () => randomNumberWithinRange(1, 3);
-const rollDieT4 = () => randomNumberWithinRange(1, 4);
-const rollDieT6 = () => randomNumberWithinRange(1, 6);
-const rollDieT8 = () => randomNumberWithinRange(1, 8);
-const rollDieT10 = () => randomNumberWithinRange(1, 10);
-const rollDieT12 = () => randomNumberWithinRange(1, 12);
-const rollDieT20 = () => randomNumberWithinRange(1, 20);
-const rollDieT100 = () => randomNumberWithinRange(1, 100);
+const rollDieD3 = () => randomNumberWithinRange(1, 3);
+const rollDieD4 = () => randomNumberWithinRange(1, 4);
+const rollDieD6 = () => randomNumberWithinRange(1, 6);
+const rollDieD8 = () => randomNumberWithinRange(1, 8);
+const rollDieD10 = () => randomNumberWithinRange(1, 10);
+const rollDieD12 = () => randomNumberWithinRange(1, 12);
+const rollDieD20 = () => randomNumberWithinRange(1, 20);
+const rollDieD100 = () => randomNumberWithinRange(1, 100);
 
 const rollDie = (die, min, max) => {
-  switch (die) {
-    case 'T3':
+  const cleanedDie = die.replace(/T/g, 'D');
+  switch (cleanedDie) {
+    case 'D3':
       return { 
         die: 'T3',
-        value: rollDieT3(),
+        value: rollDieD3(),
       };
-    case 'T4':
+    case 'D4':
       return { 
         die: 'T4',
-        value: rollDieT4(),
+        value: rollDieD4(),
       };
-    case 'T6':
+    case 'D6':
       return { 
         die: 'T6',
-        value: rollDieT6(),
+        value: rollDieD6(),
       };
-    case 'T8':
+    case 'D8':
       return { 
         die: 'T8',
-        value: rollDieT8(),
+        value: rollDieD8(),
       };
-    case 'T10':
+    case 'D10':
       return { 
         die: 'T10',
-        value: rollDieT10(),
+        value: rollDieD10(),
       };
-    case 'T12':
+    case 'D12':
       return { 
         die: 'T12',
-        value: rollDieT12(),
+        value: rollDieD12(),
       };
-    case 'T20':
+    case 'D20':
       return { 
         die: 'T20',
-        value: rollDieT20(),
+        value: rollDieD20(),
       };
-    case 'T100':
+    case 'D100':
       return { 
         die: 'T100',
-        value: rollDieT100(),
+        value: rollDieD100(),
       };
   }
   return max ? {
@@ -90,14 +91,14 @@ const rollDice = ({ amount, type, min, max, bonus }) => {
 // Export randomNumberGenerator methods
 export {
   randomNumberWithinRange,
-  rollDieT3,
-  rollDieT4,
-  rollDieT6,
-  rollDieT8,
-  rollDieT10,
-  rollDieT12,
-  rollDieT20,
-  rollDieT100,
+  rollDieD3,
+  rollDieD4,
+  rollDieD6,
+  rollDieD8,
+  rollDieD10,
+  rollDieD12,
+  rollDieD20,
+  rollDieD100,
   rollDie,
   rollDice,
 };
