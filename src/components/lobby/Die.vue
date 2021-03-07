@@ -39,8 +39,12 @@ export default {
     },
     rollDie(die) {
       const result = rollDie(die);
+      const message = this.$i18n.locale === 'en' ?
+        `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}` :
+        `${this.userDisplayName} rullade: ${result.value}, med en: ${this.$t(result.die)}`;
+
       writeObject('console', 'shared', {
-        message: `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}`,
+        message,
       });
     },
   },
