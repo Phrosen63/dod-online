@@ -18,13 +18,13 @@
         @click="switchLanguage"
       >
         <img
-          v-if="showFlag === 'swe'"
+          v-if="language === 'sv'"
           src="@/assets/flag_swe.svg"
           alt="Swedens flag"
           class="header-flag header-flag--swe"
         >
         <img
-          v-if="showFlag === 'uk'"
+          v-if="language === 'en'"
           src="@/assets/flag_uk.svg"
           alt="The flag of the United Kingdom"
           class="header-flag header-flag--uk"
@@ -48,27 +48,42 @@ import { auth } from '@/api/database/auth';
 
 export default {
   name: 'Header',
-  data() {
-    return {
-      showFlag: 'swe',
-    };
+  computed: {
+    language() {
+      return this.$store.state.settings.language;
+    },
   },
   methods: {
     logOut() {
       // Log out user and re-direct to LoginScreen
+      const language = 'en';
+
+      this.$i18n.locale = language;
+      this.$store.commit('updateLanguage', {
+        data: {
+          value: language,
+        },
+      });
+
       auth.signOut();
       if (this.$route.name !== 'LoginScreen') {
         this.$router.push('/');
       }
     },
     switchLanguage() {
+      const data = {};
+
       if (this.$i18n.locale === 'en') {
         this.$i18n.locale = 'sv';
-        this.showFlag = 'uk';
+        data.value = 'sv';
       } else {
         this.$i18n.locale = 'en';
-        this.showFlag = 'swe';
+        data.value = 'en';
       }
+
+      this.$store.commit('updateLanguage', {
+        data,
+      });
     },
   },
 };

@@ -261,8 +261,54 @@ const deleteCharacterWealth = (state, payload) => {
   }
 };
 
+const updateLanguage = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value) {
+      state.settings.language = obj.value;
+    }
+  }
+};
+
+const updateRole = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value) {
+      state.settings.role = obj.value;
+    }
+  }
+};
+
+const updateSettingsId = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value) {
+      state.settings.id = obj.value;
+    }
+  }
+};
+
+const updateUserDisplayName = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value) {
+      state.settings.displayName = obj.value;
+    }
+  }
+};
+
+const updateUserEmail = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    const obj = payload.data;
+    if (obj.value) {
+      state.settings.email = obj.value;
+    }
+  }
+};
+
 // Export mutations
 export default {
+  // User character
   setCharacterList,
   setSelectedCharacter,
   setCharacterClicked,
@@ -289,4 +335,11 @@ export default {
   addCharacterWealth,
   updateCharacterWealth,
   deleteCharacterWealth,
+
+  // User settings
+  updateLanguage,
+  updateRole,
+  updateSettingsId,
+  updateUserDisplayName,
+  updateUserEmail,
 };

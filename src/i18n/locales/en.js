@@ -104,6 +104,12 @@ export default {
   generate_random_name: 'Generate random name',
   role: 'Role',
   prefered_language: 'Prefered lanaguage',
+  english: 'English',
+  swedish: 'Swedish',
+  admin: 'Admin',
+  moderator: 'Moderator',
+  user: 'User',
+  reader: 'Reader',
 
   // Modals
   // Modals - AddCharacter

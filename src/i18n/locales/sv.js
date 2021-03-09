@@ -104,6 +104,12 @@ export default {
   generate_random_name: 'Slumpa användarnamn',
   role: 'Roll',
   prefered_language: 'Föredraget språk',
+  english: 'Engelska',
+  swedish: 'Svenska',
+  admin: 'Admin',
+  moderator: 'Moderator',
+  user: 'Användare',
+  reader: 'Läs',
 
   // Modals
   // Modals - AddCharacter

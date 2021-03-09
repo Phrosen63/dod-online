@@ -8,7 +8,9 @@
 <script>
 // Components
 import Header from '@/components/Header';
-import { getFirebaseUser } from '@/api/database/user';
+
+// Modules
+import { getUserSettings } from '@/api/database/user';
 
 export default {
   name: 'App',
@@ -16,9 +18,43 @@ export default {
     Header,
   },
   async beforeCreate() {
-    const currentUser = await getFirebaseUser();
-    if(!currentUser) {
+    const settings = await getUserSettings();
+
+    if (settings) {
+      this.$i18n.locale = settings.language;
+      this.$store.commit('updateLanguage', {
+        data: {
+          value: settings.language,
+        },
+      });
+
+      this.$store.commit('updateRole', {
+        data: {
+          value: settings.role,
+        },
+      });
+
+      this.$store.commit('updateSettingsId', {
+        data: {
+          value: settings.id,
+        },
+      });
+
+      this.$store.commit('updateUserDisplayName', {
+        data: {
+          value: settings.displayName,
+        },
+      });
+
+      this.$store.commit('updateUserEmail', {
+        data: {
+          value: settings.email,
+        },
+      });
+    } else {
+      // User is logged in
       if (this.$route.name !== 'LoginScreen') {
+        // Redirect user to LoginScreen
         this.$router.push('/');
       }
     }

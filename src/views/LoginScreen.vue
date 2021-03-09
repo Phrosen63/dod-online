@@ -54,7 +54,7 @@
 <script>
 // Modules
 import { auth } from '@/api/database/auth';
-import { getFirebaseUser, createNewUser } from '@/api/database/user';
+import { getFirebaseUser, createNewUser, getUserSettings } from '@/api/database/user';
 
 export default {
   name: 'LoginScreen',
@@ -74,9 +74,18 @@ export default {
     login() {
       this.resetErrors();
       auth.signInWithEmailAndPassword(this.email, this.pass)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         // Signed in
         if (userCredential.user) {
+          const settings = await getUserSettings();
+
+          this.$i18n.locale = settings.language;
+          this.$store.commit('updateLanguage', {
+            data: {
+              value: settings.language,
+            },
+          });
+
           if (this.$route.name === 'LoginScreen') {
             this.$router.push('Lobby');
           }

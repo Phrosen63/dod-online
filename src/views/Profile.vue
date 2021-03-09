@@ -34,14 +34,14 @@
           {{ $t('generate_random_name') }}
         </button>
       </div>
-      <p>{{ $t('email') }}: <span>{{ user.email }}</span></p>
+      <p>{{ $t('email') }}: <span>{{ email }}</span></p>
       <p>{{ $t('role') }}: <span>{{ role }}</span></p>
       <div>
         <label
           for="language"
           class="profile-info__label"
         >
-          {{ $t('prefered_language') }}
+          {{ $t('prefered_language') }}:
         </label>
         <select
           id="language"
@@ -49,10 +49,10 @@
           @change="languageUpdated($event)"
         >
           <option value="en">
-            en
+            {{ $t('english') }}
           </option>
           <option value="sv">
-            sv
+            {{ $t('swedish') }}
           </option>
         </select>
       </div>
@@ -62,7 +62,6 @@
 
 <script>
 // Modules
-import { db } from '@/api/database/db';
 import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 import { generateName } from '@/api/randomNameGenerator';
@@ -76,52 +75,47 @@ export default {
   data() {
     return {
       user: {},
-      displayName: undefined,
-      settingsId: undefined,
       language: undefined,
-      role: undefined,
       loading: true,
       color: '#75a1de',
       size: '25px',
     };
   },
-  async created() {
-    const currentUser = await getFirebaseUser();
-    this.user = currentUser;
-    this.role = await this.getUserRole();
+  computed: {
+    role() {
+      return this.convertRole(this.$store.state.settings.role);
+    },
+    settingsId() {
+      return this.$store.state.settings.id;
+    },
+    displayName() {
+      return this.$store.state.settings.displayName;
+    },
+    email() {
+      return this.$store.state.settings.email;
+    },
+  },
+  created() {
+    this.language = this.$store.state.settings.language;
     this.loading = false;
-    this.displayName = this.user.displayName;
   },
   methods: {
     convertRole(role) {
       switch (role) {
-        case 0:
-          return 'Admin';
         case 1:
-          return 'Moderator';
-        case 3:
-          return 'Reader';
+          return this.$t('admin');
+        case 2:
+          return this.$t('moderator');
+        case 4:
+          return this.$t('reader');
       }
-      return 'User'; // 2
+      return this.$t('user'); // 3
     },
-    async getUserRole() {
-      const currentUser = this.user ? this.user : await getFirebaseUser();
-      const { uid } = currentUser;
-      const COLLECTION_NAME = `/users/${uid}/settings`;
+    async updateUserDisplayName(event) {
+      const currentUser = await getFirebaseUser();
 
-      const snapshot = await db.collection(COLLECTION_NAME).get();
-      snapshot.docs.map((doc) => {
-        this.settingsId = doc.id || undefined;
-        const data = doc.data();
-        this.role = data.role || 2;
-        this.language = data.language || 'en';
-      });
-
-      return this.convertRole(this.role);
-    },
-    updateUserDisplayName(event) {
-      if (this.user) {
-        this.user.updateProfile({displayName: event.target.value});
+      if (currentUser) {
+        currentUser.updateProfile({displayName: event.target.value});
       }
     },
     generateRandomName() {
@@ -136,14 +130,22 @@ export default {
       this.displayName = randomName;
     },
     async languageUpdated(event) {
+      const value = event.target.value;
       const data = {
-        language: event.target.value,
+        language: value,
       };
 
       updateDocumentFieldForCurrentUser({
         collection: 'settings',
         document: this.settingsId,
         data,
+      }).then(() => {
+        this.$i18n.locale = value;
+        this.$store.commit('updateLanguage', {
+          data: {
+            value: value,
+          },
+        });
       }).catch(e => console.log('Error: ' + e));
     },
   },

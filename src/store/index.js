@@ -10,6 +10,13 @@ export default new Vuex.Store({
   state: {
     characterList: null,
     selectedCharacter: null,
+    settings: {
+      displayName: null,
+      email: null,
+      language: 'en',
+      role: 4,
+      id: null,
+    }
   },
   actions,
   mutations,
