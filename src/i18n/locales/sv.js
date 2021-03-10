@@ -37,6 +37,14 @@ export default {
   D12: 'T12',
   D20: 'T20',
   D100: 'T100',
+  T3: 'T3',
+  T4: 'T4',
+  T6: 'T6',
+  T8: 'T8',
+  T10: 'T10',
+  T12: 'T12',
+  T20: 'T20',
+  T100: 'T100',
   custom: 'Custom',
 
   // Lobby - Console
