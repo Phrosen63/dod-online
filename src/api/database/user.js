@@ -38,16 +38,29 @@ const getUserSettings = () => new Promise((resolve, reject) => {
       const { uid } = userAuth;
 
       if(uid) {
+        let roles = [];
+        const ROLES_COLLECTION = `/roles`;
+        db.collection(ROLES_COLLECTION).get().then(snapshot => {
+          snapshot.docs.map((doc) => {
+            const data = doc.data();
+            roles.push({
+              id: doc.id,
+              role: data.role,
+            });
+          });
+        });
+
         const SETTINGS_COLLECTION = `/users/${uid}/settings`;
         db.collection(SETTINGS_COLLECTION).get().then(snapshot => {
           snapshot.docs.map((doc) => {
             const data = doc.data();
+            const userRole = roles.find(obj => obj.id === uid);
 
             const settings = {
               id: doc.id || undefined,
               displayName: userAuth.displayName,
               email: userAuth.email,
-              role: data.role || 4,
+              role: userRole.role || 4,
               language: data.language || 'en',
             };
 

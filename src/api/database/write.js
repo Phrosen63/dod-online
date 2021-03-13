@@ -36,11 +36,12 @@ const addUserDocument = async (uid) => {
   const USER_COLLECTION = `/users/`;
   const CHARACTER_COLLECTION = `/users/${uid}/characters/`;
   const SETTINGS_COLLECTION = `/users/${uid}/settings/`;
+  const ROLES_COLLECTION = `/roles/${uid}`;
 
   await db.collection(USER_COLLECTION).doc(uid).set({});
   await db.collection(CHARACTER_COLLECTION).doc(uid);
-  await db.collection(SETTINGS_COLLECTION).add({role: 3});
   await db.collection(SETTINGS_COLLECTION).add({language: 'en'});
+  await db.collection(ROLES_COLLECTION).add({role: 4});
 };
 
 // Export methods
