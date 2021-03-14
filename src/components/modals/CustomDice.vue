@@ -125,6 +125,13 @@ export default {
         minMax: 9998,
         maxMax: 9999,
       },
+      messageColor: {
+        name: '#e4b03b',
+        result: '#00ff08',
+        dice: '#ffefa0',
+        eachResult: '#9fa09f',
+        bonus: '#9fa09f',
+      },
     };
   },
   async created() {
@@ -134,32 +141,68 @@ export default {
     closeModal() {
       this.$modal.hideAll();
     },
+    highlightText({value, color}) {
+      return `<span style="color: ${color};">${value}</span>`;
+    },
     getConsoleMessage(eachResult, combinedResult) {
       const rolls = eachResult.join(' + ');
+
+      const highlight = {
+        name: this.highlightText({
+          value: this.userDisplayName,
+          color: this.messageColor.name,
+        }),
+        result: this.highlightText({
+          value: combinedResult,
+          color: this.messageColor.result,
+        }),
+        eachRoll: this.highlightText({
+          value: rolls,
+          color: this.messageColor.eachResult,
+        }),
+        bonus: this.highlightText({
+          value: this.getBonus(),
+          color: this.messageColor.eachResult,
+        }),
+        die: this.highlightText({
+          value: this.getOutput(),
+          color: this.messageColor.dice,
+        }),
+      };
 
       if (this.die === 'Custom') {
         const min = this.min > this.customDie.minMax ? this.customDie.minMax : this.min;
         const max = this.max > this.customDie.maxMax ? this.customDie.maxMax : this.max;
 
+        const dieWithMinMax = this.highlightText({
+          value: `${this.die} ${this.$t('die')} (${min}, ${max})${this.getBonus()}`,
+          color: this.messageColor.dice,
+        });
+
         if (this.bonus !== 0) {
           return this.amount > 1 ?
-            `${this.userDisplayName} rolled: ${combinedResult} (${rolls})${this.getBonus()}, using: ${this.getOutput()} (${min}, ${max})` :
-            `${this.userDisplayName} rolled: ${combinedResult}, with a: ${this.die} die (${min}, ${max})${this.getBonus()}`;
+            `${highlight.name} ${this.$t('rolled')}: ${highlight.result} (${highlight.eachRoll})${highlight.bonus}, ${this.$t('using')}: ${highlight.die} (${min}, ${max})` :
+            `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${dieWithMinMax}`;
         }
         return this.amount > 1 ?
-          `${this.userDisplayName} rolled: ${combinedResult} (${rolls})${this.getBonus()}, using: ${this.getOutput()} (${min}, ${max})` :
-          `${this.userDisplayName} rolled: ${combinedResult}, with a: ${this.die} die (${min}, ${max})`;
+          `${highlight.name} ${this.$t('rolled')}: ${highlight.result} (${highlight.eachRoll})${highlight.bonus}, ${this.$t('using')}: ${highlight.die} (${min}, ${max})` :
+          `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${dieWithMinMax}`;
       }
+
+      const regularDie = this.highlightText({
+        value: `${this.die}${this.getBonus()}`,
+        color: this.messageColor.dice,
+      });
 
       if (this.bonus !== 0) {
         return this.amount > 1 ?
-          `${this.userDisplayName} rolled: ${combinedResult} (${rolls})${this.getBonus()}, using: ${this.getOutput()}` :
-          `${this.userDisplayName} rolled: ${combinedResult}, with a: ${this.die}${this.getBonus()}`;
+          `${highlight.name} ${this.$t('rolled')}: ${highlight.result} (${highlight.eachRoll})${highlight.bonus}, ${this.$t('using')}: ${highlight.die}` :
+          `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${regularDie}`;
       }
 
       return this.amount > 1 ?
-        `${this.userDisplayName} rolled: ${combinedResult} (${rolls})${this.getBonus()}, using: ${this.getOutput()}` :
-        `${this.userDisplayName} rolled: ${combinedResult}, with a: ${this.die}`;
+        `${highlight.name} ${this.$t('rolled')}: ${highlight.result} (${highlight.eachRoll})${highlight.bonus}, ${this.$t('using')}: ${highlight.die}` :
+        `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${regularDie}`;
     },
     roll() {
       const amount = this.amount > this.maxNumberOfRolls ? this.maxNumberOfRolls : this.amount;
@@ -174,8 +217,13 @@ export default {
         bonus: this.bonus,
       });
 
+      const data = {
+        message: this.getConsoleMessage(result.eachResult, result.combinedResult),
+        date: Date.now(),
+      };
+
       writeObject('console', 'shared', {
-        message: this.getConsoleMessage(result.eachResult, result.combinedResult)
+        data,
       });
     },
     getBonus() {
@@ -193,7 +241,7 @@ export default {
     getOutput() {
       const amount = this.amount > this.maxNumberOfRolls ? this.maxNumberOfRolls : this.amount;
       if (this.die === 'Custom') {
-        return `${amount}x Custom die ${this.getBonus()}`;
+        return `${amount}x Custom ${this.$t('die')} ${this.getBonus()}`;
       }
       return `${amount}${this.die}${this.getBonus()}`
     },

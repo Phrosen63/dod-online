@@ -28,6 +28,11 @@ export default {
   data() {
     return {
       userDisplayName: undefined,
+      messageColor: {
+        name: '#e4b03b',
+        result: '#00ff08',
+        dice: '#ffefa0',
+      },
     };
   },
   created() {
@@ -37,14 +42,37 @@ export default {
     async setUserDisplayName() {
       this.userDisplayName = await getUserDisplayName();
     },
+    highlightText({value, color}) {
+      return `<span style="color: ${color};">${value}</span>`;
+    },
     rollDie(die) {
       const result = rollDie(die);
-      const message = this.$i18n.locale === 'en' ?
-        `${this.userDisplayName} rolled: ${result.value}, with a: ${result.die}` :
-        `${this.userDisplayName} rullade: ${result.value}, med en: ${this.$t(result.die)}`;
+      const highlight = {
+        name: this.highlightText({
+          value: this.userDisplayName,
+          color: this.messageColor.name,
+        }),
+        result: this.highlightText({
+          value: result.value,
+          color: this.messageColor.result,
+        }),
+        die: this.highlightText({
+          value: this.$t(result.die),
+          color: this.messageColor.dice,
+        }),
+      };
 
-      writeObject('console', 'shared', {
+      // const message = this.$i18n.locale === 'en' ?
+      //   `${highlight.name} rolled: ${highlight.result}, with a: ${highlight.die}` :
+      //   `${highlight.name} rullade: ${highlight.result}, med en: ${highlight.die}`;
+      const message = `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${highlight.die}`;
+
+      const data = {
         message,
+        date: Date.now(),
+      };
+      writeObject('console', 'shared', {
+        data,
       });
     },
   },

@@ -29,9 +29,8 @@
         v-for="(item, index) in items"
         :key="index"
         class="console-message"
-      >
-        {{ item.message }}
-      </p>
+        v-html="item.message"
+      />
     </div>
     <form
       class="console-message-bar"
@@ -57,6 +56,7 @@
 import { db } from '@/api/database/db';
 import { writeObject } from '@/api/database/write';
 import { getUserDisplayName } from '@/api/database/user';
+import sanitizeHtml from 'sanitize-html';
 
 export default {
   name: 'Console',
@@ -66,6 +66,9 @@ export default {
       autoScroll: true,
       userDisplayName: undefined,
       showMessages: false,
+      messageColor: {
+        customMessage: '#c8e89e',
+      },
     };
   },
   computed: {
@@ -83,8 +86,19 @@ export default {
   },
   async mounted() {
     db.collection('console').doc('shared').onSnapshot((doc) => {
-      if (this.showMessages) {
-        this.items.push({ message: doc.data().message });
+      const data = doc.data().data;
+
+      const message = sanitizeHtml(data.message, {
+        allowedTags: ['span'],
+        allowedAttributes: {
+          'span': [ 'style' ],
+        },
+      });
+
+      if (this.showMessages && message) {
+        this.items.push({
+          message,
+        });
       }
       if (this.autoScroll && this.$refs.consoleWindow) {
         this.$nextTick(() => this.$refs.consoleWindow.scrollTop = this.$refs.consoleWindow.scrollHeight);
@@ -103,8 +117,13 @@ export default {
       const value = this.$refs.messageBar.value;
       this.$refs.messageBar.value = '';
       if (value && value !== '') {
+        const data = {
+          message: `<span style="color: ${this.messageColor.customMessage}">${this.userDisplayName}: ${value}</span>`,
+          date: Date.now(),
+        };
+
         writeObject('console', 'shared', {
-          message: `${this.userDisplayName}: ${value}`,
+          data,
         });        
       }
     },
