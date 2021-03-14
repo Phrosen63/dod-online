@@ -13,6 +13,8 @@ export default {
   save: 'Spara',
   edit_field: 'Redigera fält',
   close: 'Stäng',
+  rolled: 'rullade',
+  with_a: 'med en',
 
   // Header
   lobby: 'Lobby',
@@ -143,7 +145,7 @@ export default {
   value: 'Värde',
 
   // Modals - CustomDice
-  custom_die_roll: 'Rolla custom tärning',
+  custom_die_roll: 'Rulla custom tärning',
   custom_dice_info_1: 'Välj antal tärningar, välj sedan vilken sorts tärning',
   custom_dice_info_2: 'Välj slutligen bonus som ska läggas till på resultatet',
   how_many_rolls: 'Antal tärningar att rulla?',
@@ -152,4 +154,6 @@ export default {
   custom_die_max: 'Custom tärning - max',
   bonus: 'Bonus?',
   rolling: 'Rullar',
+  die: 'tärning',
+  using: 'med',
 };

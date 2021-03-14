@@ -13,6 +13,8 @@ export default {
   save: 'Save',
   edit_field: 'Edit field',
   close: 'Close',
+  rolled: 'rolled',
+  with_a: 'with a',
 
   // Header
   lobby: 'Lobby',
@@ -152,4 +154,6 @@ export default {
   custom_die_max: 'Custom die - max',
   bonus: 'Bonus?',
   rolling: 'Rolling',
+  die: 'die',
+  using: 'using',
 };
