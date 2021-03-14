@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     "prefer-default-export": 0,
     "no-unused-vars": "warn",
+    "vue/no-v-html": 0,
   },
   parserOptions: {
     ecmaVersion: 2018,
