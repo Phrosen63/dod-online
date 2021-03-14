@@ -6,7 +6,7 @@ export default {
   name: 'Namn',
   race: 'Ras',
   class: 'Klass',
-  email: 'Email',
+  email: 'E-post',
   edit: 'Redigera',
   delete: 'Ta bort',
   cancel: 'Avbryt',
