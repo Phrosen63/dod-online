@@ -56,6 +56,23 @@
           </option>
         </select>
       </div>
+      <div
+        v-if="isModeratorOrAdmin"
+        class="profile-enable-user"
+      >
+        <input
+          v-model="newUserId"
+          class="profile-enable-user__input"
+          type="text"
+          placeholder="User id"
+        >
+        <button
+          class="profile-enable-user__button"
+          @click="enableUser"
+        >
+          Enable user
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -66,6 +83,7 @@ import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 import { generateName } from '@/api/randomNameGenerator';
 import { updateDocumentFieldForCurrentUser } from '@/api/database/write';
+import { addUserDocument } from '@/api/database/write';
 
 export default {
   name: 'Profile',
@@ -74,7 +92,7 @@ export default {
   },
   data() {
     return {
-      user: {},
+      newUserId: undefined,
       language: undefined,
       loading: true,
       color: '#75a1de',
@@ -94,6 +112,9 @@ export default {
     email() {
       return this.$store.state.settings.email;
     },
+    isModeratorOrAdmin() {
+      return this.$store.state.settings.role < 3;
+    }
   },
   created() {
     this.language = this.$store.state.settings.language;
@@ -148,6 +169,11 @@ export default {
         });
       }).catch(e => console.log('Error: ' + e));
     },
+    async enableUser() {
+      if (this.newUserId.length === 28) {
+        await addUserDocument(this.newUserId);
+      }
+    },
   },
 };
 </script>
@@ -158,6 +184,28 @@ export default {
 }
 
 .profile-info__random-name-button {
+  cursor: pointer;
+}
+
+.profile-enable-user {
+  display: flex;
+  flex-direction: row;
+  margin: 18px 0;
+}
+
+.profile-enable-user__input {
+  flex: 1 0 auto;
+  max-width: 400px;
+  height: 40px;
+  padding: 0 5px;
+  font-size: 22px;
+  margin: 0 5px 0 0;
+}
+
+.profile-enable-user__button {
+  flex: 0 0 auto;
+  padding: 0 20px;
+  font-size: 18px;
   cursor: pointer;
 }
 </style>
