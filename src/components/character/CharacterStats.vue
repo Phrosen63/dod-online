@@ -14,7 +14,7 @@
           type="text"
           :value="stat"
           class="hidden-textfield"
-          title="Click to edit"
+          :title="$t('title_click_to_edit')"
           @focus="$event.target.select()"
           @change="updateText(key, $event)"
         >
