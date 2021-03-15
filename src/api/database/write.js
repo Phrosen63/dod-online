@@ -2,14 +2,21 @@ import { db } from '@/api/database/db';
 import { getFirebaseUser } from '@/api/database/user';
 
 const writeObject = (collectionPath, docName, data) => {
-  db.collection(collectionPath).doc(docName).update(data);
+  db.collection(collectionPath).doc(docName).set(data);
 };
 
-const writeNestedObjToCurrentUser = async (userCollection, docName, nestedObject) => {
+const writeObjectToCurrentUser = async (userCollection, docName, obj) => {
   const currentUser = await getFirebaseUser();
   const { uid } = currentUser;
   const collectionPath = `/users/${uid}/${userCollection}`;
-  db.collection(collectionPath).doc(docName).update(nestedObject);
+  db.collection(collectionPath).doc(docName).set(obj);
+};
+
+const writeNestedObjToCurrentUser = async (userCollection, docName, obj) => {
+  const currentUser = await getFirebaseUser();
+  const { uid } = currentUser;
+  const collectionPath = `/users/${uid}/${userCollection}`;
+  db.collection(collectionPath).doc(docName).set(obj);
 };
 
 const createDocumentFieldObject = ({ map, key, value }) => {
@@ -52,6 +59,7 @@ const addUserDocument = async (uid) => {
 // Export methods
 export {
   writeObject,
+  writeObjectToCurrentUser,
   writeNestedObjToCurrentUser,
   createDocumentFieldObject,
   updateDocumentFieldForCurrentUser,
