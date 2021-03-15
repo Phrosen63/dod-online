@@ -15,6 +15,8 @@ export default {
   close: 'Close',
   rolled: 'rolled',
   with_a: 'with a',
+  left: 'Left',
+  right: 'Right',
 
   // Header
   lobby: 'Lobby',
@@ -99,10 +101,10 @@ export default {
   health_info: 'A character\'s health is automatically calculated by adding the following stats: Physique, Size, Psyche.',
   total_hp: 'Total hp',
   head: 'Head',
-  arms: 'Arms',
+  arm: 'arm',
   chest: 'Chest',
   stomach: 'Stomach',
-  legs: 'Legs',
+  leg: 'leg',
 
   // Characters - CharacterNotes
   notes: 'Notes',

@@ -13,7 +13,10 @@
           {{ $t('head') }}: {{ fourth }}
         </p>
         <p class="character-health-stat">
-          {{ $t('arms') }}: {{ fourth }}
+          {{ `${$t('left')} ${$t('arm')}` }}: {{ fourth }}
+        </p>
+        <p class="character-health-stat">
+          {{ `${$t('right')} ${$t('arm')}` }}: {{ fourth }}
         </p>
         <p class="character-health-stat">
           {{ $t('chest') }}: {{ half }}
@@ -22,7 +25,10 @@
           {{ $t('stomach') }}: {{ third }}
         </p>
         <p class="character-health-stat">
-          {{ $t('legs') }}: {{ third }}
+          {{ `${$t('left')} ${$t('leg')}` }}: {{ third }}
+        </p>
+        <p class="character-health-stat">
+          {{ `${$t('right')} ${$t('leg')}` }}: {{ third }}
         </p>
       </div>
     </div>

@@ -15,6 +15,8 @@ export default {
   close: 'Stäng',
   rolled: 'rullade',
   with_a: 'med en',
+  left: 'Vänster',
+  right: 'Höger',
 
   // Header
   lobby: 'Lobby',
@@ -99,10 +101,10 @@ export default {
   health_info: 'Kroppspoäng räknas automatiskt ut genom att lägga ihop följande grundegenskapr: Fysik, Storlek, Psyke.',
   total_hp: 'Total kroppspoäng',
   head: 'Huvud',
-  arms: 'Armar',
+  arm: 'arm',
   chest: 'Bröst',
   stomach: 'Mage',
-  legs: 'Ben',
+  leg: 'ben',
 
   // Characters - CharacterNotes
   notes: 'Anteckningar',
