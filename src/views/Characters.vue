@@ -79,6 +79,17 @@ export default {
         }
         chars[i].inventory = inventory;
 
+        // Injuries
+        const injuriesCollection = `/users/${uid}/characters/${characterId}/injuries`;
+        const injuriesSnapshot = await db.collection(injuriesCollection).get();
+
+        const injuries = injuriesSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < injuriesSnapshot.docs.length; i += 1) {
+          const injuriesId = injuriesSnapshot.docs[i].id;
+          injuries[i].id = injuriesId;
+        }
+        chars[i].injuries = injuries;
+
         // Armor
         const armorCollection = `/users/${uid}/characters/${characterId}/armor`;
         const armorSnapshot = await db.collection(armorCollection).get();

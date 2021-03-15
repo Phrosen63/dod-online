@@ -1,61 +1,131 @@
 <template>
   <div class="character-health">
     <h2>{{ $t('health') }}</h2>
-    <p class="preamble">
-      {{ $t('health_info') }}
-    </p>
-    <div class="character-health-wrapper">
-      <div class="character-health__stats">
-        <p class="character-health-stat">
-          {{ $t('total_hp') }}: {{ max }} / {{ half }}
+    <div class="character-health-row">
+      <div class="character-health__image">
+        <img
+          src="@/assets/humanoid.svg"
+          alt="The drawing of a human silhouette"
+          class="character-health__image--human"
+        >
+      </div>
+      <div class="character-health-wrapper">
+        <p class="preamble">
+          {{ $t('health_info') }}
         </p>
-        <p class="character-health-stat">
-          {{ $t('head') }}: {{ fourth }}
-        </p>
-        <p class="character-health-stat">
-          {{ `${$t('left')} ${$t('arm')}` }}: {{ fourth }}
-        </p>
-        <p class="character-health-stat">
-          {{ `${$t('right')} ${$t('arm')}` }}: {{ fourth }}
-        </p>
-        <p class="character-health-stat">
-          {{ $t('chest') }}: {{ half }}
-        </p>
-        <p class="character-health-stat">
-          {{ $t('stomach') }}: {{ third }}
-        </p>
-        <p class="character-health-stat">
-          {{ `${$t('left')} ${$t('leg')}` }}: {{ third }}
-        </p>
-        <p class="character-health-stat">
-          {{ `${$t('right')} ${$t('leg')}` }}: {{ third }}
-        </p>
+        <div class="character-health__stats">
+          <div class="character-health-heading-wrapper">
+            <h3 class="character-health-heading">
+              {{ $t('hp') }}
+            </h3>
+            <h3 class="character-health-heading">
+              {{ $t('injuries') }}
+            </h3>
+          </div>
+          <div
+            v-for="bodypart in bodyparts"
+            :key="bodypart.key"
+            class="character-health-heading-wrapper"
+          >
+            <p class="character-health-stat">
+              {{ bodypart.fieldName }} : {{ bodypart.value }}
+            </p>
+            <input
+              type="text"
+              class="hidden-textfield hidden-textfield--injury"
+              :title="$t('title_click_to_edit')"
+              :value="getInjuryValue(bodypart.key)"
+              @focus="$event.target.select()"
+              @change="updateText(bodypart.key, $event)"
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+// Modules
+import { writeObjectToCurrentUser } from '@/api/database/write';
+
 export default {
   name: 'CharacterHealth',
+  data() {
+    return {
+      bodyparts: [],
+    };
+  },
   computed: {
     selectedCharacter() {
       return this.$store.state.selectedCharacter;
     },
-    max() {
+    health() {
       const physique = parseInt(this.selectedCharacter.stats.physique);
       const psyche = parseInt(this.selectedCharacter.stats.psyche);
       const size = parseInt(this.selectedCharacter.stats.size);
-      return physique + psyche + size;
+      const max = physique + psyche + size;
+
+      return {
+        max: max,
+        half: Math.floor(max / 2),
+        third: Math.floor(max / 3),
+        fourth: Math.floor(max / 4),
+      };
     },
-    half() {
-      return Math.floor(this.max / 2);
+  },
+  created() {
+    this.bodyparts.push({
+      key: 'total',
+      value: `${this.health.max} / ${this.health.half}`,
+      fieldName: this.$t('total_hp'),
+    });
+    this.bodyparts.push({
+      key: 'head',
+      value: this.health.fourth,
+      fieldName: this.$t('head'),
+    });
+    this.bodyparts.push({
+      key: 'leftArm',
+      value: this.health.fourth,
+      fieldName: `${this.$t('left')} ${this.$t('arm')}`,
+    });
+    this.bodyparts.push({
+      key: 'rightArm',
+      value: this.health.fourth,
+      fieldName: `${this.$t('right')} ${this.$t('arm')}`,
+    });
+    this.bodyparts.push({
+      key: 'chest',
+      value: this.health.half,
+      fieldName: this.$t('chest'),
+    });
+    this.bodyparts.push({
+      key: 'stomach',
+      value: this.health.third,
+      fieldName: this.$t('stomach'),
+    });
+    this.bodyparts.push({
+      key: 'leftLeg',
+      value: this.health.third,
+      fieldName: `${this.$t('left')} ${this.$t('leg')}`,
+    });
+    this.bodyparts.push({
+      key: 'rightLeg',
+      value: this.health.third,
+      fieldName: `${this.$t('right')} ${this.$t('leg')}`,
+    });
+  },
+  methods: {
+    updateText(key, event) {
+      const INJURIES_COLLECTION = `characters/${this.selectedCharacter.id}/injuries/`;
+      const data = {};
+      data[key] = event.target.value;
+      writeObjectToCurrentUser(INJURIES_COLLECTION, key, data);
     },
-    third() {
-      return Math.floor(this.max / 3);
-    },
-    fourth() {
-      return Math.floor(this.max / 4);
+    getInjuryValue(key) {
+      const obj = this.selectedCharacter.injuries.find(bodypart => bodypart.id === key);
+      return obj ? obj[key] : '0';
     },
   },
 };
@@ -64,6 +134,12 @@ export default {
 <style scoped>
 .character-health {
   flex: 0 1 auto;
+}
+
+.character-health-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .character-health > .preamble {
@@ -76,11 +152,59 @@ export default {
 
 .character-health-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: nowrap;
 }
 
 .character-health__stats {
-  flex: 1 0 30%;
+  flex: 1 0 auto;
+  max-width: 460px;
+}
+
+.character-health__injuries {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.character-health__image {
+  flex: 0 0 auto;
+  margin: 0 25px 0 0;
+}
+
+.character-health__image--human {
+  height: 350px;
+}
+
+.character-health-heading-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  max-width: 460px;
+}
+
+.character-health-heading {
+  flex: 1 0 auto;
+}
+
+.character-health-stat-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  max-width: 460px;
+}
+
+.character-health-stat-wrapper:hover {
+  background-color: #ffeac4;
+}
+
+.hidden-textfield--injury {
+  border-bottom: 1px dashed;
+}
+
+.character-health-stat-wrapper:hover > .hidden-textfield--injury {
+  background-color: #ffeac4;
 }
 </style>

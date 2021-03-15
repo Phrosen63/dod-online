@@ -12,13 +12,12 @@
         </div>
         <CharacterSkills />
       </v-tab>
-
       <v-tab :title="$t('back')">
         <CharacterInventory />
         <div class="character-viewer-wrapper">
-          <CharacterArmor />
           <CharacterHealth />
         </div>
+        <CharacterArmor />
         <CharacterNotes />
       </v-tab>
     </vue-tabs>
