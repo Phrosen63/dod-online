@@ -2,13 +2,6 @@
   <div class="character-armor">
     <h2>{{ $t('armor') }}</h2>
     <div class="character-armor-wrapper">
-      <div class="character-armor__image">
-        <img
-          src="@/assets/humanoid.svg"
-          alt="The drawing of a human silhouette"
-          class="character-armor__image--human"
-        >
-      </div>
       <div>
         <button
           class="button--add"
@@ -200,15 +193,6 @@ export default {
 .character-armor-part {
   position: relative;
   padding: 10px 0 0 0;
-}
-
-.character-armor__image {
-  flex: 0 0 10%;
-  margin: 0 25px 0 0;
-}
-
-.character-armor__image--human {
-  height: 350px;
 }
 
 [data-type="id"] {
