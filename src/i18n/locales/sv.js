@@ -17,6 +17,7 @@ export default {
   with_a: 'med en',
   left: 'Vänster',
   right: 'Höger',
+  title_click_to_edit: 'Klicka för att ändra',
 
   // Header
   lobby: 'Lobby',
@@ -105,6 +106,8 @@ export default {
   chest: 'Bröst',
   stomach: 'Mage',
   leg: 'ben',
+  hp: 'Kroppspoäng',
+  injuries: 'Skador',
 
   // Characters - CharacterNotes
   notes: 'Anteckningar',

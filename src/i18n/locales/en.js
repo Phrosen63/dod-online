@@ -17,6 +17,7 @@ export default {
   with_a: 'with a',
   left: 'Left',
   right: 'Right',
+  title_click_to_edit: 'Click to edit',
 
   // Header
   lobby: 'Lobby',
@@ -105,6 +106,8 @@ export default {
   chest: 'Chest',
   stomach: 'Stomach',
   leg: 'leg',
+  hp: 'Hitpoints',
+  injuries: 'Injuries',
 
   // Characters - CharacterNotes
   notes: 'Notes',
