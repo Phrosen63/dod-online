@@ -1,7 +1,7 @@
 <template>
   <div class="grid">
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <div class="console-settings">
           <button
             class="console-settings__controls button--clear"
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <div
           ref="consoleWindow"
           class="console-window"
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <form
           class="console-message-bar"
           @submit.prevent

@@ -1,38 +1,38 @@
 <template>
   <div class="grid dice-wrapper">
     <div class="row">
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D3'), die: $t('D3') }" />
       </div>
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D4'), die: $t('D4') }" />
       </div>
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D6'), die: $t('D6') }" />
       </div>
     </div>
     <div class="row">
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D8'), die: $t('D8') }" />
       </div>
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D10'), die: $t('D10') }" />
       </div>
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D12'), die: $t('D12') }" />
       </div>
     </div>
     <div class="row">
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D20'), die: $t('D20') }" />
       </div>
-      <div class="col col-4">
+      <div class="col-4">
         <Die :data="{ title: getTitle('D100'), die: $t('D100') }" />
       </div>
-      <div class="col col-4" />
+      <div class="col-4" />
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <button
           class="die custom-die"
           @click="showModal"

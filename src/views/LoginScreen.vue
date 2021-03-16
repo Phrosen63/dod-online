@@ -1,12 +1,12 @@
 <template>
   <div class="grid login-screen">
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <h1>DoD-online<br>{{ $t('login_or_signup') }}</h1>
       </div>
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <p
           class="error-message"
           :class="showErrorMessage ? '' : 'hide'"
@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <p
           class="error-message"
           :class="showErrorMessage ? '' : 'hide'"
@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col col-12">
+      <div class="col-12">
         <form
           id="login-form"
           @submit.prevent

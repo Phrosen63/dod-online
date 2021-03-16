@@ -3,10 +3,10 @@
     <h1>Lobby</h1>
     <div class="grid">
       <div class="row">
-        <div class="col col-2">
+        <div class="col-2">
           <Dice />
         </div>
-        <div class="col col-10">
+        <div class="col-10">
           <Console />
         </div>
       </div>
