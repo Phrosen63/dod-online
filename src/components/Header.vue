@@ -156,7 +156,7 @@ nav > a:hover {
   width: 50px;
 }
 
-@media all and (max-width: 550px) {
+@media all and (max-width: 768px) {
   header {
     flex-direction: column;
     height: auto;

@@ -1,53 +1,65 @@
 <template>
-  <div class="console">
-    <div class="console-settings">
-      <button
-        class="console-settings__controls button--clear"
-        @click="clearConsole"
-      >
-        {{ $t('clear') }}
-      </button>
-      <label
-        class="console-settings__controls"
-        for="autoscroll"
-      >
-        {{ $t('autoscroll') }}:
-      </label>
-      <input
-        id="autoscroll"
-        class="console-settings__controls"
-        type="checkbox"
-        checked
-        @change="toggleAutoscroll($event)"
-      >
+  <div class="grid">
+    <div class="row">
+      <div class="col col-12">
+        <div class="console-settings">
+          <button
+            class="console-settings__controls button--clear"
+            @click="clearConsole"
+          >
+            {{ $t('clear') }}
+          </button>
+          <label
+            class="console-settings__controls"
+            for="autoscroll"
+          >
+            {{ $t('autoscroll') }}:
+          </label>
+          <input
+            id="autoscroll"
+            class="console-settings__controls"
+            type="checkbox"
+            checked
+            @change="toggleAutoscroll($event)"
+          >
+        </div>
+      </div>
     </div>
-    <div
-      ref="consoleWindow"
-      class="console-window"
-    >
-      <p
-        v-for="(item, index) in items"
-        :key="index"
-        class="console-message"
-        v-html="item.message"
-      />
+    <div class="row">
+      <div class="col col-12">
+        <div
+          ref="consoleWindow"
+          class="console-window"
+        >
+          <p
+            v-for="(item, index) in items"
+            :key="index"
+            class="console-message"
+            v-html="item.message"
+          />
+        </div>
+      </div>
     </div>
-    <form
-      class="console-message-bar"
-      @submit.prevent
-    >
-      <input
-        ref="messageBar"
-        class="console-message-bar__input-field"
-        type="text"
-      >
-      <input
-        type="submit"
-        class="console-message-bar__send-button"
-        :value="$t('send')"
-        @click="sendMessage"
-      >
-    </form>
+    <div class="row">
+      <div class="col col-12">
+        <form
+          class="console-message-bar"
+          @submit.prevent
+        >
+          <input
+            ref="messageBar"
+            class="console-message-bar__input-field"
+            type="text"
+          >
+          <input
+            type="submit"
+            class="console-message-bar__send-button"
+            :value="$t('send')"
+            @click="sendMessage"
+          >
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -143,7 +155,6 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 10px 0;
 }
 
 .console-settings__controls {
@@ -179,11 +190,11 @@ export default {
 .console-message-bar {
   display: flex;
   flex-direction: row;
-  padding: 10px 0;
 }
 
 .console-message-bar__input-field {
   flex: 1 0 auto;
+  width: 60px;
   height: 40px;
   padding: 0 5px;
   font-size: 22px;

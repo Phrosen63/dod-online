@@ -1,9 +1,15 @@
 <template>
   <div class="lobby view-window">
     <h1>Lobby</h1>
-    <div class="lobby-wrapper">
-      <Dice />
-      <Console />
+    <div class="grid">
+      <div class="row">
+        <div class="col col-2">
+          <Dice />
+        </div>
+        <div class="col col-10">
+          <Console />
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,11 +27,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.lobby-wrapper {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-</style>

@@ -1,21 +1,46 @@
 <template>
-  <div class="dice-wrapper">
-    <div class="dice">
-      <Die :data="{ title: getTitle('D3'), die: $t('D3') }" />
-      <Die :data="{ title: getTitle('D4'), die: $t('D4') }" />
-      <Die :data="{ title: getTitle('D6'), die: $t('D6') }" />
-      <Die :data="{ title: getTitle('D8'), die: $t('D8') }" />
-      <Die :data="{ title: getTitle('D10'), die: $t('D10') }" />
-      <Die :data="{ title: getTitle('D12'), die: $t('D12') }" />
-      <Die :data="{ title: getTitle('D20'), die: $t('D20') }" />
-      <Die :data="{ title: getTitle('D100'), die: $t('D100') }" />
+  <div class="grid dice-wrapper">
+    <div class="row">
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D3'), die: $t('D3') }" />
+      </div>
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D4'), die: $t('D4') }" />
+      </div>
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D6'), die: $t('D6') }" />
+      </div>
     </div>
-    <button
-      class="die custom-die"
-      @click="showModal"
-    >
-      {{ $t('custom') }}
-    </button>
+    <div class="row">
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D8'), die: $t('D8') }" />
+      </div>
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D10'), die: $t('D10') }" />
+      </div>
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D12'), die: $t('D12') }" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D20'), die: $t('D20') }" />
+      </div>
+      <div class="col col-4">
+        <Die :data="{ title: getTitle('D100'), die: $t('D100') }" />
+      </div>
+      <div class="col col-4" />
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <button
+          class="die custom-die"
+          @click="showModal"
+        >
+          {{ $t('custom') }}
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,28 +79,15 @@ export default {
 
 <style scoped>
 .dice-wrapper {
-  flex: 1 0 20%;
-  display: flex;
-  flex-direction: column;
-  margin: 41px 0 0 0;
-}
-
-.dice {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 0 10px;
-  margin: 0 0 25px 0;
+  margin: 38px 5px 0 5px;
 }
 
 .custom-die {
-  flex: 1 0 auto;
-  margin: 0 20px;
+  width: 100%;
   background-color: tomato;
   border-radius: 5px;
   border: 1px solid #000;
-  min-height: 60px;
-  max-height: 60px;
+  height: 70px;
   color: #fff;
   font-size: 22px;
   cursor: pointer;

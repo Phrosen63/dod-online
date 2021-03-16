@@ -1,53 +1,69 @@
 <template>
-  <div class="login-screen  view-window">
-    <h1>DoD-online<br>{{ $t('login_or_signup') }}</h1>
-    <p
-      class="error-message"
-      :class="showErrorMessage ? '' : 'hide'"
-    >
-      {{ $t('login_failed') }}
-    </p>
-    <p
-      class="error-message"
-      :class="showErrorMessage ? '' : 'hide'"
-    >
-      {{ errorMessage }}
-    </p>
-    <form
-      id="login-form"
-      @submit.prevent
-    >
-      <input
-        id="txtEmail"
-        v-model="email"
-        class="form-control"
-        type="email"
-        :placeholder="$t('email')"
-        required
-      >
-      <input
-        id="txtPassword"
-        v-model="pass"
-        class="form-control"
-        type="password"
-        :placeholder="$t('password')"
-        required
-      >
-      <button
-        id="btnLogin"
-        class="form-control"
-        @click="login"
-      >
-        {{ $t('log_in') }}
-      </button>
-      <button
-        id="btnSignUp"
-        class="form-control"
-        @click="signUp"
-      >
-        {{ $t('sign_up') }}
-      </button>
-    </form>
+  <div class="grid login-screen">
+    <div class="row">
+      <div class="col col-12">
+        <h1>DoD-online<br>{{ $t('login_or_signup') }}</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <p
+          class="error-message"
+          :class="showErrorMessage ? '' : 'hide'"
+        >
+          {{ $t('login_failed') }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <p
+          class="error-message"
+          :class="showErrorMessage ? '' : 'hide'"
+        >
+          {{ errorMessage }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col col-12">
+        <form
+          id="login-form"
+          @submit.prevent
+        >
+          <input
+            id="txtEmail"
+            v-model="email"
+            class="form-control"
+            type="email"
+            :placeholder="$t('email')"
+            required
+          >
+          <input
+            id="txtPassword"
+            v-model="pass"
+            class="form-control"
+            type="password"
+            :placeholder="$t('password')"
+            required
+          >
+          <button
+            id="btnLogin"
+            class="form-control"
+            @click="login"
+          >
+            {{ $t('log_in') }}
+          </button>
+          <button
+            id="btnSignUp"
+            class="form-control"
+            @click="signUp"
+          >
+            {{ $t('sign_up') }}
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -129,6 +145,7 @@ export default {
   border: 1px solid #000;
   background-color: rgba(245, 235, 201, 0.65);
   min-height: unset;
+  border-radius: 5px;
 }
 
 .login-screen > h1 {
@@ -169,7 +186,14 @@ export default {
   background-color: #2dbecc;
 }
 
-@media all and (max-width: 1200px) {
+@media all and (max-width: 1400px) {
+  .login-screen {
+    width: 60%;
+    margin: 75px auto 50px auto;
+  }
+}
+
+@media all and (max-width: 768px) {
   .login-screen {
     width: 80%;
   }

@@ -62,11 +62,7 @@ export default {
         }),
       };
 
-      // const message = this.$i18n.locale === 'en' ?
-      //   `${highlight.name} rolled: ${highlight.result}, with a: ${highlight.die}` :
-      //   `${highlight.name} rullade: ${highlight.result}, med en: ${highlight.die}`;
       const message = `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${highlight.die}`;
-
       const data = {
         message,
         date: Date.now(),
@@ -81,13 +77,11 @@ export default {
 
 <style scoped>
 .die {
-  flex: 0 0 auto;
-  margin: 10px;
   background-color: tomato;
   border-radius: 10%;
   border: 1px solid #000;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   color: #fff;
   font-size: 22px;
   cursor: pointer;
