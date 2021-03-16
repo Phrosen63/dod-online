@@ -64,4 +64,5 @@ export default {
 
 <style>
 @import './assets/styles/style.css';
+@import './assets/styles/grid.css';
 </style>
