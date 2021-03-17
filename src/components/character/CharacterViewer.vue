@@ -1,24 +1,52 @@
 <template>
   <div
     v-if="selectedCharacter"
-    class="character-viewer"
+    class="col-10"
   >
     <vue-tabs>
       <v-tab :title="$t('front')">
-        <div class="character-viewer-wrapper">
-          <CharacterInfo />
-          <CharacterStats />
-          <CharacterWealth />
+        <div class="grid">
+          <div class="row character-viewer-wrapper">
+            <div class="col-3">
+              <CharacterInfo />
+            </div>
+            <div class="col-3">
+              <CharacterStats />
+            </div>
+            <div class="col-6">
+              <CharacterWealth />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <CharacterSkills />
+            </div>
+          </div>
         </div>
-        <CharacterSkills />
       </v-tab>
       <v-tab :title="$t('back')">
-        <CharacterInventory />
-        <div class="character-viewer-wrapper">
-          <CharacterHealth />
+        <div class="grid">
+          <div class="row character-viewer-wrapper">
+            <div class="col-12">
+              <CharacterInventory />
+            </div>
+          </div>
+          <div class="row character-viewer-wrapper">
+            <div class="col-12">
+              <CharacterHealth />
+            </div>
+          </div>
+          <div class="row character-viewer-wrapper">
+            <div class="col-12">
+              <CharacterArmor />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <CharacterNotes />
+            </div>
+          </div>
         </div>
-        <CharacterArmor />
-        <CharacterNotes />
       </v-tab>
     </vue-tabs>
   </div>
@@ -61,18 +89,7 @@ export default {
 </script>
 
 <style scoped>
-.character-viewer {
-  display: flex;
-  flex: 1 0 80%;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 20px;
-}
-
 .character-viewer-wrapper {
-  flex: 1 0 100%;
-  display: flex;
-  flex-direction: row;
   border-bottom: 1px solid #a2a2a2;
   padding: 0 0 25px 0;
 }

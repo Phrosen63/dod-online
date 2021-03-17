@@ -1,5 +1,5 @@
 <template>
-  <div class="characters-list">
+  <div class="col-2">
     <div class="characters-list-wrapper">
       <div class="side-bar">
         <button
@@ -67,10 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.characters-list {
-  flex: 1 0 20%;
-}
-
 .characters-list-wrapper {
   display: flex;
   flex-direction: row;

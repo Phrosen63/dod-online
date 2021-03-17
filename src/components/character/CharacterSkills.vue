@@ -7,38 +7,40 @@
     >
       +{{ $t('add_skill') }}
     </button>
-    <transition-group
-      name="transition-list"
-      class="character-skills-list"
-      tag="ul"
-    >
-      <li
-        v-for="skill in selectedCharacter.skills"
-        :key="skill.id"
-        class="character-skill"
+    <div class="grid">
+      <transition-group
+        name="transition-list"
+        class="row"
+        tag="ul"
       >
-        <span>{{ skill.key }}:</span>
-        <span class="character-skill__value">
-          {{ skill.value }}
-        </span>
-        <div class="skill-controls">
-          <button
-            class="skill-control skill-control__edit"
-            :data-id="skill.id"
-            @click="clickEdit(skill.id)"
-          >
-            {{ $t('edit') }}
-          </button>
-          <button
-            class="skill-control skill-control__delete"
-            :data-id="skill.id"
-            @click="clickDelete(skill.id)"
-          >
-            {{ $t('delete') }}
-          </button>
-        </div>
-      </li>
-    </transition-group>
+        <li
+          v-for="skill in selectedCharacter.skills"
+          :key="skill.id"
+          class="character-skill col-6"
+        >
+          <span>{{ skill.key }}:</span>
+          <span class="character-skill__value">
+            {{ skill.value }}
+          </span>
+          <div class="skill-controls">
+            <button
+              class="skill-control skill-control__edit"
+              :data-id="skill.id"
+              @click="clickEdit(skill.id)"
+            >
+              {{ $t('edit') }}
+            </button>
+            <button
+              class="skill-control skill-control__delete"
+              :data-id="skill.id"
+              @click="clickDelete(skill.id)"
+            >
+              {{ $t('delete') }}
+            </button>
+          </div>
+        </li>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -165,19 +167,10 @@ export default {
 
 <style scoped>
 .character-skills {
-  flex: 1 0 100%;
-  border-bottom: 1px solid #a2a2a2;
   padding: 0 0 55px 0;
 }
 
-.character-skills-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
 .character-skill {
-  flex: 1 0 50%;
   position: relative;
   display: flex;
   flex-direction: row;

@@ -11,9 +11,11 @@
       <p class="preamble">
         ~ {{ $t('click_to_edit') }} ~
       </p>
-      <div class="characters-wrapper">
-        <CharacterList />
-        <CharacterViewer />
+      <div class="grid">
+        <div class="row">
+          <CharacterList />
+          <CharacterViewer />
+        </div>
       </div>
     </template>
   </div>
@@ -133,10 +135,5 @@ export default {
 <style scoped>
 .characters > h1 {
   margin: 22px 0 10px 0;
-}
-
-.characters-wrapper {
-  display: flex;
-  flex-direction: row;
 }
 </style>

@@ -185,9 +185,7 @@ export default {
 
 <style scoped>
 .character-notes {
-  flex: 1 0 auto;
-  border-bottom: 1px solid #a2a2a2;
-  padding: 0 0 25px 0;
+  padding: 0 0 55px 0;
 }
 
 .character-notes-item {
