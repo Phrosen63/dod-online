@@ -9,69 +9,88 @@
     />
     <div
       v-else
-      class="profile-info"
+      class="grid profile-info"
     >
-      <div>
-        <label
-          for="field_UserName"
-          class="profile-info__label profile-info__user-name"
-        >
-          {{ $t('user_name') }}:
-        </label>
-        <input
-          id="field_UserName"
-          v-model="displayName"
-          type="text"
-          class="hidden-textfield"
-          :title="$t('title_click_to_edit')"
-          @focus="$event.target.select()"
-          @change="updateUserDisplayName($event)"
-        >
-        <button
-          class="profile-info__random-name-button"
-          @click="generateRandomName"
-        >
-          {{ $t('generate_random_name') }}
-        </button>
+      <div class="row">
+        <div class="col-6">
+          <label
+            for="field_UserName"
+            class="profile-info__label profile-info__user-name"
+          >
+            {{ $t('user_name') }}:
+          </label>
+          <input
+            id="field_UserName"
+            v-model="displayName"
+            type="text"
+            class="hidden-textfield"
+            :title="$t('title_click_to_edit')"
+            @focus="$event.target.select()"
+            @change="updateUserDisplayName($event)"
+          >
+          <button
+            class="profile-info__random-name-button"
+            @click="generateRandomName"
+          >
+            {{ $t('generate_random_name') }}
+          </button>
+        </div>
+        <div class="col-6">
+          <p class="preamble">
+            {{ $t('admin_settings') }}
+          </p>
+        </div>
       </div>
-      <p>{{ $t('email') }}: <span>{{ email }}</span></p>
-      <p>{{ $t('role') }}: <span>{{ role }}</span></p>
-      <div>
-        <label
-          for="language"
-          class="profile-info__label"
-        >
-          {{ $t('prefered_language') }}:
-        </label>
-        <select
-          id="language"
-          v-model="language"
-          @change="languageUpdated($event)"
-        >
-          <option value="en">
-            {{ $t('english') }}
-          </option>
-          <option value="sv">
-            {{ $t('swedish') }}
-          </option>
-        </select>
+      <div class="row">
+        <div class="col-6">
+          <p>{{ $t('email') }}: <span>{{ email }}</span></p>
+        </div>
+        <div class="col-6">
+          <div
+            v-if="isModeratorOrAdmin"
+            class="profile-enable-user"
+          >
+            <input
+              v-model="newUserId"
+              class="profile-enable-user__input"
+              type="text"
+              placeholder="User id"
+            >
+            <button
+              class="profile-enable-user__button"
+              @click="enableUser"
+            >
+              {{ $t('enable_user') }}
+            </button>
+          </div>
+        </div>
       </div>
-      <div
-        v-if="isModeratorOrAdmin"
-        class="profile-enable-user"
-      >
-        <input
-          v-model="newUserId"
-          class="profile-enable-user__input"
-          type="text"
-          placeholder="User id"
-        >
-        <button
-          class="profile-enable-user__button"
-          @click="enableUser"
-        >
-          Enable user
-        </button>
+      <div class="row">
+        <div class="col-6">
+          <p>{{ $t('role') }}: <span>{{ role }}</span></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label
+            for="language"
+            class="profile-info__label"
+          >
+            {{ $t('prefered_language') }}:
+          </label>
+          <select
+            id="language"
+            v-model="language"
+            @change="languageUpdated($event)"
+          >
+            <option value="en">
+              {{ $t('english') }}
+            </option>
+            <option value="sv">
+              {{ $t('swedish') }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
   </div>
@@ -179,6 +198,10 @@ export default {
 </script>
 
 <style scoped>
+.profile p {
+  margin: 5px 0;
+}
+
 .profile-info__label {
   font-size: 18px;
 }
