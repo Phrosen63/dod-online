@@ -1,5 +1,5 @@
 <template>
-  <div class="characters  view-window">
+  <div class="characters view-window">
     <pulse-loader
       v-if="loading"
       class="spinner"
