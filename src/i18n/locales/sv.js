@@ -125,6 +125,8 @@ export default {
   moderator: 'Moderator',
   user: 'Användare',
   reader: 'Läs',
+  admin_settings: 'Admininistratörsinställningar',
+  enable_user: 'Aktivera användare',
 
   // Modals
   // Modals - AddCharacter

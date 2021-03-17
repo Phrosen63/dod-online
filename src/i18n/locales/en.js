@@ -125,6 +125,8 @@ export default {
   moderator: 'Moderator',
   user: 'User',
   reader: 'Reader',
+  admin_settings: 'Admin settings',
+  enable_user: 'Enable user',
 
   // Modals
   // Modals - AddCharacter
