@@ -163,4 +163,7 @@ export default {
   rolling: 'Rullar',
   die: 'tärning',
   using: 'med',
+
+  // Users
+  users: 'Användare',
 };

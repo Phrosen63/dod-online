@@ -2,6 +2,7 @@ import LoginScreen from '../views/LoginScreen.vue';
 import Lobby from '../views/Lobby.vue';
 import Characters from '../views/Characters.vue';
 import Profile from '../views/Profile.vue';
+import Users from '../views/Users.vue';
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: Users,
   },
 ];
 

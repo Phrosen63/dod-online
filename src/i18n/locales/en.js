@@ -163,4 +163,7 @@ export default {
   rolling: 'Rolling',
   die: 'die',
   using: 'using',
+
+  // Users
+  users: 'Users',
 };

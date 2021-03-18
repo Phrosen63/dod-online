@@ -10,6 +10,9 @@
       <router-link to="/profile">
         {{ $t('profile') }}
       </router-link>
+      <router-link to="/users">
+        {{ $t('users') }}
+      </router-link>
     </nav>
     <div class="header-button-wrapper">
       <button
