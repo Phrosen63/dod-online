@@ -1,6 +1,6 @@
 <template>
   <div class="lobby view-window">
-    <h1>Lobby</h1>
+    <h1>{{ $t('lobby') }}</h1>
     <div class="grid">
       <div class="row">
         <div class="col-2">
