@@ -21,9 +21,9 @@
           </label>
           <input
             id="field_UserName"
-            v-model="displayName"
             type="text"
             class="hidden-textfield"
+            :value="displayName"
             :title="$t('title_click_to_edit')"
             @focus="$event.target.select()"
             @change="updateUserDisplayName($event)"
@@ -101,8 +101,7 @@
 import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 import { generateName } from '@/api/randomNameGenerator';
-import { updateDocumentFieldForCurrentUser } from '@/api/database/write';
-import { addUserDocument } from '@/api/database/write';
+import { addUserDocument, updateDocumentFieldForCurrentUser } from '@/api/database/write';
 
 export default {
   name: 'Profile',
@@ -155,7 +154,22 @@ export default {
       const currentUser = await getFirebaseUser();
 
       if (currentUser) {
-        currentUser.updateProfile({displayName: event.target.value});
+        const newDisplayName = event.target.value;
+        currentUser.updateProfile({displayName: newDisplayName});
+
+        updateDocumentFieldForCurrentUser({
+          collection: 'settings',
+          document: this.settingsId,
+          data: {
+            displayName: newDisplayName,
+          },
+        }).then(() => {
+          this.$store.commit('updateUserDisplayName', {
+            data: {
+              value: newDisplayName,
+            },
+          });
+        }).catch(e => console.log('Error: ' + e));
       }
     },
     generateRandomName() {
@@ -167,7 +181,6 @@ export default {
         },
       };
       this.updateUserDisplayName(fakeEvent);
-      this.displayName = randomName;
     },
     async languageUpdated(event) {
       const value = event.target.value;
