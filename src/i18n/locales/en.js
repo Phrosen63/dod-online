@@ -18,9 +18,9 @@ export default {
   left: 'Left',
   right: 'Right',
   title_click_to_edit: 'Click to edit',
+  lobby: 'Lobby',
 
   // Header
-  lobby: 'Lobby',
   switch_language: 'Switch language to Swedish',
   log_out: 'Log out',
 
