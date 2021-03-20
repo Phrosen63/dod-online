@@ -19,6 +19,13 @@ export default {
   right: 'Höger',
   title_click_to_edit: 'Klicka för att ändra',
   lobby: 'Lobby',
+  yes: 'Ja',
+  no: 'Nej',
+  title: 'Titel',
+  text: 'Text',
+  value: 'Värde',
+  skill: 'Färdighet',
+  type: 'Typ',
 
   // Header
   switch_language: 'Byt språk till Engelska',
@@ -113,6 +120,9 @@ export default {
   notes: 'Anteckningar',
   add_note: 'Lägg till anteckning',
   cross_out: 'Stryk över',
+  warning_message_title: 'Varning! Ta bort anteckning',
+  warning_message_preamble: 'Ta bort anteckning',
+  warning_message_content: 'Detta kan inte göras ogjort. Ta bort ändå?',
 
   // Profile
   user_name: 'Användarnamn',
@@ -149,7 +159,6 @@ export default {
   quantity: 'Antal',
   weight: 'Vikt',
   effect: 'Effekt',
-  value: 'Värde',
 
   // Modals - CustomDice
   custom_die_roll: 'Rulla custom tärning',

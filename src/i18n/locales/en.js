@@ -19,6 +19,13 @@ export default {
   right: 'Right',
   title_click_to_edit: 'Click to edit',
   lobby: 'Lobby',
+  yes: 'Yes',
+  no: 'No',
+  title: 'Title',
+  text: 'Text',
+  value: 'Value',
+  skill: 'Skill',
+  type: 'Type',
 
   // Header
   switch_language: 'Switch language to Swedish',
@@ -113,6 +120,9 @@ export default {
   notes: 'Notes',
   add_note: 'Add note',
   cross_out: 'Cross-out',
+  warning_message_title: 'Warning! Delete note',
+  warning_message_preamble: 'Delete note',
+  warning_message_content: 'This cannot be undone. Delete anyway?',
 
   // Profile
   user_name: 'User name',
@@ -149,7 +159,6 @@ export default {
   quantity: 'Quantity',
   weight: 'Weight',
   effect: 'Effect',
-  value: 'Value',
 
   // Modals - CustomDice
   custom_die_roll: 'Custom die roll',
