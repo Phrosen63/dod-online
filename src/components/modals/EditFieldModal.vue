@@ -10,7 +10,7 @@
         :data="{
           key: obj.key,
           value: obj.value,
-          fieldName: obj.key,
+          fieldName: obj.fieldName || obj.key,
         }"
         @editFieldUpdate="updateDataValue($event, obj)"
       />
@@ -68,11 +68,11 @@ export default {
       this.$modal.hideAll();
     },
     save() {
+      const obj = {};
       this.data.forEach(item => {
-        const obj = {};
         obj[item.key] = item.value;
-        writeNestedObjToCurrentUser(this.collectionPath, this.objectId, obj);
       });
+      writeNestedObjToCurrentUser(this.collectionPath, this.objectId, obj);
 
       this.$store.commit(this.mutation, this.data);
       this.$modal.hideAll();
