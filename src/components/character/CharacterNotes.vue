@@ -79,13 +79,13 @@ export default {
           id: note.id,
           key: 'key',
           value: note.key,
-          fieldName: 'Title',
+          fieldName: this.$t('title'),
         },
         {
           id: note.id,
           key: 'value',
           value: note.value,
-          fieldName: 'Text',
+          fieldName: this.$t('text'),
         },
       ];
 
@@ -116,7 +116,7 @@ export default {
       const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const note = this.getNoteObjectById(noteId);
       note.strikethrough = !note.strikethrough;
-      writeNestedObjToCurrentUser(NOTES_COLLECTION, note.id, { strikethrough: note.strikethrough });
+      writeNestedObjToCurrentUser(NOTES_COLLECTION, note.id, note);
     },
     clickDelete(noteId) {
       const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
@@ -125,14 +125,14 @@ export default {
       const componentProps = {
         data: {
           button: {
-            yes: 'Yes',
-            no: 'No',
+            yes: this.$t('yes'),
+            no: this.$t('no'),
           },
         },
         heading: {
-          title: `Warning! Delete note.`,
-          preamble: `Delete note: ${note.key}`,
-          content: `This cannot be undone. Delete anyway?`,
+          title: `${this.$t('warning_message_title')}.`,
+          preamble: `${this.$t('warning_message_preamble')}: ${note.key}`,
+          content: `${this.$t('warning_message_content')}`,
         },
         objectId: noteId,
         collectionPath: NOTES_COLLECTION,
@@ -154,10 +154,10 @@ export default {
       const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const data = [
         {
-          key: 'Title',
+          key: this.$t('title'),
         },
         {
-          key: 'Text',
+          key: this.$t('text'),
         },
       ];
 

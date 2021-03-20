@@ -69,13 +69,13 @@ export default {
           id: wealth.id,
           key: 'key',
           value: wealth.key,
-          fieldName: 'Title',
+          fieldName: this.$t('type'),
         },
         {
           id: wealth.id,
           key: 'value',
           value: wealth.value,
-          fieldName: 'Text',
+          fieldName: this.$t('value'),
         },
       ];
 

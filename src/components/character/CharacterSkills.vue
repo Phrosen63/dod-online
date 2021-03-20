@@ -98,11 +98,13 @@ export default {
           id: skill.id,
           key: 'key',
           value: skill.key,
+          fieldName: this.$t('skill'),
         },
         {
           id: skill.id,
           key: 'value',
           value: skill.value,
+          fieldName: this.$t('value'),
         },
       ];
 
