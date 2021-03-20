@@ -17,6 +17,17 @@
             <p>
               {{ $t('class') }}: {{ character.info.class }}
             </p>
+            <router-link
+              :to="{
+                path: '/characters',
+                query: {
+                  uid,
+                  characterId: character.id,
+                },
+              }"
+            >
+              {{ $t('view_character_details') }}
+            </router-link>
           </div>
           <div class="col-8">
             <UserCharacterStatsList :stats="character.stats" />

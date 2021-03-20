@@ -50,8 +50,8 @@ export default {
     const { uid } = currentUser;
 
     if (uid) {
-      const characterCollection = `/users/${uid}/characters`;
-      const snapshot = await db.collection(characterCollection).get();
+      const CHARACTER_COLLECTION = `/users/${uid}/characters`;
+      const snapshot = await db.collection(CHARACTER_COLLECTION).get();
       const characters = snapshot.docs.map((doc) => doc.data());
 
       for (let i = 0; i < snapshot.docs.length; i += 1) {
@@ -60,8 +60,8 @@ export default {
         characters[i].id = characterId;
 
         // Notes
-        const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
-        const notesSnapshot = await db.collection(notesCollection).get();
+        const NOTES_COLLECTION = `/users/${uid}/characters/${characterId}/notes`;
+        const notesSnapshot = await db.collection(NOTES_COLLECTION).get();
 
         const notes = notesSnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < notesSnapshot.docs.length; i += 1) {
@@ -71,8 +71,8 @@ export default {
         characters[i].notes = notes;
 
         // Inventory
-        const inventoryCollection = `/users/${uid}/characters/${characterId}/inventory`;
-        const inventorySnapshot = await db.collection(inventoryCollection).get();
+        const INVENTORY_COLLECTION = `/users/${uid}/characters/${characterId}/inventory`;
+        const inventorySnapshot = await db.collection(INVENTORY_COLLECTION).get();
 
         const inventory = inventorySnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < inventorySnapshot.docs.length; i += 1) {
@@ -82,8 +82,8 @@ export default {
         characters[i].inventory = inventory;
 
         // Injuries
-        const injuriesCollection = `/users/${uid}/characters/${characterId}/injuries`;
-        const injuriesSnapshot = await db.collection(injuriesCollection).get();
+        const INJURIES_COLLECTION = `/users/${uid}/characters/${characterId}/injuries`;
+        const injuriesSnapshot = await db.collection(INJURIES_COLLECTION).get();
 
         const injuries = injuriesSnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < injuriesSnapshot.docs.length; i += 1) {
@@ -93,8 +93,8 @@ export default {
         characters[i].injuries = injuries;
 
         // Armor
-        const armorCollection = `/users/${uid}/characters/${characterId}/armor`;
-        const armorSnapshot = await db.collection(armorCollection).get();
+        const ARMOR_COLLECTION = `/users/${uid}/characters/${characterId}/armor`;
+        const armorSnapshot = await db.collection(ARMOR_COLLECTION).get();
 
         const armor = armorSnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < armorSnapshot.docs.length; i += 1) {
@@ -104,8 +104,8 @@ export default {
         characters[i].armor = armor;
 
         // Skills
-        const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
-        const skillsSnapshot = await db.collection(skillsCollection).get();
+        const SKILLS_COLLECTION = `/users/${uid}/characters/${characterId}/skills`;
+        const skillsSnapshot = await db.collection(SKILLS_COLLECTION).get();
 
         const skills = skillsSnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < skillsSnapshot.docs.length; i += 1) {
@@ -115,8 +115,8 @@ export default {
         characters[i].skills = skills;
 
         // Wealth
-        const wealthCollection = `/users/${uid}/characters/${characterId}/wealth`;
-        const wealthSnapshot = await db.collection(wealthCollection).get();
+        const WEALTH_COLLECTION = `/users/${uid}/characters/${characterId}/wealth`;
+        const wealthSnapshot = await db.collection(WEALTH_COLLECTION).get();
 
         const wealth = wealthSnapshot.docs.map((doc) => doc.data());
         for (let i = 0; i < wealthSnapshot.docs.length; i += 1) {
