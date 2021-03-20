@@ -52,12 +52,12 @@ export default {
     if (uid) {
       const characterCollection = `/users/${uid}/characters`;
       const snapshot = await db.collection(characterCollection).get();
-      const chars = snapshot.docs.map((doc) => doc.data());
+      const characters = snapshot.docs.map((doc) => doc.data());
 
       for (let i = 0; i < snapshot.docs.length; i += 1) {
         // Character id
         const characterId = snapshot.docs[i].id;
-        chars[i].id = characterId;
+        characters[i].id = characterId;
 
         // Notes
         const notesCollection = `/users/${uid}/characters/${characterId}/notes`;
@@ -68,7 +68,7 @@ export default {
           const noteId = notesSnapshot.docs[i].id;
           notes[i].id = noteId;
         }
-        chars[i].notes = notes;
+        characters[i].notes = notes;
 
         // Inventory
         const inventoryCollection = `/users/${uid}/characters/${characterId}/inventory`;
@@ -79,7 +79,7 @@ export default {
           const inventoryId = inventorySnapshot.docs[i].id;
           inventory[i].id = inventoryId;
         }
-        chars[i].inventory = inventory;
+        characters[i].inventory = inventory;
 
         // Injuries
         const injuriesCollection = `/users/${uid}/characters/${characterId}/injuries`;
@@ -90,7 +90,7 @@ export default {
           const injuriesId = injuriesSnapshot.docs[i].id;
           injuries[i].id = injuriesId;
         }
-        chars[i].injuries = injuries;
+        characters[i].injuries = injuries;
 
         // Armor
         const armorCollection = `/users/${uid}/characters/${characterId}/armor`;
@@ -101,7 +101,7 @@ export default {
           const armorId = armorSnapshot.docs[i].id;
           armor[i].id = armorId;
         }
-        chars[i].armor = armor;
+        characters[i].armor = armor;
 
         // Skills
         const skillsCollection = `/users/${uid}/characters/${characterId}/skills`;
@@ -112,7 +112,7 @@ export default {
           const skillsId = skillsSnapshot.docs[i].id;
           skills[i].id = skillsId;
         }
-        chars[i].skills = skills;
+        characters[i].skills = skills;
 
         // Wealth
         const wealthCollection = `/users/${uid}/characters/${characterId}/wealth`;
@@ -123,9 +123,9 @@ export default {
           const wealthId = wealthSnapshot.docs[i].id;
           wealth[i].id = wealthId;
         }
-        chars[i].wealth = wealth;
+        characters[i].wealth = wealth;
       }
-      this.$store.commit('setCharacterList', chars);
+      this.$store.commit('setCharacterList', characters);
       this.loading = false;
     }
   },
