@@ -166,4 +166,7 @@ export default {
 
   // Users
   users: 'Users',
+
+  // Users - UserCharactersList
+  view_character_details: 'View character details',
 };
