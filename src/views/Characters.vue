@@ -58,6 +58,7 @@ export default {
         // Character id
         const characterId = snapshot.docs[i].id;
         characters[i].id = characterId;
+        characters[i].uid = uid;
 
         // Notes
         const NOTES_COLLECTION = `/users/${uid}/characters/${characterId}/notes`;
