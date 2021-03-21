@@ -42,7 +42,7 @@
         class="add-multiple-field"
       >
         <label class="modal-label">
-          {{ item.key }}:
+          {{ getFieldName(item) }}:
         </label>
         <input
           v-model="result[item.key]"
@@ -103,9 +103,7 @@ export default {
         if (alreadyInList) {
           // Already in list, do not add new field
           this.showErrorMessage = true;
-          this.errorMessage = this.$i18n.locale === 'en' ?
-            'A field with that name already exists, please choose a different name.' :
-            'Ett fält med samma namn existerar redan, vänligen välj ett annat namn';
+          this.errorMessage = this.$t('field_already_exists');
         } else {
           // New field, add to list
           this.list.push({
@@ -117,9 +115,7 @@ export default {
       } else {
         // No field name
         this.showErrorMessage = true;
-        this.errorMessage = this.$i18n.locale === 'en' ?
-          'Please fill out the Field name field.' :
-          'Fyll i Fältets namn-fältet.';
+        this.errorMessage = this.$t('fill_out_field');
       }
     },
     cancel() {
@@ -142,10 +138,14 @@ export default {
       } else {
         // Cleaned object has no keys
         this.showErrorMessage = true;
-        this.errorMessage = this.$i18n.locale === 'en' ?
-          'Please fill out the custom field(s).' :
-          'Vänligen fyll i custom fält(en).';
+        this.errorMessage = this.$t('fill_out_custom_fields');
       }
+    },
+    getFieldName(item) {
+      if (item) {
+        return item.fieldName ? item.fieldName : item.key;
+      }
+      return this.$t('missing_field_name');
     },
   },
 }
