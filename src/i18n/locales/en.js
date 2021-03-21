@@ -159,6 +159,10 @@ export default {
   quantity: 'Quantity',
   weight: 'Weight',
   effect: 'Effect',
+  missing_field_name: 'Error: missing field name!',
+  field_already_exists: 'A field with that name already exists, please choose a different name',
+  fill_out_field: 'Please fill out the Field name field',
+  fill_out_custom_fields: 'Please fill out the custom field(s)',
 
   // Modals - CustomDice
   custom_die_roll: 'Custom die roll',

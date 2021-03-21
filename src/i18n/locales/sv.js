@@ -159,6 +159,10 @@ export default {
   quantity: 'Antal',
   weight: 'Vikt',
   effect: 'Effekt',
+  missing_field_name: 'Error: fältnamn saknas!',
+  field_already_exists: 'Ett fält med samma namn existerar redan, vänligen välj ett annat namn',
+  fill_out_field: 'Fyll i Fältets namn-fältet',
+  fill_out_custom_fields: 'Vänligen fyll i custom fält(en)',
 
   // Modals - CustomDice
   custom_die_roll: 'Rulla custom tärning',
