@@ -154,10 +154,12 @@ export default {
       const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
       const data = [
         {
-          key: this.$t('title'),
+          key: 'Title',
+          fieldName: this.$t('title'),
         },
         {
-          key: this.$t('text'),
+          key: 'Text',
+          fieldName: this.$t('text'),
         },
       ];
 
