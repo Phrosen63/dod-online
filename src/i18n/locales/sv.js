@@ -26,6 +26,9 @@ export default {
   value: 'Värde',
   skill: 'Färdighet',
   type: 'Typ',
+  warning_message_title: 'Varning! Ta bort',
+  warning_message_preamble: 'Ta bort',
+  warning_message_content: 'Detta kan inte göras ogjort. Ta bort ändå?',
 
   // Header
   switch_language: 'Byt språk till Engelska',
@@ -88,6 +91,7 @@ export default {
 
   // Characters - CharacterWealth
   wealth: 'Rikedomar',
+  wealth_singular: 'Rikedom',
   add_wealth: 'Lägg till rikedom',
 
   // Characters - CharacterSkills
@@ -117,12 +121,10 @@ export default {
   injuries: 'Skador',
 
   // Characters - CharacterNotes
+  note: 'Anteckning',
   notes: 'Anteckningar',
   add_note: 'Lägg till anteckning',
   cross_out: 'Stryk över',
-  warning_message_title: 'Varning! Ta bort anteckning',
-  warning_message_preamble: 'Ta bort anteckning',
-  warning_message_content: 'Detta kan inte göras ogjort. Ta bort ändå?',
 
   // Profile
   user_name: 'Användarnamn',

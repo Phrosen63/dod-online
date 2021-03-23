@@ -26,6 +26,9 @@ export default {
   value: 'Value',
   skill: 'Skill',
   type: 'Type',
+  warning_message_title: 'Warning! Delete',
+  warning_message_preamble: 'Delete',
+  warning_message_content: 'This cannot be undone. Delete anyway?',
 
   // Header
   switch_language: 'Switch language to Swedish',
@@ -88,6 +91,7 @@ export default {
 
   // Characters - CharacterWealth
   wealth: 'Wealth',
+  wealth_singular: 'Wealth',
   add_wealth: 'Add wealth',
 
   // Characters - CharacterSkills
@@ -117,12 +121,10 @@ export default {
   injuries: 'Injuries',
 
   // Characters - CharacterNotes
+  note: 'Note',
   notes: 'Notes',
   add_note: 'Add note',
   cross_out: 'Cross-out',
-  warning_message_title: 'Warning! Delete note',
-  warning_message_preamble: 'Delete note',
-  warning_message_content: 'This cannot be undone. Delete anyway?',
 
   // Profile
   user_name: 'User name',
