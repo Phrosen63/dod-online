@@ -37,6 +37,7 @@ export default {
       heading: undefined,
       objectId: undefined,
       mutation: undefined,
+      stateTarget: undefined,
     };
   },
   created() {
@@ -45,24 +46,19 @@ export default {
     this.objectId = this.$attrs.objectId;
     this.mutation = this.$attrs.mutation;
     this.collectionPath = this.$attrs.collectionPath;
+    this.stateTarget = this.$attrs.stateTarget;
   },
   methods: {
     no() {
-      this.$store.commit(this.mutation, {
-        data: {
-          value: false,
-        },
-      });
       this.$modal.hideAll();
     },
     yes() {
-      this.$store.commit(this.mutation, {
-        data: {
-          value: true,
-          id: this.objectId,
-          collectionPath: this.collectionPath,
-        },
-      });
+      const data = {
+        id: this.objectId,
+        collectionPath: this.collectionPath,
+        stateTarget: this.stateTarget,
+      };
+      this.$store.commit(this.mutation, data);
       this.$modal.hideAll();
     },
   },

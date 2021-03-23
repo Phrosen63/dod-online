@@ -36,9 +36,6 @@
 // Components
 import EditField from '@/components/EditField';
 
-// Modules
-import { writeNestedObjToCurrentUser } from '@/api/database/write';
-
 export default {
   name: 'EditFieldModal',
   components: {
@@ -49,8 +46,10 @@ export default {
       data: [],
       title: undefined,
       objectId: undefined,
-      COLLECTION_PATH: undefined,
+      collectionPath: undefined,
       mutation: undefined,
+      stateTarget: undefined,
+      id: undefined,
     };
   },
   created() {
@@ -59,6 +58,8 @@ export default {
     this.objectId = this.$attrs.objectId;
     this.mutation = this.$attrs.mutation;
     this.collectionPath = this.$attrs.collectionPath;
+    this.stateTarget = this.$attrs.stateTarget;
+    this.id = this.$attrs.data[0].id;
   },
   methods: {
     updateDataValue(e, obj) {
@@ -69,12 +70,16 @@ export default {
     },
     save() {
       const obj = {};
-      this.data.forEach(item => {
-        obj[item.key] = item.value;
-      });
-      writeNestedObjToCurrentUser(this.collectionPath, this.objectId, obj);
+      obj.collectionPath = this.collectionPath;
+      obj.stateTarget = this.stateTarget;
+      obj.id = this.id;
+      obj.data = {};
 
-      this.$store.commit(this.mutation, this.data);
+      this.data.forEach(item => {
+        obj.data[item.key] = item.value;
+      });
+
+      this.$store.commit(this.mutation, obj);
       this.$modal.hideAll();
     },
   }

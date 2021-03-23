@@ -101,7 +101,7 @@
 import { getFirebaseUser } from '@/api/database/user';
 import { PulseLoader } from 'vue-spinner/dist/vue-spinner.min';
 import { generateName } from '@/api/randomNameGenerator';
-import { addUserDocument, updateDocumentFieldForCurrentUser } from '@/api/database/write';
+import { addUserDocument, updateDocument } from '@/api/database/write';
 
 export default {
   name: 'Profile',
@@ -139,6 +139,13 @@ export default {
     this.loading = false;
   },
   methods: {
+    async getCollectionPath() {
+      const currentUser = await getFirebaseUser();
+      if (currentUser && currentUser.uid) {
+        return `users/${currentUser.uid}/settings/`;
+      }
+      return undefined;
+    },
     convertRole(role) {
       switch (role) {
         case 1:
@@ -152,13 +159,14 @@ export default {
     },
     async updateUserDisplayName(event) {
       const currentUser = await getFirebaseUser();
+      const SETTINGS_COLLECTION = await this.getCollectionPath();
 
-      if (currentUser) {
+      if (currentUser && SETTINGS_COLLECTION) {
         const newDisplayName = event.target.value;
         currentUser.updateProfile({displayName: newDisplayName});
 
-        updateDocumentFieldForCurrentUser({
-          collection: 'settings',
+        updateDocument({
+          collectionPath: SETTINGS_COLLECTION,
           document: this.settingsId,
           data: {
             displayName: newDisplayName,
@@ -183,23 +191,27 @@ export default {
       this.updateUserDisplayName(fakeEvent);
     },
     async languageUpdated(event) {
-      const value = event.target.value;
-      const data = {
-        language: value,
-      };
+      const SETTINGS_COLLECTION = await this.getCollectionPath();
 
-      updateDocumentFieldForCurrentUser({
-        collection: 'settings',
-        document: this.settingsId,
-        data,
-      }).then(() => {
-        this.$i18n.locale = value;
-        this.$store.commit('updateLanguage', {
-          data: {
-            value: value,
-          },
-        });
-      }).catch(e => console.log('Error: ' + e));
+      if (SETTINGS_COLLECTION) {
+        const value = event.target.value;
+        const data = {
+          language: value,
+        };
+  
+        updateDocument({
+          collectionPath: SETTINGS_COLLECTION,
+          document: this.settingsId,
+          data,
+        }).then(() => {
+          this.$i18n.locale = value;
+          this.$store.commit('updateLanguage', {
+            data: {
+              value: value,
+            },
+          });
+        }).catch(e => console.log('Error: ' + e));
+      }
     },
     async enableUser() {
       if (this.newUserId.length === 28) {

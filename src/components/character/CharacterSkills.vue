@@ -54,114 +54,149 @@ export default {
   name: 'CharacterSkills',
   computed: {
     selectedCharacter() {
+      const query = this.getQuery();
+
+      if (query.uid && query.characterId) {
+        if (this.getSelectedCharacterId() !== query.characterId) {
+          this.getCharacterById(query.uid, query.characterId);
+        }
+      }
+
       return this.$store.state.selectedCharacter;
     },
   },
   methods: {
+    getQuery() {
+      const query = this.$route.query;
+      return query ? {
+        uid: query.uid || undefined,
+        characterId: query.characterId || undefined,
+      } : undefined;
+    },
+    getCollectionPath() {
+      if (this.selectedCharacter.uid && this.selectedCharacter.id) {
+        return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/skills`;
+      }
+      return undefined;
+    },
     getSkillObjectById(id) {
       return this.selectedCharacter.skills.find((skill) => skill.id === id);
     },
     addSkill() {
-      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
-      const data = [
-        {
-          key: 'key',
-        },
-        {
-          key: 'value',
-        },
-      ];
+      const SKILLS_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data,
-        title: this.$t('add_skill'),
-        collectionPath: SKILLS_COLLECTION,
-        mutation: 'addCharacterSkill',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        AddFieldsMultipleModal,
-        componentProps,
-        modalProps,
-      );
+      if (SKILLS_COLLECTION) {
+        const data = [
+          {
+            key: 'key',
+            fieldName: this.$t('skill'),
+          },
+          {
+            key: 'value',
+            fieldName: this.$t('value'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: this.$t('add_skill'),
+          collectionPath: SKILLS_COLLECTION,
+          mutation: 'addObject',
+          stateTarget: this.$store.state.selectedCharacter.skills,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          AddFieldsMultipleModal,
+          componentProps,
+          modalProps,
+        );
+      }
     },
     clickEdit(skillId) {
-      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
-      const skill = this.getSkillObjectById(skillId);
-      const data = [
-        {
-          id: skill.id,
-          key: 'key',
-          value: skill.key,
-          fieldName: this.$t('skill'),
-        },
-        {
-          id: skill.id,
-          key: 'value',
-          value: skill.value,
-          fieldName: this.$t('value'),
-        },
-      ];
+      const SKILLS_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data,
-        title: {
-          key: this.$t('edit_field'),
-          value: skill.key,
-        },
-        objectId: skillId,
-        characterId: this.selectedCharacter.id,
-        collectionPath: SKILLS_COLLECTION,
-        mutation: 'updateCharacterSkill',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        EditFieldModal,
-        componentProps,
-        modalProps,
-      );
+      if (SKILLS_COLLECTION) {
+        const skill = this.getSkillObjectById(skillId);
+        const data = [
+          {
+            id: skill.id,
+            key: 'key',
+            value: skill.key,
+            fieldName: this.$t('skill'),
+          },
+          {
+            id: skill.id,
+            key: 'value',
+            value: skill.value,
+            fieldName: this.$t('value'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: {
+            key: this.$t('edit_field'),
+            value: skill.key,
+          },
+          objectId: skillId,
+          characterId: this.selectedCharacter.id,
+          collectionPath: SKILLS_COLLECTION,
+          mutation: 'updateObject',
+          stateTarget: this.$store.state.selectedCharacter.skills,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          EditFieldModal,
+          componentProps,
+          modalProps,
+        );
+      }
     },
     clickDelete(skillId) {
-      const SKILLS_COLLECTION = `characters/${this.selectedCharacter.id}/skills`;
-      const skill = this.getSkillObjectById(skillId);
+      const SKILLS_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data: {
-          button: {
-            yes: 'Yes',
-            no: 'No',
+      if (SKILLS_COLLECTION) {
+        const skill = this.getSkillObjectById(skillId);
+  
+        const componentProps = {
+          data: {
+            button: {
+              yes: this.$t('yes'),
+              no: this.$t('no'),
+            },
           },
-        },
-        heading: {
-          title: `Warning! Delete skill.`,
-          preamble: `Delete skill: ${skill.key}`,
-          content: `This cannot be undone. Delete anyway?`,
-        },
-        objectId: skillId,
-        collectionPath: SKILLS_COLLECTION,
-        mutation: 'deleteCharacterSkill',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        PromptBoolean,
-        componentProps,
-        modalProps,
-      );
+          heading: {
+            title: `${this.$t('warning_message_title')} ${this.$t('skill').toLowerCase()}.`,
+            preamble: `${this.$t('warning_message_preamble')} ${this.$t('skill').toLowerCase()}: ${skill.key}`,
+            content: `${this.$t('warning_message_content')}`,
+          },
+          objectId: skillId,
+          collectionPath: SKILLS_COLLECTION,
+          mutation: 'deleteObject',
+          stateTarget: this.$store.state.selectedCharacter.skills,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          PromptBoolean,
+          componentProps,
+          modalProps,
+        );
+      }
     },
   },
 };

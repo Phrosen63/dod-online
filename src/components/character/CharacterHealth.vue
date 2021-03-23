@@ -47,7 +47,7 @@
 
 <script>
 // Modules
-import { writeObjectToCurrentUser } from '@/api/database/write';
+import { writeObject } from '@/api/database/write';
 
 export default {
   name: 'CharacterHealth',
@@ -58,6 +58,14 @@ export default {
   },
   computed: {
     selectedCharacter() {
+      const query = this.getQuery();
+
+      if (query.uid && query.characterId) {
+        if (this.getSelectedCharacterId() !== query.characterId) {
+          this.getCharacterById(query.uid, query.characterId);
+        }
+      }
+
       return this.$store.state.selectedCharacter;
     },
     health() {
@@ -117,11 +125,32 @@ export default {
     });
   },
   methods: {
+    getQuery() {
+      const query = this.$route.query;
+      return query ? {
+        uid: query.uid || undefined,
+        characterId: query.characterId || undefined,
+      } : undefined;
+    },
+    getCollectionPath() {
+      if (this.selectedCharacter.uid && this.selectedCharacter.id) {
+        return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/injuries`;
+      }
+      return undefined;
+    },
     updateText(key, event) {
-      const INJURIES_COLLECTION = `characters/${this.selectedCharacter.id}/injuries/`;
-      const data = {};
-      data[key] = event.target.value;
-      writeObjectToCurrentUser(INJURIES_COLLECTION, key, data);
+      const INJURIES_COLLECTION = this.getCollectionPath();
+
+      if (INJURIES_COLLECTION) {
+        const data = {};
+        data[key] = event.target.value;
+  
+        writeObject({
+          collectionPath: INJURIES_COLLECTION,
+          document: key,
+          data,
+        });
+      }
     },
     getInjuryValue(key) {
       const obj = this.selectedCharacter.injuries.find(bodypart => bodypart.id === key);

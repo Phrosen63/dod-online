@@ -81,6 +81,8 @@ export default {
       showErrorMessage: false,
       errorMessage: undefined,
       mutation: undefined,
+      stateTarget: undefined,
+      extras: undefined,
     };
   },
   created() {
@@ -89,6 +91,8 @@ export default {
     this.title = this.$attrs.title;
     this.mutation = this.$attrs.mutation;
     this.collectionPath = this.$attrs.collectionPath;
+    this.stateTarget = this.$attrs.stateTarget;
+    this.extras = this.$attrs.extras;
   },
   methods: {
     resetErrors() {
@@ -131,8 +135,11 @@ export default {
         // Cleaned object has keys
         const payload = {
           collectionPath: this.collectionPath,
+          stateTarget: this.stateTarget,
+          extras: this.extras,
           data: cleanedObject,
         };
+
         this.$store.commit(this.mutation, payload);
         this.$modal.hideAll();
       } else {

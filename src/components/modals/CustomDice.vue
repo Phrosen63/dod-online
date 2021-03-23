@@ -222,8 +222,12 @@ export default {
         date: Date.now(),
       };
 
-      writeObject('console', 'shared', {
-        data,
+      writeObject({
+        collectionPath: 'console',
+        document: 'shared',
+        data: {
+          data,
+        },
       });
     },
     getBonus() {

@@ -1,22 +1,11 @@
 import { db } from '@/api/database/db';
-import { getFirebaseUser } from '@/api/database/user';
 
-const writeObject = (collectionPath, docName, data) => {
-  db.collection(collectionPath).doc(docName).set(data);
+const writeObject = ({ collectionPath, document, data }) => {
+  return db.collection(collectionPath).doc(document).set(data);
 };
 
-const writeObjectToCurrentUser = async (userCollection, docName, obj) => {
-  const currentUser = await getFirebaseUser();
-  const { uid } = currentUser;
-  const collectionPath = `/users/${uid}/${userCollection}`;
-  db.collection(collectionPath).doc(docName).set(obj);
-};
-
-const writeNestedObjToCurrentUser = async (userCollection, docName, obj) => {
-  const currentUser = await getFirebaseUser();
-  const { uid } = currentUser;
-  const collectionPath = `/users/${uid}/${userCollection}`;
-  db.collection(collectionPath).doc(docName).set(obj);
+const writeNewObject = async ({ collectionPath, data }) => {
+  return await db.collection(collectionPath).add(data).then(docRef => docRef.id);
 };
 
 const createDocumentFieldObject = ({ map, key, value }) => {
@@ -25,18 +14,8 @@ const createDocumentFieldObject = ({ map, key, value }) => {
   return object;
 };
 
-const updateDocumentFieldForCurrentUser = async ({ collection, document, data }) => {
-  const currentUser = await getFirebaseUser();
-  const { uid } = currentUser;
-  const collectionPath = `/users/${uid}/${collection}`;
+const updateDocument = async ({ collectionPath, document, data }) => {
   return db.collection(collectionPath).doc(document).update(data);
-};
-
-const writeNewObjToCurrentUser = async (userCollection, nestedObject) => {
-  const currentUser = await getFirebaseUser();
-  const { uid } = currentUser;
-  const collectionPath = `/users/${uid}/${userCollection}`;
-  return db.collection(collectionPath).add(nestedObject).then(docRef => docRef.id);
 };
 
 const addUserDocument = async (uid) => {
@@ -59,10 +38,8 @@ const addUserDocument = async (uid) => {
 // Export methods
 export {
   writeObject,
-  writeObjectToCurrentUser,
-  writeNestedObjToCurrentUser,
+  writeNewObject,
   createDocumentFieldObject,
-  updateDocumentFieldForCurrentUser,
-  writeNewObjToCurrentUser,
+  updateDocument,
   addUserDocument,
 };

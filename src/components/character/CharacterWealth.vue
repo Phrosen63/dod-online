@@ -54,114 +54,149 @@ export default {
   name: 'CharacterWealth',
   computed: {
     selectedCharacter() {
+      const query = this.getQuery();
+
+      if (query.uid && query.characterId) {
+        if (this.getSelectedCharacterId() !== query.characterId) {
+          this.getCharacterById(query.uid, query.characterId);
+        }
+      }
+
       return this.$store.state.selectedCharacter;
     },
   },
   methods: {
+    getQuery() {
+      const query = this.$route.query;
+      return query ? {
+        uid: query.uid || undefined,
+        characterId: query.characterId || undefined,
+      } : undefined;
+    },
+    getCollectionPath() {
+      if (this.selectedCharacter.uid && this.selectedCharacter.id) {
+        return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/wealth`;
+      }
+      return undefined;
+    },
     getWealthObjectById(id) {
       return this.selectedCharacter.wealth.find((wealth) => wealth.id === id);
     },
+    addWealth() {
+      const WEALTH_COLLECTION = this.getCollectionPath();
+
+      if (WEALTH_COLLECTION) {
+        const data = [
+          {
+            key: 'key',
+            fieldName: this.$t('type'),
+          },
+          {
+            key: 'value',
+            fieldName: this.$t('value'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: 'Add wealth',
+          collectionPath: WEALTH_COLLECTION,
+          mutation: 'addObject',
+          stateTarget: this.$store.state.selectedCharacter.wealth,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          AddFieldsMultipleModal,
+          componentProps,
+          modalProps,
+        );
+      }
+    },
     clickEdit(wealthId) {
-      const WEALTH_COLLECTION = `characters/${this.selectedCharacter.id}/wealth`;
-      const wealth = this.getWealthObjectById(wealthId);
-      const data = [
-        {
-          id: wealth.id,
-          key: 'key',
-          value: wealth.key,
-          fieldName: this.$t('type'),
-        },
-        {
-          id: wealth.id,
-          key: 'value',
-          value: wealth.value,
-          fieldName: this.$t('value'),
-        },
-      ];
+      const WEALTH_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data,
-        title: {
-          key: this.$t('edit_field'),
-          value: wealth.key,
-        },
-        objectId: wealth.id,
-        characterId: this.selectedCharacter.id,
-        collectionPath: WEALTH_COLLECTION,
-        mutation: 'updateCharacterWealth',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        EditFieldModal,
-        componentProps,
-        modalProps,
-      );
+      if (WEALTH_COLLECTION) {
+        const wealth = this.getWealthObjectById(wealthId);
+        const data = [
+          {
+            id: wealth.id,
+            key: 'key',
+            value: wealth.key,
+            fieldName: this.$t('type'),
+          },
+          {
+            id: wealth.id,
+            key: 'value',
+            value: wealth.value,
+            fieldName: this.$t('value'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: {
+            key: this.$t('edit_field'),
+            value: wealth.key,
+          },
+          objectId: wealth.id,
+          characterId: this.selectedCharacter.id,
+          collectionPath: WEALTH_COLLECTION,
+          mutation: 'updateObject',
+          stateTarget: this.$store.state.selectedCharacter.wealth,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          EditFieldModal,
+          componentProps,
+          modalProps,
+        );
+      }
     },
     clickDelete(wealthId) {
-      const WEALTH_COLLECTION = `characters/${this.selectedCharacter.id}/wealth`;
-      const wealth = this.getWealthObjectById(wealthId);
+      const WEALTH_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data: {
-          button: {
-            yes: 'Yes',
-            no: 'No',
+      if (WEALTH_COLLECTION) {
+        const wealth = this.getWealthObjectById(wealthId);
+  
+        const componentProps = {
+          data: {
+            button: {
+              yes: this.$t('yes'),
+              no: this.$t('no'),
+            },
           },
-        },
-        heading: {
-          title: `Warning! Delete wealth.`,
-          preamble: `Delete wealth: ${wealth.key}`,
-          content: `This cannot be undone. Delete anyway?`,
-        },
-        objectId: wealth.id,
-        collectionPath: WEALTH_COLLECTION,
-        mutation: 'deleteCharacterWealth',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        PromptBoolean,
-        componentProps,
-        modalProps,
-      );
-    },
-    addWealth() {
-      const WEALTH_COLLECTION = `characters/${this.selectedCharacter.id}/wealth`;
-      const data = [
-        {
-          key: 'Title',
-        },
-        {
-          key: 'Text',
-        },
-      ];
-
-      const componentProps = {
-        data,
-        title: 'Add wealth',
-        collectionPath: WEALTH_COLLECTION,
-        mutation: 'addCharacterWealth',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        AddFieldsMultipleModal,
-        componentProps,
-        modalProps,
-      );
+          heading: {
+            title: `${this.$t('warning_message_title')} ${this.$t('wealth_singular').toLowerCase()}.`,
+            preamble: `${this.$t('warning_message_preamble')} ${this.$t('wealth_singular').toLowerCase()}: ${wealth.key}`,
+            content: `${this.$t('warning_message_content')}`,
+          },
+          objectId: wealth.id,
+          collectionPath: WEALTH_COLLECTION,
+          mutation: 'deleteObject',
+          stateTarget: this.$store.state.selectedCharacter.wealth,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          PromptBoolean,
+          componentProps,
+          modalProps,
+        );
+      }
     },
   }
 };

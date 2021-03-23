@@ -17,12 +17,18 @@
         class="character-notes-item"
         :class="note.strikethrough ? 'character-notes-item--strikethrough' : ''"
       >
-        <p class="character-notes-item__name">
-          {{ note.key }}
+        <p
+          v-for="(value, key) in trimmedNote(note)"
+          :key="getUniqueObjectKey(note.id, key)"
+          :data-type="key.toLowerCase()"
+        >
+          <span class="character-notes-item__name">
+            {{ key }}:
+          </span>
+          <span class="character-notes-item__text">
+            {{ value }}
+          </span>
         </p>
-        <span class="character-notes-item__text">
-          {{ note.value }}
-        </span>
         <div class="note-controls">
           <button
             class="note-control note-control__edit"
@@ -58,128 +64,184 @@ import EditFieldModal from '@/components/modals/EditFieldModal';
 import PromptBoolean from '@/components/modals/PromptBoolean';
 
 // Modules
-import { writeNestedObjToCurrentUser } from '@/api/database/write';
+import { writeObject } from '@/api/database/write';
 
 export default {
   name: 'CharacterNotes',
   computed: {
     selectedCharacter() {
+      const query = this.getQuery();
+
+      if (query.uid && query.characterId) {
+        if (this.getSelectedCharacterId() !== query.characterId) {
+          this.getCharacterById(query.uid, query.characterId);
+        }
+      }
+
       return this.$store.state.selectedCharacter;
     },
   },
   methods: {
+    getQuery() {
+      const query = this.$route.query;
+      return query ? {
+        uid: query.uid || undefined,
+        characterId: query.characterId || undefined,
+      } : undefined;
+    },
+    getCollectionPath() {
+      if (this.selectedCharacter.uid && this.selectedCharacter.id) {
+        return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/notes`;
+      }
+      return undefined;
+    },
+    trimmedNote(note) {
+      const obj = Object.assign({}, note);
+      delete obj['id'];
+      delete obj['strikethrough'];
+      return obj;
+    },
+    getUniqueObjectKey(id, key) {
+      return `${id}_${key}`;
+    },
     getNoteObjectById(id) {
       return this.selectedCharacter.notes.find((note) => note.id === id);
     },
+    addNote() {
+      const NOTES_COLLECTION = this.getCollectionPath();
+
+      if (NOTES_COLLECTION) {
+        const data = [
+          {
+            key: 'Title',
+            fieldName: this.$t('title'),
+          },
+          {
+            key: 'Text',
+            fieldName: this.$t('text'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: this.$t('add_note'),
+          collectionPath: NOTES_COLLECTION,
+          mutation: 'addObject',
+          stateTarget: this.$store.state.selectedCharacter.notes,
+          extras: [
+            {
+              key: 'strikethrough',
+              value: false,
+            },
+          ],
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          AddFieldsMultipleModal,
+          componentProps,
+          modalProps,
+        );
+      }
+    },
     clickEdit(noteId) {
-      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
-      const note = this.getNoteObjectById(noteId);
-      const data = [
-        {
-          id: note.id,
-          key: 'key',
-          value: note.key,
-          fieldName: this.$t('title'),
-        },
-        {
-          id: note.id,
-          key: 'value',
-          value: note.value,
-          fieldName: this.$t('text'),
-        },
-      ];
+      const NOTES_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data,
-        title: {
-          key: this.$t('edit_field'),
-          value: note.key,
-        },
-        objectId: noteId,
-        characterId: this.selectedCharacter.id,
-        collectionPath: NOTES_COLLECTION,
-        mutation: 'updateCharacterNote',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        EditFieldModal,
-        componentProps,
-        modalProps,
-      );
+      if (NOTES_COLLECTION) {
+        const note = this.getNoteObjectById(noteId);
+        const data = [
+          {
+            id: note.id,
+            key: 'Title',
+            value: note.Title,
+            fieldName: this.$t('title'),
+          },
+          {
+            id: note.id,
+            key: 'Text',
+            value: note.Text,
+            fieldName: this.$t('text'),
+          },
+        ];
+  
+        const componentProps = {
+          data,
+          title: {
+            key: this.$t('edit_field'),
+            value: note.key,
+          },
+          objectId: noteId,
+          characterId: this.selectedCharacter.id,
+          collectionPath: NOTES_COLLECTION,
+          mutation: 'updateObject',
+          stateTarget: this.$store.state.selectedCharacter.notes,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          EditFieldModal,
+          componentProps,
+          modalProps,
+        );
+      }
     },
     clickStrike(noteId) {
-      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
-      const note = this.getNoteObjectById(noteId);
-      note.strikethrough = !note.strikethrough;
-      writeNestedObjToCurrentUser(NOTES_COLLECTION, note.id, note);
+      const NOTES_COLLECTION = this.getCollectionPath();
+
+      if (NOTES_COLLECTION) {
+        const note = this.getNoteObjectById(noteId);
+        note.strikethrough = !note.strikethrough;
+  
+        writeObject({
+          collectionPath: NOTES_COLLECTION,
+          document: note.id,
+          data: note,
+        });
+      }
     },
     clickDelete(noteId) {
-      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
-      const note = this.getNoteObjectById(noteId);
+      const NOTES_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data: {
-          button: {
-            yes: this.$t('yes'),
-            no: this.$t('no'),
+      if (NOTES_COLLECTION) {
+        const note = this.getNoteObjectById(noteId);
+  
+        const componentProps = {
+          data: {
+            button: {
+              yes: this.$t('yes'),
+              no: this.$t('no'),
+            },
           },
-        },
-        heading: {
-          title: `${this.$t('warning_message_title')}.`,
-          preamble: `${this.$t('warning_message_preamble')}: ${note.key}`,
-          content: `${this.$t('warning_message_content')}`,
-        },
-        objectId: noteId,
-        collectionPath: NOTES_COLLECTION,
-        mutation: 'deleteCharacterNote',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        PromptBoolean,
-        componentProps,
-        modalProps,
-      );
-    },
-    addNote() {
-      const NOTES_COLLECTION = `characters/${this.selectedCharacter.id}/notes`;
-      const data = [
-        {
-          key: 'Title',
-          fieldName: this.$t('title'),
-        },
-        {
-          key: 'Text',
-          fieldName: this.$t('text'),
-        },
-      ];
-
-      const componentProps = {
-        data,
-        title: this.$t('add_note'),
-        collectionPath: NOTES_COLLECTION,
-        mutation: 'addCharacterNote',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        AddFieldsMultipleModal,
-        componentProps,
-        modalProps,
-      );
+          heading: {
+            title: `${this.$t('warning_message_title')} ${this.$t('note').toLowerCase()}.`,
+            preamble: `${this.$t('warning_message_preamble')} ${this.$t('note').toLowerCase()}: ${note.Title}`,
+            content: `${this.$t('warning_message_content')}`,
+          },
+          objectId: noteId,
+          collectionPath: NOTES_COLLECTION,
+          mutation: 'deleteObject',
+          stateTarget: this.$store.state.selectedCharacter.notes,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          PromptBoolean,
+          componentProps,
+          modalProps,
+        );
+      }
     },
   }
 };

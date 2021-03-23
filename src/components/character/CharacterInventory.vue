@@ -69,137 +69,169 @@ export default {
   name: 'CharacterInventory',
   computed: {
     selectedCharacter() {
+      const query = this.getQuery();
+
+      if (query.uid && query.characterId) {
+        if (this.getSelectedCharacterId() !== query.characterId) {
+          this.getCharacterById(query.uid, query.characterId);
+        }
+      }
+
       return this.$store.state.selectedCharacter;
     },
   },
   methods: {
+    getQuery() {
+      const query = this.$route.query;
+      return query ? {
+        uid: query.uid || undefined,
+        characterId: query.characterId || undefined,
+      } : undefined;
+    },
+    getCollectionPath() {
+      if (this.selectedCharacter.uid && this.selectedCharacter.id) {
+        return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/inventory`;
+      }
+      return undefined;
+    },
     getItemById(id) {
       return this.selectedCharacter.inventory.find((item) => item.id === id);
     },
     getUniqueObjectKey(id, key) {
       return `${id}_${key}`;
     },
-    clickEdit(itemId) {
-      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
-      const item = this.getItemById(itemId);
+addCustomItem(type) {
+      const INVENTORY_COLLECTION = this.getCollectionPath();
+      let title = this.$t('add_custom_item');
       const data = [];
 
-      Object.keys(item).forEach(key => {
-        if (key !== 'id') {
-          const temp = {
-            id: itemId,
-            key: key,
-            value: item[key],
-            fieldName: key,
-          };
-          data.push(temp);
+      if (INVENTORY_COLLECTION) {
+        if (type === 'weapon') {
+          title = this.$t('add_weapon');
+          data.push({
+            key: this.$t('name'),
+          });
+          data.push({
+            key: this.$t('damage'),
+          });
+          data.push({
+            key: this.$t('description'),
+          });
         }
-      });
+  
+        if (type === 'item') {
+          title = this.$t('add_item');
+          data.push({
+            key: this.$t('name'),
+          });
+          data.push({
+            key: this.$t('description'),
+          });
+          data.push({
+            key: this.$t('quantity'),
+          });
+          data.push({
+            key: this.$t('weight'),
+          });
+        }
+  
+        const componentProps = {
+          data,
+          title,
+          collectionPath: INVENTORY_COLLECTION,
+          mutation: 'addObject',
+          stateTarget: this.$store.state.selectedCharacter.inventory,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          AddFieldsMultipleModal,
+          componentProps,
+          modalProps,
+        );
+      }
+    },
+    clickEdit(itemId) {
+      const INVENTORY_COLLECTION = this.getCollectionPath();
 
-      const componentProps = {
-        data,
-        title: {
-          key: this.$t('edit_field'),
-          value: item.key,
-        },
-        objectId: itemId,
-        collectionPath: INVENTORY_COLLECTION,
-        mutation: 'updateCharacterInventoryItem',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        EditFieldModal,
-        componentProps,
-        modalProps,
-      );
+      if (INVENTORY_COLLECTION) {
+        const item = this.getItemById(itemId);
+        const data = [];
+  
+        Object.keys(item).forEach(key => {
+          if (key !== 'id') {
+            const temp = {
+              id: itemId,
+              key: key,
+              value: item[key],
+              fieldName: key,
+            };
+            data.push(temp);
+          }
+        });
+  
+        const componentProps = {
+          data,
+          title: {
+            key: this.$t('edit_field'),
+            value: item.key,
+          },
+          objectId: itemId,
+          collectionPath: INVENTORY_COLLECTION,
+          mutation: 'updateObject',
+          stateTarget: this.$store.state.selectedCharacter.inventory,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          EditFieldModal,
+          componentProps,
+          modalProps,
+        );
+      }
     },
     clickDelete(itemId) {
-      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
-      const item = this.selectedCharacter.inventory.find(obj => obj.id === itemId);
-      const componentProps = {
-        data: {
-          button: {
-            yes: 'Yes',
-            no: 'No',
+      const INVENTORY_COLLECTION = this.getCollectionPath();
+
+      if (INVENTORY_COLLECTION) {
+        const item = this.selectedCharacter.inventory.find(obj => obj.id === itemId);
+        const componentProps = {
+          data: {
+            button: {
+              yes: this.$t('yes'),
+              no: this.$t('no'),
+            },
           },
-        },
-        heading: {
-          title: `Warning! Delete item.`,
-          preamble: `Delete item: ${item.key}`,
-          content: `This cannot be undone. Delete anyway?`,
-        },
-        objectId: itemId,
-        collectionPath: INVENTORY_COLLECTION,
-        mutation: 'deleteCharacterInventoryItem',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        PromptBoolean,
-        componentProps,
-        modalProps,
-      );
-    },
-    addCustomItem(type) {
-      const data = [];
-      let title = this.$t('add_custom_item');
-      const INVENTORY_COLLECTION = `characters/${this.selectedCharacter.id}/inventory`;
-
-      if (type === 'weapon') {
-        title = this.$t('add_weapon');
-        data.push({
-          key: this.$t('name'),
-        });
-        data.push({
-          key: this.$t('damage'),
-        });
-        data.push({
-          key: this.$t('description'),
-        });
+          heading: {
+            title: `${this.$t('warning_message_title')} ${this.$t('inventory').toLowerCase()}.`,
+            preamble: `${this.$t('warning_message_preamble')} ${this.$t('inventory').toLowerCase()}: ${item.key}`,
+            content: `${this.$t('warning_message_content')}`,
+          },
+          objectId: itemId,
+          collectionPath: INVENTORY_COLLECTION,
+          mutation: 'deleteObject',
+          stateTarget: this.$store.state.selectedCharacter.inventory,
+        };
+        const modalProps = {
+          height: 'auto',
+          scrollable: true,
+          focusTrap: true,
+        };
+  
+        this.$modal.show(
+          PromptBoolean,
+          componentProps,
+          modalProps,
+        );
       }
-
-      if (type === 'item') {
-        title = this.$t('add_item');
-        data.push({
-          key: this.$t('name'),
-        });
-        data.push({
-          key: this.$t('description'),
-        });
-        data.push({
-          key: this.$t('quantity'),
-        });
-        data.push({
-          key: this.$t('weight'),
-        });
-      }
-
-      const componentProps = {
-        data,
-        title,
-        collectionPath: INVENTORY_COLLECTION,
-        mutation: 'addCharacterInventoryItem',
-      };
-      const modalProps = {
-        height: 'auto',
-        scrollable: true,
-        focusTrap: true,
-      };
-
-      this.$modal.show(
-        AddFieldsMultipleModal,
-        componentProps,
-        modalProps,
-      );
     },
   }
 };
