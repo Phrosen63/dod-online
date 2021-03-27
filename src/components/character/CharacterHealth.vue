@@ -132,6 +132,9 @@ export default {
         characterId: query.characterId || undefined,
       } : undefined;
     },
+    getSelectedCharacterId() {
+      return this.$store.state.selectedCharacter ? this.$store.state.selectedCharacter.id : '';
+    },
     getCollectionPath() {
       if (this.selectedCharacter.uid && this.selectedCharacter.id) {
         return `users/${this.selectedCharacter.uid}/characters/${this.selectedCharacter.id}/injuries`;
