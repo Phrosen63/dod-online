@@ -72,11 +72,17 @@ export default {
           document: this.$store.state.selectedCharacter.id,
           data,
         }).then(() => {
-            this.$store.commit('updateCharacterStats', {
-              key,
-              value: newValue,
-            });
-          }).catch(e => console.log('Error: ' + e));
+          this.$store.commit('updateCharacterStats', {
+            key,
+            value: newValue,
+          });
+        }).catch(e => {
+          const data = {
+            hasError: true,
+            message: e,
+          }
+          this.$store.commit('setError', data);
+        });
       }
     },
   },

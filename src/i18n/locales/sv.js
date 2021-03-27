@@ -36,7 +36,6 @@ export default {
 
   // LoginScreen
   login_or_signup: 'Logga in eller registrera dig',
-  login_failed: 'Inloggningen misslyckades, kontrollera dina inloggningsuppgifter och försök igen.',
   password: 'Lösenord',
   log_in: 'Logga in',
   sign_up: 'Skapa konto',

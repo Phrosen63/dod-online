@@ -7,26 +7,6 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <p
-          class="error-message"
-          :class="showErrorMessage ? '' : 'hide'"
-        >
-          {{ $t('login_failed') }}
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <p
-          class="error-message"
-          :class="showErrorMessage ? '' : 'hide'"
-        >
-          {{ errorMessage }}
-        </p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
         <form
           id="login-form"
           @submit.prevent
@@ -76,16 +56,13 @@ export default {
   name: 'LoginScreen',
   data() {
     return {
-      showErrorMessage: false,
-      errorMessage: undefined,
       email: undefined,
       pass: undefined,
     };
   },
   methods: {
     resetErrors() {
-      this.showErrorMessage = false;
-      this.errorMessage = undefined;
+      this.$store.commit('resetError');
     },
     login() {
       this.resetErrors();
@@ -108,8 +85,11 @@ export default {
         }
       })
       .catch((e) => {
-        this.showErrorMessage = true;
-        this.errorMessage = e.message;
+        const data = {
+          hasError: true,
+          message: e.message,
+        }
+        this.$store.commit('setError', data);
       });
     },
     async signUp() {
@@ -118,8 +98,11 @@ export default {
         await createNewUser(this.email, this.pass);
         this.$router.push('Profile');
       } catch (e) {
-        this.showErrorMessage = true;
-        this.errorMessage = e.message;
+        const data = {
+          hasError: true,
+          message: e.message,
+        }
+        this.$store.commit('setError', data);
       }
     },
   },

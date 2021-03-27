@@ -36,7 +36,6 @@ export default {
 
   // LoginScreen
   login_or_signup: 'Log in or Sign up',
-  login_failed: 'Login failed, please check your credentials and try again.',
   password: 'Password',
   log_in: 'Log in',
   sign_up: 'Sign up',

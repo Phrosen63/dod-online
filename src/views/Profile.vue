@@ -181,7 +181,13 @@ export default {
               value: newDisplayName,
             },
           });
-        }).catch(e => console.log('Error: ' + e));
+          }).catch(e => {
+            const data = {
+              hasError: true,
+              message: e,
+            }
+            this.$store.commit('setError', data);
+          });
       }
     },
     generateRandomName() {
@@ -214,7 +220,13 @@ export default {
               value: value,
             },
           });
-        }).catch(e => console.log('Error: ' + e));
+        }).catch(e => {
+          const data = {
+            hasError: true,
+            message: e,
+          }
+          this.$store.commit('setError', data);
+        });
       }
     },
     async enableUser() {

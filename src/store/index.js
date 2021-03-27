@@ -16,6 +16,10 @@ export default new Vuex.Store({
       language: 'en',
       role: 4,
       id: null,
+    },
+    error: {
+      hasError: false,
+      message: null,
     }
   },
   actions,

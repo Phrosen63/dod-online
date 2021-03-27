@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+    <ErrorHandler />
     <router-view />
   </div>
 </template>
@@ -8,6 +9,7 @@
 <script>
 // Components
 import Header from '@/components/Header';
+import ErrorHandler from '@/components/ErrorHandler';
 
 // Modules
 import { getUserSettings } from '@/api/database/user';
@@ -16,6 +18,7 @@ export default {
   name: 'App',
   components: {
     Header,
+    ErrorHandler,
   },
   async beforeCreate() {
     const settings = await getUserSettings();

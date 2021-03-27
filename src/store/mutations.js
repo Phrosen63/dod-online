@@ -132,6 +132,17 @@ const deleteObject = (state, payload) => {
   }
 };
 
+const setError = (state, payload) => {
+  if (payload && typeof payload === 'object') {
+    state.error = payload;
+  }
+};
+
+const resetError = (state) => {
+  state.error.hasError = false;
+  state.error.message = null;
+};
+
 // Export mutations
 export default {
   // User character
@@ -152,4 +163,8 @@ export default {
   addObject,
   updateObject,
   deleteObject,
+
+  // Error handling
+  setError,
+  resetError,
 };
