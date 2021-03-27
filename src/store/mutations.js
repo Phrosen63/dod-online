@@ -71,7 +71,6 @@ const updateUserEmail = (state, payload) => {
   }
 };
 
-
 const addObject = (state, payload) => {
   if (payload && typeof payload === 'object') {
     const obj = payload.data;
