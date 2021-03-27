@@ -103,6 +103,7 @@ export default {
           collectionPath: WEALTH_COLLECTION,
           mutation: 'addObject',
           stateTarget: this.$store.state.selectedCharacter.wealth,
+          uid: this.selectedCharacter.uid,
         };
         const modalProps = {
           height: 'auto',

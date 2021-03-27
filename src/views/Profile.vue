@@ -36,7 +36,10 @@
           </button>
         </div>
         <div class="col-6">
-          <p class="preamble">
+          <p
+            v-if="isModeratorOrAdmin"
+            class="preamble"
+          >
             {{ $t('admin_settings') }}
           </p>
         </div>
@@ -51,6 +54,7 @@
             class="profile-enable-user"
           >
             <input
+              ref="enableUserInput"
               v-model="newUserId"
               class="profile-enable-user__input"
               type="text"
@@ -216,6 +220,7 @@ export default {
     async enableUser() {
       if (this.newUserId.length === 28) {
         await addUserDocument(this.newUserId);
+        this.$refs.enableUserInput.value = '';
       }
     },
   },

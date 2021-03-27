@@ -83,6 +83,7 @@ export default {
       mutation: undefined,
       stateTarget: undefined,
       extras: undefined,
+      uid: undefined,
     };
   },
   created() {
@@ -93,6 +94,7 @@ export default {
     this.collectionPath = this.$attrs.collectionPath;
     this.stateTarget = this.$attrs.stateTarget;
     this.extras = this.$attrs.extras;
+    this.uid = this.$attrs.uid;
   },
   methods: {
     resetErrors() {
@@ -131,6 +133,8 @@ export default {
     add() {
       this.resetErrors();
       const cleanedObject = this.removeEmptyFields(this.result);
+      cleanedObject.uid = this.uid || '';
+
       if (Object.keys(cleanedObject).length > 0) {
         // Cleaned object has keys
         const payload = {

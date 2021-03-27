@@ -142,9 +142,11 @@ export default {
       const INJURIES_COLLECTION = this.getCollectionPath();
 
       if (INJURIES_COLLECTION) {
-        const data = {};
+        const data = {
+          uid: this.selectedCharacter.uid,
+        };
         data[key] = event.target.value;
-  
+
         writeObject({
           collectionPath: INJURIES_COLLECTION,
           document: key,

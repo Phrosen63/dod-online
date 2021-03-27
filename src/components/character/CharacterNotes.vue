@@ -20,7 +20,6 @@
         <p
           v-for="(value, key) in trimmedNote(note)"
           :key="getUniqueObjectKey(note.id, key)"
-          :data-type="key.toLowerCase()"
         >
           <span class="character-notes-item__name">
             {{ key }}:
@@ -97,6 +96,7 @@ export default {
     },
     trimmedNote(note) {
       const obj = Object.assign({}, note);
+      delete obj['uid'];
       delete obj['id'];
       delete obj['strikethrough'];
       return obj;
@@ -134,6 +134,7 @@ export default {
               value: false,
             },
           ],
+          uid: this.selectedCharacter.uid,
         };
         const modalProps = {
           height: 'auto',

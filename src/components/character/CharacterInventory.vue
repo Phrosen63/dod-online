@@ -31,9 +31,8 @@
         class="character-inventory-item"
       >
         <p
-          v-for="(value, key) in item"
+          v-for="(value, key) in trimmedItem(item)"
           :key="getUniqueObjectKey(item.id, key)"
-          :data-type="key.toLowerCase()"
         >
           {{ key }}:
           {{ value }}
@@ -94,13 +93,19 @@ export default {
       }
       return undefined;
     },
+    trimmedItem(item) {
+      const obj = Object.assign({}, item);
+      delete obj['id'];
+      delete obj['uid'];
+      return obj;
+    },
     getItemById(id) {
       return this.selectedCharacter.inventory.find((item) => item.id === id);
     },
     getUniqueObjectKey(id, key) {
       return `${id}_${key}`;
     },
-addCustomItem(type) {
+    addCustomItem(type) {
       const INVENTORY_COLLECTION = this.getCollectionPath();
       let title = this.$t('add_custom_item');
       const data = [];
@@ -118,7 +123,7 @@ addCustomItem(type) {
             key: this.$t('description'),
           });
         }
-  
+
         if (type === 'item') {
           title = this.$t('add_item');
           data.push({
@@ -134,20 +139,21 @@ addCustomItem(type) {
             key: this.$t('weight'),
           });
         }
-  
+
         const componentProps = {
           data,
           title,
           collectionPath: INVENTORY_COLLECTION,
           mutation: 'addObject',
           stateTarget: this.$store.state.selectedCharacter.inventory,
+          uid: this.selectedCharacter.uid,
         };
         const modalProps = {
           height: 'auto',
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           AddFieldsMultipleModal,
           componentProps,
@@ -161,7 +167,7 @@ addCustomItem(type) {
       if (INVENTORY_COLLECTION) {
         const item = this.getItemById(itemId);
         const data = [];
-  
+
         Object.keys(item).forEach(key => {
           if (key !== 'id') {
             const temp = {
@@ -173,7 +179,7 @@ addCustomItem(type) {
             data.push(temp);
           }
         });
-  
+
         const componentProps = {
           data,
           title: {
@@ -190,7 +196,7 @@ addCustomItem(type) {
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           EditFieldModal,
           componentProps,
@@ -225,7 +231,7 @@ addCustomItem(type) {
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           PromptBoolean,
           componentProps,
@@ -250,10 +256,6 @@ addCustomItem(type) {
 
 .character-inventory-item {
   position: relative;
-}
-
-[data-type="id"] {
-  display: none;
 }
 
 .character-inventory-item--strikethrough p,

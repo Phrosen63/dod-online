@@ -103,6 +103,7 @@ export default {
           collectionPath: SKILLS_COLLECTION,
           mutation: 'addObject',
           stateTarget: this.$store.state.selectedCharacter.skills,
+          uid: this.selectedCharacter.uid,
         };
         const modalProps = {
           height: 'auto',

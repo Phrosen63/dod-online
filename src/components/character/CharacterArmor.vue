@@ -19,9 +19,8 @@
           class="character-armor-part"
         >
           <p
-            v-for="(value, key) in armor"
+            v-for="(value, key) in trimmedArmor(armor)"
             :key="getUniqueObjectKey(armor.id, key)"
-            :data-type="key.toLowerCase()"
           >
             {{ key }}:
             {{ value }}
@@ -83,6 +82,12 @@ export default {
       }
       return undefined;
     },
+    trimmedArmor(armor) {
+      const obj = Object.assign({}, armor);
+      delete obj['id'];
+      delete obj['uid'];
+      return obj;
+    },
     getArmorById(id) {
       return this.selectedCharacter.armor.find((armor) => armor.id === id);
     },
@@ -107,20 +112,21 @@ export default {
             key: this.$t('value'),
           },
         ];
-  
+
         const componentProps = {
           data,
           title: this.$t('add_armor'),
           collectionPath: ARMOR_COLLECTION,
           mutation: 'addObject',
           stateTarget: this.$store.state.selectedCharacter.armor,
+          uid: this.selectedCharacter.uid,
         };
         const modalProps = {
           height: 'auto',
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           AddFieldsMultipleModal,
           componentProps,
@@ -146,7 +152,7 @@ export default {
             data.push(temp);
           }
         });
-  
+
         const componentProps = {
           data,
           title: {
@@ -163,7 +169,7 @@ export default {
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           EditFieldModal,
           componentProps,
@@ -198,7 +204,7 @@ export default {
           scrollable: true,
           focusTrap: true,
         };
-  
+
         this.$modal.show(
           PromptBoolean,
           componentProps,
@@ -214,10 +220,6 @@ export default {
 .character-armor-part {
   position: relative;
   padding: 10px 0 0 0;
-}
-
-[data-type="id"] {
-  display: none;
 }
 
 .armor-controls {

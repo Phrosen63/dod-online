@@ -161,6 +161,7 @@ export default {
       const { uid } = this.user;
 
       const data = {
+        uid,
         info: {
           name: this.char.name,
           class: this.char.class,

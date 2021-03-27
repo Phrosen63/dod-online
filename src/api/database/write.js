@@ -27,7 +27,11 @@ const addUserDocument = async (uid) => {
   usersRef.get().then(async (snapshot) => {
     if (!snapshot.exists) {
       await db.collection(USERS_COLLECTION).doc(uid).set({});
-      await db.collection(SETTINGS_COLLECTION).add({ language: 'en' });
+      await db.collection(SETTINGS_COLLECTION).add({
+        uid,
+        displayName: '',
+        language: 'en',
+      });
       await db.collection(ROLES_COLLECTION).doc(uid).set({
         role: 3,
       });
