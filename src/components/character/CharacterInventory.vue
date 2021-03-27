@@ -169,7 +169,7 @@ export default {
         const data = [];
 
         Object.keys(item).forEach(key => {
-          if (key !== 'id') {
+          if (key !== 'id' && key !== 'uid') {
             const temp = {
               id: itemId,
               key: key,

@@ -142,7 +142,7 @@ export default {
         const data = [];
   
         Object.keys(armor).forEach(key => {
-          if (key !== 'id') {
+          if (key !== 'id' && key !== 'uid') {
             const temp = {
               id: armorId,
               key: key,
