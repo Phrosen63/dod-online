@@ -143,6 +143,14 @@ const resetError = (state) => {
   state.error.message = null;
 };
 
+const setHiddenRoll = (state, payload) => {
+  state.hiddenRoll = payload;
+};
+
+const setConsoleMessage = (state, payload) => {
+  state.consoleMessage = payload;
+};
+
 // Export mutations
 export default {
   // User character
@@ -167,4 +175,8 @@ export default {
   // Error handling
   setError,
   resetError,
+
+  // Other
+  setHiddenRoll,
+  setConsoleMessage,
 };

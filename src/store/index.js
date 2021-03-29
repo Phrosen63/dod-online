@@ -20,7 +20,9 @@ export default new Vuex.Store({
     error: {
       hasError: false,
       message: null,
-    }
+    },
+    hiddenRoll: false,
+    consoleMessage: {},
   },
   actions,
   mutations,
