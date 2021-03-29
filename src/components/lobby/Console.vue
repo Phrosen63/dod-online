@@ -83,16 +83,6 @@ export default {
       },
     };
   },
-  computed: {
-    customDiceRollListener() {
-      return this.$store.state.customDiceRoll;
-    },
-  },
-  watch: {
-    customDiceRollListener(obj) {
-      this.items.push({ message: obj.message });
-    }
-  },
   created() {
     this.userDisplayName = this.setUserDisplayName();
   },
