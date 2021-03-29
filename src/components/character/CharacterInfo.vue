@@ -86,7 +86,7 @@ export default {
           const data = {
             hasError: true,
             message: e,
-          }
+          };
           this.$store.commit('setError', data);
         });
       }
