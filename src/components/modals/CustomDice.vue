@@ -104,7 +104,6 @@
 
 <script>
 // Modules
-import { writeObject } from '@/api/database/write';
 import { rollDice } from '@/api/randomNumberGenerator';
 import { getUserDisplayName } from '@/api/database/user';
 
@@ -209,6 +208,13 @@ export default {
       const min = this.min > this.customDie.minMax ? this.customDie.minMax : this.min;
       const max = this.max > this.customDie.maxMax ? this.customDie.maxMax : this.max;
 
+      const highlight = {
+        name: this.highlightText({
+          value: this.userDisplayName,
+          color: this.messageColor.name,
+        }),
+      };
+
       const result = rollDice({
         amount: amount,
         type: this.die,
@@ -218,17 +224,12 @@ export default {
       });
 
       const data = {
-        message: this.getConsoleMessage(result.eachResult, result.combinedResult),
         date: Date.now(),
+        message: this.getConsoleMessage(result.eachResult, result.combinedResult),
+        hiddenMessage: `${highlight.name} ${this.$t('rolled')} ${this.$t('hidden_result')}`,
       };
 
-      writeObject({
-        collectionPath: 'console',
-        document: 'shared',
-        data: {
-          data,
-        },
-      });
+      this.$store.commit('setConsoleMessage', data);
     },
     getBonus() {
       let bonus;

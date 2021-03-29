@@ -10,7 +10,6 @@
 
 <script>
 // Modules
-import { writeObject } from '@/api/database/write';
 import { getUserDisplayName } from '@/api/database/user';
 import { rollDie } from '@/api/randomNumberGenerator';
 
@@ -47,6 +46,7 @@ export default {
     },
     rollDie(die) {
       const result = rollDie(die);
+
       const highlight = {
         name: this.highlightText({
           value: this.userDisplayName,
@@ -63,17 +63,14 @@ export default {
       };
 
       const message = `${highlight.name} ${this.$t('rolled')}: ${highlight.result}, ${this.$t('with_a')}: ${highlight.die}`;
+      const hiddenMessage = `${highlight.name} ${this.$t('rolled')} ${this.$t('hidden_result')}`;
+
       const data = {
         message,
         date: Date.now(),
+        hiddenMessage,
       };
-      writeObject({
-        collectionPath: 'console',
-        document: 'shared',
-        data: {
-          data,
-        },
-      });
+      this.$store.commit('setConsoleMessage', data);
     },
   },
 };

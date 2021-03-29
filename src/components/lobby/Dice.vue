@@ -41,6 +41,24 @@
         </button>
       </div>
     </div>
+    <div class="row">
+      <div class="col-12">
+        <label
+          class="checkbox-controls"
+          for="hidden"
+          :title="$t('hidden_roll_tooltip')"
+        >
+          {{ $t('hidden_roll') }}:
+        </label>
+        <input
+          id="hidden"
+          class="checkbox-controls"
+          type="checkbox"
+          :title="$t('hidden_roll_tooltip')"
+          @change="toggleHidden($event)"
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,6 +91,9 @@ export default {
         modalProps,
       );
     },
+    toggleHidden(evt) {
+      this.$store.commit('setHiddenRoll', evt.target.checked);
+    },
   },
 };
 </script>
@@ -91,5 +112,10 @@ export default {
   color: #fff;
   font-size: 22px;
   cursor: pointer;
+}
+
+.checkbox-controls {
+  cursor: pointer;
+  font-size: 18px;
 }
 </style>

@@ -83,6 +83,60 @@ export default {
       },
     };
   },
+  computed: {
+    hiddenRoll() {
+      return this.$store.state.hiddenRoll;
+    },
+    consoleMessageListener() {
+      return this.$store.state.consoleMessage;
+    },
+  },
+  watch: {
+    consoleMessageListener(obj) {
+      let message = sanitizeHtml(obj.message, {
+        allowedTags: ['span'],
+        allowedAttributes: {
+          'span': [ 'style' ],
+        },
+      });
+      const hiddenMessage = sanitizeHtml(obj.hiddenMessage, {
+        allowedTags: ['span'],
+        allowedAttributes: {
+          'span': [ 'style' ],
+        },
+      });
+
+      if (this.hiddenRoll) {
+        message += ` <span style="color: #9fa09f;">*${this.$t('hidden_roll')}*</span>`;
+        this.items.push({
+          message,
+        });
+        this.showMessages = false;
+
+        writeObject({
+          collectionPath: 'console',
+          document: 'shared',
+          data: {
+            data: {
+              date: obj.date,
+              message: hiddenMessage,
+            },
+          },
+        });
+      } else {
+        writeObject({
+          collectionPath: 'console',
+          document: 'shared',
+          data: {
+            data: {
+              date: obj.date,
+              message: message,
+            },
+          },
+        });
+      }
+    }
+  },
   created() {
     this.userDisplayName = this.setUserDisplayName();
   },
@@ -119,9 +173,17 @@ export default {
       const value = this.$refs.messageBar.value;
       this.$refs.messageBar.value = '';
       if (value && value !== '') {
+        const dirtyMessage = `<span style="color: ${this.messageColor.customMessage}">${this.userDisplayName}: ${value}</span>`;
+        const message = sanitizeHtml(dirtyMessage, {
+          allowedTags: ['span'],
+          allowedAttributes: {
+            'span': [ 'style' ],
+          },
+        });
+
         const data = {
-          message: `<span style="color: ${this.messageColor.customMessage}">${this.userDisplayName}: ${value}</span>`,
           date: Date.now(),
+          message,
         };
 
         writeObject({
