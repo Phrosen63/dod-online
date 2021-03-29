@@ -60,6 +60,9 @@ export default {
   T20: 'T20',
   T100: 'T100',
   custom: 'Custom',
+  hidden_roll: 'Dolt slag',
+  hidden_roll_tooltip: 'Dolda slag visas endast för dig',
+  hidden_result: 'ett dolt resultat',
 
   // Lobby - Console
   clear: 'Rensa',

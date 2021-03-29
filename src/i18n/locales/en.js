@@ -60,6 +60,9 @@ export default {
   T20: 'D20',
   T100: 'D100',
   custom: 'Custom',
+  hidden_roll: 'Hidden roll',
+  hidden_roll_tooltip: 'Hidden rolls are hidden for everyone but you',
+  hidden_result: 'a hidden result',
 
   // Lobby - Console
   clear: 'Clear',
