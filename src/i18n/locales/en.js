@@ -100,6 +100,14 @@ export default {
   skills: 'Skills',
   add_skill: 'Add skill',
 
+  // Characters - CharacterMagic
+  magic: 'Magic',
+  magic_prayers: 'Magic/Prayers',
+  add_spell: 'Add spell',
+  add_prayer: 'Add prayer',
+  add_custom_magic: 'Add custom magic',
+  cost: 'Cost',
+
   // Characters - CharacterInventory
   inventory: 'Inventory',
   add_weapon: 'Add weapon',

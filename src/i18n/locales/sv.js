@@ -100,6 +100,14 @@ export default {
   skills: 'Färdigheter',
   add_skill: 'Lägg till färdighet',
 
+  // Characters - CharacterMagic
+  magic: 'Magi',
+  magic_prayers: 'Magi/Böner',
+  add_spell: 'Lägg till magi',
+  add_prayer: 'Lägg till bön',
+  add_custom_magic: 'Lägg till custom magi',
+  cost: 'Kostnad',
+
   // Characters - CharacterInventory
   inventory: 'Utrustning',
   add_weapon: 'Lägg till vapen',
