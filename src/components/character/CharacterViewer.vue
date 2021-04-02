@@ -21,9 +21,14 @@
                 <CharacterWealth />
               </div>
             </div>
-            <div class="row">
+            <div class="row character-viewer-wrapper">
               <div class="col-12">
                 <CharacterSkills />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <CharacterMagic />
               </div>
             </div>
           </div>
@@ -66,6 +71,7 @@ import CharacterArmor from '@/components/character/CharacterArmor';
 import CharacterHealth from '@/components/character/CharacterHealth';
 import CharacterInventory from '@/components/character/CharacterInventory';
 import CharacterSkills from '@/components/character/CharacterSkills';
+import CharacterMagic from '@/components/character/CharacterMagic';
 import CharacterNotes from '@/components/character/CharacterNotes';
 
 // Modules
@@ -85,6 +91,7 @@ export default {
     CharacterHealth,
     CharacterInventory,
     CharacterSkills,
+    CharacterMagic,
     CharacterNotes,
     VueTabs,
     VTab,

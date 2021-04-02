@@ -125,6 +125,17 @@ export default {
           wealth[i].id = wealthId;
         }
         characters[i].wealth = wealth;
+
+        // Magic/Prayers
+        const MAGIC_COLLECTION = `/users/${uid}/characters/${characterId}/magic`;
+        const magicSnapshot = await db.collection(MAGIC_COLLECTION).get();
+
+        const magic = magicSnapshot.docs.map((doc) => doc.data());
+        for (let i = 0; i < magicSnapshot.docs.length; i += 1) {
+          const magicId = magicSnapshot.docs[i].id;
+          magic[i].id = magicId;
+        }
+        characters[i].magic = magic;
       }
       this.$store.commit('setCharacterList', characters);
       this.loading = false;
