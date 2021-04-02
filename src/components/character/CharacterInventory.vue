@@ -187,7 +187,7 @@ export default {
           data,
           title: {
             key: this.$t('edit_field'),
-            value: item.key,
+            value: item[this.$t('name')],
           },
           objectId: itemId,
           collectionPath: INVENTORY_COLLECTION,
@@ -221,7 +221,7 @@ export default {
           },
           heading: {
             title: `${this.$t('warning_message_title')} ${this.$t('inventory').toLowerCase()}.`,
-            preamble: `${this.$t('warning_message_preamble')} ${this.$t('inventory').toLowerCase()}: ${item.key}`,
+            preamble: `${this.$t('warning_message_preamble')} ${this.$t('inventory').toLowerCase()}: ${item[this.$t('name')]}`,
             content: `${this.$t('warning_message_content')}`,
           },
           objectId: itemId,
@@ -261,11 +261,6 @@ export default {
   position: relative;
 }
 
-.character-inventory-item--strikethrough p,
-.character-inventory-item--strikethrough span {
-  text-decoration: line-through;
-}
-
 .item-controls {
   display: none;
   position: absolute;
@@ -278,10 +273,6 @@ export default {
 }
 
 .item-control__edit {
-  margin: 0 5px 0 0;
-}
-
-.item-control__strike {
   margin: 0 5px 0 0;
 }
 
