@@ -207,10 +207,6 @@ export default {
 </script>
 
 <style scoped>
-.character-skills {
-  padding: 0 0 55px 0;
-}
-
 .character-skill {
   position: relative;
   display: flex;
